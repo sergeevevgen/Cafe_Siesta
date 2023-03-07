@@ -17,7 +17,7 @@ public class LoginController {
 
     @GetMapping("/a")
     public String index() {
-        return "<h1>sadasda</h1>";
+        return "<h1>sadasda</h1><button>Button</button>";
     }
 
     @GetMapping("/b")
