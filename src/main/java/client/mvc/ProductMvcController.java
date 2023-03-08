@@ -28,4 +28,36 @@ public class ProductMvcController {
                         .toList());
         return "index";
     }
+    @GetMapping("/login")
+    public String getLogin(Model model) {
+        model.addAttribute("products",
+                productService.findAllProducts().stream()
+                        .map(ProductDto::new)
+                        .toList());
+        return "login";
+    }
+    @GetMapping("/example")
+    public String getExample(Model model) {
+        model.addAttribute("products",
+                productService.findAllProducts().stream()
+                        .map(ProductDto::new)
+                        .toList());
+        return "example";
+    }
+    @GetMapping("/signup")
+    public String getSignup(Model model) {
+        model.addAttribute("products",
+                productService.findAllProducts().stream()
+                        .map(ProductDto::new)
+                        .toList());
+        return "signup";
+    }
+    @GetMapping("/navbar")
+    public String getNavbar(Model model) {
+        model.addAttribute("products",
+                productService.findAllProducts().stream()
+                        .map(ProductDto::new)
+                        .toList());
+        return "navbar";
+    }
 }

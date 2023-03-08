@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Siesta</title>
+    <link rel="stylesheet" href="/css/authorization.css"/>
+</head>
+<body>
+
+<div th:if="${param.created}" class="alert alert-success margin-bottom">
+    Пользователь '<span th:text="${param.created}"></span>' успешно создан
+</div>
+
+<div class="form" th:action="@{/signup}" method="post">
+    <h1>Регистрация</h1>
+    <div class="input-form">
+        <input type="text" name="name" id="name"
+               placeholder="Имя" required autofocus>
+    </div>
+    <div class="input-form">
+        <input type="text" name="surname" id="surname"
+               placeholder="Фамилия" required>
+    </div>
+    <div class="input-form">
+        <input type="text" name="username" id="username"
+               placeholder="Почта" required>
+    </div>
+    <div class="input-form">
+        <input type="password" name="password" id="password"
+               placeholder="Пароль" required>
+    </div>
+    <div class="input-form">
+        <input type="submit" value="Зарегистрироваться">
+    </div>
+    <a href="/product/login" class="forget">Вход</a>
+</div>
+
+</body>
+</html>

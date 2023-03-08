@@ -1,30 +1,32 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{default}" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Siesta</title>
+    <link rel="stylesheet" href="/css/authorization.css"/>
+</head>
 <body>
-<div class="container" layout:fragment="content">
-    <div th:if="${param.error}" class="alert alert-danger margin-bottom">
-        Пользователь не найден или пароль указан не верно
-    </div>
-    <div th:if="${param.logout}" class="alert alert-success margin-bottom">
-        Выход успешно произведен
-    </div>
-    <div th:if="${param.created}" class="alert alert-success margin-bottom">
-        Пользователь '<span th:text="${param.created}"></span>' успешно создан
-    </div>
-    <form th:action="@{/login}" method="post" class="container-padding">
-        <div class="mb-3">
-            <input type="text" name="username" id="username" class="form-control"
-                   placeholder="Логин" required autofocus/>
-        </div>
-        <div class="mb-3">
-            <input type="password" name="password" id="password" class="form-control"
-                   placeholder="Пароль" required/>
-        </div>
-        <button type="submit" class="btn btn-success button-fixed">Войти</button>
-        <a class="btn btn-primary button-fixed" href="/signup">Регистрация</a>
-    </form>
+
+<div th:if="${param.error}" class="alert alert-danger margin-bottom">
+    Пользователь не найден или пароль указан не верно
 </div>
+
+
+<div class="form" th:action="@{/login}" method="post">
+    <h1>Вход</h1>
+    <div class="input-form">
+        <input type="text" name="username" id="username"
+               placeholder="Почта" required autofocus>
+    </div>
+    <div class="input-form">
+        <input type="password" name="password" id="password"
+               placeholder="Пароль" required>
+    </div>
+    <div class="input-form">
+        <input type="submit" value="Войти">
+    </div>
+    <a href="/product/signup" class="forget">Регистрация</a>
+</div>
+
 </body>
 </html>
