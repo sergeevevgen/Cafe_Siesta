@@ -39,9 +39,9 @@ public class Combo {
     @JoinColumn(name = "combo_fk")
     private List<Product> products = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_fk")
-    private Order order;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "combo_fk")
+    private List<Combo_Order> items = new ArrayList<>();
 
     public Combo() {
     }
@@ -133,19 +133,11 @@ public class Combo {
         }
     }
 
-    public void setOrder(Order order) {
-        this.order = order;
-        if (!order.getCombos().contains(this)) {
-            order.setCombo(this);
-        }
+    public List<Combo_Order> getItems() {
+        return items;
     }
 
-    public void removeOrder() {
-        order.removeCombo(getId());
-        order = null;
-    }
-
-    public Order getOrder() {
-        return order;
+    public void setItems(List<Combo_Order> items) {
+        this.items = items;
     }
 }

@@ -20,6 +20,8 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotBlank
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Order_Status status;
 
@@ -47,9 +49,9 @@ public class Order {
     @JoinColumn(name = "order_fk")
     private List<Order_Item> items = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "order_fk")
-    private List<Combo> combos = new ArrayList<>();
+    private List<Combo_Order> combo_items = new ArrayList<>();
 
     @OneToOne(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Chat chat;
@@ -151,41 +153,6 @@ public class Order {
         this.items = items;
     }
 
-    public List<Combo> getCombos() {
-        return combos;
-    }
-
-    public void setCombos(List<Combo> combos) {
-        this.combos = combos;
-    }
-
-    public void updateCombo(Combo c) {
-        for (var m : combos) {
-            if (Objects.equals(m.getId(), c.getId())) {
-                m = c;
-                return;
-            }
-        }
-    }
-    public Combo removeCombo(Long id) {
-        for (var c : combos) {
-            if (Objects.equals(c.getId(), id)) {
-                combos.remove(c);
-                return c;
-            }
-        }
-        return null;
-    }
-
-    public void setCombo(Combo combo) {
-        if (!combos.contains(combo)) {
-            combos.add(combo);
-            if (combo.getOrder() != this) {
-                combo.setOrder(this);
-            }
-        }
-    }
-
     public void updateItems(Order_Item item) {
         for (var i : items) {
             if (Objects.equals(i.getId(), item.getId())) {
@@ -207,6 +174,41 @@ public class Order {
     public void setItem(Order_Item item) {
         if (!items.contains(item)) {
             items.add(item);
+            if (item.getOrder() != this) {
+                item.setOrder(this);
+            }
+        }
+    }
+
+    public List<Combo_Order> getCombo_items() {
+        return combo_items;
+    }
+
+    public void setCombo_items(List<Combo_Order> combo_items) {
+        this.combo_items = combo_items;
+    }
+
+    public void updateComboItems(Combo_Order item) {
+        for (var i : combo_items) {
+            if (Objects.equals(i.getId(), item.getId())) {
+                i = item;
+                return;
+            }
+        }
+    }
+    public Combo_Order removeComboItems(Long id) {
+        for (var i : combo_items) {
+            if (Objects.equals(i.getId(), id)) {
+                combo_items.remove(i);
+                return i;
+            }
+        }
+        return null;
+    }
+
+    public void setComboItem(Combo_Order item) {
+        if (!combo_items.contains(item)) {
+            combo_items.add(item);
             if (item.getOrder() != this) {
                 item.setOrder(this);
             }

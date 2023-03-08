@@ -1,5 +1,6 @@
 package client.data.model.entity;
 
+import client.data.model.enums.DeliveryMan_Status;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -38,6 +39,11 @@ public class DeliveryMan {
     private String password;
 
     private String image_url;
+
+    @NotBlank
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private DeliveryMan_Status status;
 
     //done
     @OneToMany(fetch = FetchType.LAZY)
@@ -139,5 +145,13 @@ public class DeliveryMan {
                 return;
             }
         }
+    }
+
+    public DeliveryMan_Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(DeliveryMan_Status status) {
+        this.status = status;
     }
 }

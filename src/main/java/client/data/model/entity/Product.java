@@ -40,7 +40,7 @@ public class Product {
     @JoinColumn(name = "category_fk")
     private Category category;
 
-    //Done
+    //Done, maybe, should add many-to-many
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "combo_fk")
     private Combo combo;
