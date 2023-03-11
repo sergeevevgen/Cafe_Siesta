@@ -5,6 +5,8 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @EqualsAndHashCode
@@ -22,7 +24,7 @@ public class Message {
 
     @NotBlank
     @Column(nullable = false)
-    private Long time;
+    private LocalDateTime time;
 
     @NotBlank
     @Column(nullable = false)
@@ -36,7 +38,7 @@ public class Message {
     public Message() {
     }
 
-    public Message(String text, Long time, Long sender_id) {
+    public Message(String text, LocalDateTime time, Long sender_id) {
         this.text = text;
         this.time = time;
         this.sender_id = sender_id;
@@ -54,11 +56,11 @@ public class Message {
         this.text = text;
     }
 
-    public Long getTime() {
+    public LocalDateTime getTime() {
         return time;
     }
 
-    public void setTime(Long time) {
+    public void setTime(LocalDateTime time) {
         this.time = time;
     }
 

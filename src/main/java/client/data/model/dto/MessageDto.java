@@ -3,10 +3,12 @@ package client.data.model.dto;
 import client.data.model.entity.Message;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.time.LocalDateTime;
+
 public class MessageDto {
     private Long id;
     private String text;
-    private Long time;
+    private LocalDateTime time;
     private Long sender_id;
     private Long chat_id;
 
@@ -30,7 +32,7 @@ public class MessageDto {
         return text;
     }
 
-    public Long getTime() {
+    public LocalDateTime getTime() {
         return time;
     }
 

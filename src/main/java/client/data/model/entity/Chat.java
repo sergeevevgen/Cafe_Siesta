@@ -27,8 +27,7 @@ public class Chat {
     @JoinColumn(name = "chat_fk")
     private List<Message> messages = new ArrayList<>();
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_id", nullable = false)
+    @OneToOne(optional = false, mappedBy = "chat")
     private Order order;
 
     public Chat() {

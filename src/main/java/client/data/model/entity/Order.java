@@ -53,7 +53,8 @@ public class Order {
     @JoinColumn(name = "order_fk")
     private List<Combo_Order> combo_items = new ArrayList<>();
 
-    @OneToOne(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "chat_id")
     private Chat chat;
 
     public Order() {

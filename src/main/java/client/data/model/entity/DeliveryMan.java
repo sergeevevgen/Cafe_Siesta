@@ -7,6 +7,7 @@ import lombok.ToString;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -35,7 +36,8 @@ public class DeliveryMan {
     private String login;
 
     @NotBlank
-    @Column(nullable = false)
+    @Column(nullable = false, length = 64)
+    @Size(min = 8, max = 64)
     private String password;
 
     private String image_url;
