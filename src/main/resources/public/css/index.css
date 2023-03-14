@@ -55,7 +55,7 @@
     flex-grow: 0;
 }
 
-.product-image {
+.product-image-menu {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -200,3 +200,152 @@ h3 {
     order: 0;
     flex-grow: 0;
 }
+
+.product-card {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 0px 16px 0px 0px;
+
+    width: 700px;
+    height: 200px;
+
+    background: #EFEFEF;
+    border-radius: 15px;
+}
+
+.product-image-card{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    object-fit: cover;
+    padding: 0px;
+    gap: 10px;
+
+    width: 342px;
+    height: 200px;
+
+    border-radius: 15px 0px 0px 15px;
+}
+
+.product-card-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 10px 0px 26px;
+
+    width: 342px;
+    height: 200px;
+}
+
+.card-info-name {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 10px 10px 10px 0px;
+    gap: 10px;
+
+    width: 306px;
+    height: 112px;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 20px;
+
+    color: #121219;
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 1;
+}
+
+.card-info-sum {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 10px 10px 10px 0px;
+    gap: 10px;
+
+    width: 306px;
+    height: 39px;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 20px;
+
+    color: #121219;
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 1;
+    align-self: stretch;
+    flex-grow: 0;
+}
+
+.card-info-price {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 10px 10px 10px 0px;
+    gap: 10px;
+
+    width: 306px;
+    height: 49px;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 20px;
+    color: #D5A600;
+
+    border-radius: 15px;
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 2;
+    align-self: stretch;
+    flex-grow: 0;
+}
+
+.order-btn {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 20px;
+    gap: 10px;
+    border: none;
+
+    position: fixed;
+    width: 186px;
+    height: 63px;
+    left: 45%;
+    bottom: 5%;
+
+    /* красный */
+
+    background: #FF0000;
+    border-radius: 15px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 39px;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+

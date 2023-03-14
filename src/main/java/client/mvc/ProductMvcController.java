@@ -52,12 +52,12 @@ public class ProductMvcController {
                         .toList());
         return "signup";
     }
-    @GetMapping("/navbar")
+    @GetMapping("/card")
     public String getNavbar(Model model) {
         model.addAttribute("products",
                 productService.findAllProducts().stream()
                         .map(ProductDto::new)
                         .toList());
-        return "navbar";
+        return "card";
     }
 }
