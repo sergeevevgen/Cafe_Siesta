@@ -1,15 +1,318 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{default}">
+      xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Блюда</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+            integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <script src="/js/navbar.js"></script>
+    <link rel="stylesheet" href="/css/index.css"/>
+    <title>Главная</title>
 </head>
 <body>
-  <div layout:fragment="content">
-      <div>Продукты</div>
-      <a href="123">ERROR!</a>
-  </div>
+<div th:insert="navbar"></div>
+<main class="main">
+    <div class="products">
+        <div class="product">
+            <img class="product-image" src="images/image1.jpg" alt="Описание изображения">
+            <div class="product-info">
+                <div class="info-name">
+                    <h2>Название продукта </h2>
+                </div>
+                <div class="info-dop">
+                    <div class="dop-weight">
+                        <h3>200 г</h3>
+                    </div>
+                    <div class="dop-rating">
+
+                    </div>
+                </div>
+                <div class="info-price">
+                    <input type="submit" class="price-btn" value="320 ₽">
+                </div>
+            </div>
+        </div>
+        <div class="product">
+            <img class="product-image" src="images/image2.jpg" alt="Описание изображения">
+            <div class="product-info">
+                <div class="info-name">
+                    <h2>Название продукта </h2>
+                </div>
+                <div class="info-dop">
+                    <div class="dop-weight">
+                        <h3>200 г</h3>
+                    </div>
+                    <div class="dop-rating">
+
+                    </div>
+                </div>
+                <div class="info-price">
+                    <input type="submit" class="price-btn" value="320 ₽">
+                </div>
+            </div>
+        </div>
+        <div class="product">
+            <img class="product-image" src="images/image3.jpg" alt="Описание изображения">
+            <div class="product-info">
+                <div class="info-name">
+                    <h2>Название продукта </h2>
+                </div>
+                <div class="info-dop">
+                    <div class="dop-weight">
+                        <h3>200 г</h3>
+                    </div>
+                    <div class="dop-rating">
+
+                    </div>
+                </div>
+                <div class="info-price">
+                    <input type="submit" class="price-btn" value="320 ₽">
+                </div>
+            </div>
+        </div>
+        <div class="product">
+            <img class="product-image" src="images/image4.jpg" alt="Описание изображения">
+            <div class="product-info">
+                <div class="info-name">
+                    <h2>Название продукта </h2>
+                </div>
+                <div class="info-dop">
+                    <div class="dop-weight">
+                        <h3>200 г</h3>
+                    </div>
+                    <div class="dop-rating">
+
+                    </div>
+                </div>
+                <div class="info-price">
+                    <input type="submit" class="price-btn" value="320 ₽">
+                </div>
+            </div>
+        </div>
+        <div class="product">
+            <img class="product-image" src="images/image5.jpg" alt="Описание изображения">
+            <div class="product-info">
+                <div class="info-name">
+                    <h2>Название продукта </h2>
+                </div>
+                <div class="info-dop">
+                    <div class="dop-weight">
+                        <h3>200 г</h3>
+                    </div>
+                    <div class="dop-rating">
+
+                    </div>
+                </div>
+                <div class="info-price">
+                    <input type="submit" class="price-btn" value="320 ₽">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="products">
+        <div class="product">
+            <img class="product-image" src="images/image1.jpg" alt="Описание изображения">
+            <div class="product-info">
+                <div class="info-name">
+                    <h2>Название продукта </h2>
+                </div>
+                <div class="info-dop">
+                    <div class="dop-weight">
+                        <h3>200 г</h3>
+                    </div>
+                    <div class="dop-rating">
+
+                    </div>
+                </div>
+                <div class="info-price">
+                    <input type="submit" class="price-btn" value="320 ₽">
+                </div>
+            </div>
+        </div>
+        <div class="product">
+            <img class="product-image" src="images/image2.jpg" alt="Описание изображения">
+            <div class="product-info">
+                <div class="info-name">
+                    <h2>Название продукта </h2>
+                </div>
+                <div class="info-dop">
+                    <div class="dop-weight">
+                        <h3>200 г</h3>
+                    </div>
+                    <div class="dop-rating">
+
+                    </div>
+                </div>
+                <div class="info-price">
+                    <input type="submit" class="price-btn" value="320 ₽">
+                </div>
+            </div>
+        </div>
+        <div class="product">
+            <img class="product-image" src="images/image3.jpg" alt="Описание изображения">
+            <div class="product-info">
+                <div class="info-name">
+                    <h2>Название продукта </h2>
+                </div>
+                <div class="info-dop">
+                    <div class="dop-weight">
+                        <h3>200 г</h3>
+                    </div>
+                    <div class="dop-rating">
+
+                    </div>
+                </div>
+                <div class="info-price">
+                    <input type="submit" class="price-btn" value="320 ₽">
+                </div>
+            </div>
+        </div>
+        <div class="product">
+            <img class="product-image" src="images/image4.jpg" alt="Описание изображения">
+            <div class="product-info">
+                <div class="info-name">
+                    <h2>Название продукта </h2>
+                </div>
+                <div class="info-dop">
+                    <div class="dop-weight">
+                        <h3>200 г</h3>
+                    </div>
+                    <div class="dop-rating">
+
+                    </div>
+                </div>
+                <div class="info-price">
+                    <input type="submit" class="price-btn" value="320 ₽">
+                </div>
+            </div>
+        </div>
+        <div class="product">
+            <img class="product-image" src="images/image5.jpg" alt="Описание изображения">
+            <div class="product-info">
+                <div class="info-name">
+                    <h2>Название продукта </h2>
+                </div>
+                <div class="info-dop">
+                    <div class="dop-weight">
+                        <h3>200 г</h3>
+                    </div>
+                    <div class="dop-rating">
+
+                    </div>
+                </div>
+                <div class="info-price">
+                    <input type="submit" class="price-btn" value="320 ₽">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="products">
+        <div class="product">
+            <img class="product-image" src="images/image1.jpg" alt="Описание изображения">
+            <div class="product-info">
+                <div class="info-name">
+                    <h2>Название продукта </h2>
+                </div>
+                <div class="info-dop">
+                    <div class="dop-weight">
+                        <h3>200 г</h3>
+                    </div>
+                    <div class="dop-rating">
+
+                    </div>
+                </div>
+                <div class="info-price">
+                    <input type="submit" class="price-btn" value="320 ₽">
+                </div>
+            </div>
+        </div>
+        <div class="product">
+            <img class="product-image" src="images/image2.jpg" alt="Описание изображения">
+            <div class="product-info">
+                <div class="info-name">
+                    <h2>Название продукта </h2>
+                </div>
+                <div class="info-dop">
+                    <div class="dop-weight">
+                        <h3>200 г</h3>
+                    </div>
+                    <div class="dop-rating">
+
+                    </div>
+                </div>
+                <div class="info-price">
+                    <input type="submit" class="price-btn" value="320 ₽">
+                </div>
+            </div>
+        </div>
+        <div class="product">
+            <img class="product-image" src="images/image3.jpg" alt="Описание изображения">
+            <div class="product-info">
+                <div class="info-name">
+                    <h2>Название продукта </h2>
+                </div>
+                <div class="info-dop">
+                    <div class="dop-weight">
+                        <h3>200 г</h3>
+                    </div>
+                    <div class="dop-rating">
+
+                    </div>
+                </div>
+                <div class="info-price">
+                    <input type="submit" class="price-btn" value="320 ₽">
+                </div>
+            </div>
+        </div>
+        <div class="product">
+            <img class="product-image" src="images/image4.jpg" alt="Описание изображения">
+            <div class="product-info">
+                <div class="info-name">
+                    <h2>Название продукта </h2>
+                </div>
+                <div class="info-dop">
+                    <div class="dop-weight">
+                        <h3>200 г</h3>
+                    </div>
+                    <div class="dop-rating">
+
+                    </div>
+                </div>
+                <div class="info-price">
+                    <input type="submit" class="price-btn" value="320 ₽">
+                </div>
+            </div>
+        </div>
+        <div class="product">
+            <img class="product-image" src="images/image5.jpg" alt="Описание изображения">
+            <div class="product-info">
+                <div class="info-name">
+                    <h2>Название продукта </h2>
+                </div>
+                <div class="info-dop">
+                    <div class="dop-weight">
+                        <h3>200 г</h3>
+                    </div>
+                    <div class="dop-rating">
+
+                    </div>
+                </div>
+                <div class="info-price">
+                    <input type="submit" class="price-btn" value="320 ₽">
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
 </body>
 </html>

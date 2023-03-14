@@ -6,10 +6,10 @@ spring:
         jdbc.time.zone: UTC
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: validate
     database-platform: org.hibernate.dialect.PostgreSQL95Dialect
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
-    username: zhenya
-    password: 1234
+    username: Nikita
+    password: fuckxworld
     driver-class-name: org.postgresql.Driver

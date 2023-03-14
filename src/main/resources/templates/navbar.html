@@ -11,27 +11,28 @@
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700&display=swap" rel="stylesheet">
     <script src="/js/navbar.js"></script>
     <link rel="stylesheet" href="/css/navbar.css"/>
 </head>
 <body>
-<header>
+<header class="header">
     <div th:fragment="navbar" class="navbar">
-        <div class="logo"><a th:href="@{/}">Siesta</a></div>
-        <ul class="links">
-            <li><a th:href="@{/product/login}">Вход</a></li>
-            <li><a th:href="@{/product/signup}">Регистрация</a></li>
-        </ul>
-        <a class="action-btn" th:href="@{/product/login}">Вход</a>
-        <div class="toggle-btn">
-            <i class="fa-solid fa-bars"></i>
+        <div class="logo-lvl">
+            <div class="logo"><a class="logo-s" th:href="@{/}">Siesta</a></div>
+            <div class="search-box">
+                <input type="text" class="search-text" placeholder="Поиск">
+                <input type="submit" class="search-btn" value="Найти">
+            </div>
+            <a class="action-btn" th:href="@{/product/login}">Войти</a>
         </div>
-    </div>
-
-    <div class="dropdown-menu">
-        <li><a th:href="@{/product/login}">Вход</a></li>
-        <li><a th:href="@{/product/signup}">Регистрация</a></li>
-        <li><a class="action-btn" th:href="@{/product/login}">Вход</a></li>
+        <div class="links-lvl">
+            <a class="link" th:href="@{/product/login}">Вход</a>
+            <a class="link" th:href="@{/product/signup}">Регистрация</a>
+            <a class="link" th:href="@{/}">Продукты</a>
+        </div>
     </div>
 </header>
 </body>
