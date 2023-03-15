@@ -15,6 +15,9 @@
     padding: 0px;
     gap: 60px;
 
+    font-family: 'Inter';
+    font-style: normal;
+
     position: absolute;
     width: 100%;
     min-width: 1376px;
@@ -44,17 +47,9 @@
     width: 230px;
     height: 320px;
 
-    /* светло серый */
-
     background: #EFEFEF;
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
     border-radius: 15px;
-
-    /* Inside auto layout */
-
-    flex: none;
-    order: 0;
-    flex-grow: 0;
 }
 
 .product-image-menu {
@@ -69,13 +64,6 @@
 
     background: #FFFFFF;
     border-radius: 15px 15px 0px 0px;
-
-    /* Inside auto layout */
-
-    flex: none;
-    order: 0;
-    align-self: stretch;
-    flex-grow: 1;
 }
 
 .product-info {
@@ -86,19 +74,10 @@
 
     width: 230px;
     height: 167px;
-
-
-    /* Inside auto layout */
-
-    flex: none;
-    order: 1;
-    align-self: stretch;
-    flex-grow: 0;
 }
 
 h2 {
     font-family: 'Inter';
-    font-style: normal;
     font-weight: 600;
     font-size: 24px;
     line-height: 29px;
@@ -108,7 +87,6 @@ h2 {
 
 h3 {
     font-family: 'Inter';
-    font-style: normal;
     font-weight: 400;
     font-size: 20px;
     line-height: 24px;
@@ -123,14 +101,6 @@ h3 {
 
     width: 230px;
     height: 72px;
-
-
-    /* Inside auto layout */
-
-    flex: none;
-    order: 0;
-    align-self: stretch;
-    flex-grow: 0;
 }
 
 .info-dop {
@@ -142,14 +112,6 @@ h3 {
 
     width: 230px;
     height: 28px;
-
-
-    /* Inside auto layout */
-
-    flex: none;
-    order: 1;
-    align-self: stretch;
-    flex-grow: 0;
 }
 
 .info-price {
@@ -162,14 +124,6 @@ h3 {
 
     width: 230px;
     height: 67px;
-
-
-    /* Inside auto layout */
-
-    flex: none;
-    order: 2;
-    align-self: stretch;
-    flex-grow: 0;
 }
 
 .price-btn {
@@ -183,24 +137,18 @@ h3 {
     width: 131px;
     height: 37px;
 
+    font-family: 'Inter';
+    font-style: normal;
     background: #FFFFFF;
     border-radius: 15px;
     outline: none;
     border: 2px solid #FFFFFF;
 
-    font-family: 'Inter';
-    font-style: normal;
     font-weight: 600;
     font-size: 24px;
     line-height: 29px;
     text-align: center;
     color: #121219;
-
-    /* Inside auto layout */
-
-    flex: none;
-    order: 0;
-    flex-grow: 0;
 }
 
 .product-card {
@@ -237,8 +185,6 @@ h3 {
     align-items: center;
     padding: 0px 10px 0px 26px;
 
-    font-family: 'Inter';
-    font-style: normal;
     font-weight: 600;
     font-size: 24px;
     line-height: 29px;
@@ -258,13 +204,6 @@ h3 {
     height: 112px;
 
     color: #121219;
-
-    /* Inside auto layout */
-
-    flex: none;
-    order: 0;
-    align-self: stretch;
-    flex-grow: 1;
 }
 
 .card-info-sum {
@@ -278,13 +217,6 @@ h3 {
     height: 39px;
 
     color: #121219;
-
-    /* Inside auto layout */
-
-    flex: none;
-    order: 1;
-    align-self: stretch;
-    flex-grow: 0;
 }
 
 .card-info-price {
@@ -298,15 +230,7 @@ h3 {
     height: 49px;
 
     color: #D5A600;
-
     border-radius: 15px;
-
-    /* Inside auto layout */
-
-    flex: none;
-    order: 2;
-    align-self: stretch;
-    flex-grow: 0;
 }
 
 .order-btn {
@@ -321,17 +245,12 @@ h3 {
     position: fixed;
     width: 186px;
     height: 63px;
-    left: 50%;
     bottom: 5%;
-
-    /* красный */
 
     background: #FF0000;
     border-radius: 15px;
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
 
-    font-family: 'Inter';
-    font-style: normal;
     font-weight: 600;
     font-size: 32px;
     line-height: 39px;
