@@ -22,6 +22,7 @@ import java.util.Optional;
 
 @Service
 public class ChatService {
+    //Не закончен
 
     private final Logger log = LoggerFactory.getLogger(CategoryService.class);
 
