@@ -212,28 +212,17 @@ a.logo-s {
 
     position: fixed;
     width: 100%;
-    min-width: 1376px;
+    min-width: 1200px;
     height: 174px;
     left: 0px;
     right: 0px;
     top: 0px;
     z-index: 999;
 
-    /* белый */
-
     background: #FFFFFF;
     box-shadow: 0px 1px 20px rgba(0, 0, 0, 0.15);
 }
 
-.content {
-    display: flex;
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 600;
-    font-size: 50px;
-    line-height: 50px;
-    color: #000000;
-}
 
 
 

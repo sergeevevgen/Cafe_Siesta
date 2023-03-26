@@ -60,4 +60,12 @@ public class ProductMvcController {
                         .toList());
         return "card";
     }
+    @GetMapping("/product")
+    public String getProduct(Model model) {
+        model.addAttribute("products",
+                productService.findAllProducts().stream()
+                        .map(ProductDto::new)
+                        .toList());
+        return "product";
+    }
 }
