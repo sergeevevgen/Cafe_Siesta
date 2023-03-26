@@ -34,7 +34,7 @@ public class ProductService {
     @Transactional(readOnly = true)
     public List<Product> findAllProducts() { return productRepository.findAll(); }
 
-    //Создание категории через поля
+/*    //Создание категории через поля
     @Transactional
     public Product addProduct(String name, String description, String image_url, Long weight, Double price, String category) {
         if (!StringUtils.hasText(name) || !StringUtils.hasText(description) || !StringUtils.hasText(category) ||
@@ -54,9 +54,9 @@ public class ProductService {
         product.setCategory(category1);
         validatorUtil.validate(category);
         return productRepository.save(product);
-    }
+    }*/
 
-    //Создание категории через Dto
+    /*//Создание категории через Dto
     @Transactional
     public CategoryDto addCategory(CategoryDto categoryDto) {
         return new CategoryDto(addCategory(categoryDto.getName(), categoryDto.getDescription()));
@@ -112,5 +112,5 @@ public class ProductService {
             }
         }
         repository.deleteAll();
-    }
+    }*/
 }
