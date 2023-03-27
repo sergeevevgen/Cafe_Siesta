@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
-    @Query("SELECT * FROM Orders WHERE client_fk =: client AND status =: status")
+    @Query(value = "select * from Orders WHERE client_fk = :client and status = :status")
     Order findOneByClientAndStatus(Long client, String status);
 }
