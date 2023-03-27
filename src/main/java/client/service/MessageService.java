@@ -24,6 +24,7 @@ import java.util.Optional;
 
 @Service
 public class MessageService {
+    //Вроде закончен
     private final Logger log = LoggerFactory.getLogger(CategoryService.class);
 
     private final MessageRepository repository;

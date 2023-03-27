@@ -12,6 +12,8 @@ public class ProductDto {
     private Double price;
     private Long category_id;
     private String category;
+    private Long combo_id;
+    private String combo;
 
     public ProductDto() {
     }
@@ -25,6 +27,8 @@ public class ProductDto {
         this.price = product.getPrice();
         this.category_id = product.getCategory().getId();
         this.category = product.getCategory().getName();
+        this.combo = product.getCombo().getName();
+        this.combo_id = product.getCombo().getId();
     }
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
@@ -58,5 +62,13 @@ public class ProductDto {
 
     public String getCategory() {
         return category;
+    }
+
+    public Long getCombo_id() {
+        return combo_id;
+    }
+
+    public String getCombo() {
+        return combo;
     }
 }

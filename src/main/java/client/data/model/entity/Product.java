@@ -36,12 +36,12 @@ public class Product {
     private List<Order_Item> items = new ArrayList<>();
 
     //Done
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "category_fk")
     private Category category;
 
     //Done, maybe, should add many-to-many
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "combo_fk")
     private Combo combo;
 

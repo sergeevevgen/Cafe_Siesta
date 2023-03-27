@@ -20,6 +20,7 @@ import java.util.Optional;
 
 @Service
 public class CategoryService {
+    //вроде закончен
     private final Logger log = LoggerFactory.getLogger(CategoryService.class);
 
     private final CategoryRepository repository;
@@ -37,7 +38,7 @@ public class CategoryService {
         if (!StringUtils.hasText(name) || !StringUtils.hasText(description)) {
             throw new IllegalArgumentException("Category fields are null or empty");
         }
-        if (findCategoryByName(name) != null) {
+        if (findByName(name) != null) {
             throw new ValidationException(String.format("Category '%s' is already exist", name));
         }
         final Category category = new Category();
@@ -56,13 +57,13 @@ public class CategoryService {
 
     //Поиск категории в репозитории
     @Transactional(readOnly = true)
-    public Category findCategory(Long id) {
+    public Category findById(Long id) {
         final Optional<Category> category = repository.findById(id);
         return category.orElseThrow(() -> new CategoryNotFoundException(id));
     }
 
     @Transactional(readOnly = true)
-    public Category findCategoryByName(String name) {
+    public Category findByName(String name) {
         return repository.findOneByNameIgnoreCase(name);
     }
 
@@ -75,10 +76,10 @@ public class CategoryService {
     //Изменение категории по полям
     @Transactional
     public Category updateCategory(Long id, String name, String description, String image_url) {
-        if (!StringUtils.hasText(name) || !StringUtils.hasText(description)) {
+        if (!StringUtils.hasText(name) || !StringUtils.hasText(description) || id == null || id < 0) {
             throw new IllegalArgumentException("Category fields are null or empty");
         }
-        final Category current = findCategory(id);
+        final Category current = findById(id);
         if (current == null) {
             throw new CategoryNotFoundException(id);
         }
@@ -97,7 +98,7 @@ public class CategoryService {
 
     @Transactional
     public Category deleteCategory(Long id) {
-        Category current = findCategory(id);
+        Category current = findById(id);
         repository.delete(current);
         return current;
     }

@@ -1,12 +1,15 @@
 package client.service;
 
 import client.data.model.dto.CategoryDto;
+import client.data.model.dto.ProductDto;
 import client.data.model.entity.Category;
+import client.data.model.entity.Combo;
 import client.data.model.entity.Product;
 import client.data.repository.CategoryRepository;
 import client.data.repository.ProductRepository;
 import client.service.exception.CategoryNotFoundException;
 import client.service.exception.InCategoryFoundProductsException;
+import client.service.exception.ProductNotFoundException;
 import client.util.validation.ValidationException;
 import client.util.validation.ValidatorUtil;
 import org.springframework.stereotype.Service;
@@ -21,23 +24,26 @@ import java.util.Optional;
 public class ProductService {
     //не закончен
     private final ProductRepository productRepository;
-    private final CategoryRepository categoryRepository;
+    private final CategoryService categoryService;
+    private final ComboService comboService;
     private final ValidatorUtil validatorUtil;
 
-    public ProductService(ProductRepository productRepository, CategoryRepository categoryRepository, ValidatorUtil validatorUtil) {
+    public ProductService(ProductRepository productRepository, CategoryService categoryService,
+                          ComboService comboService, ValidatorUtil validatorUtil) {
         this.productRepository = productRepository;
-        this.categoryRepository = categoryRepository;
         this.validatorUtil = validatorUtil;
+        this.comboService = comboService;
+        this.categoryService = categoryService;
     }
 
     //Поиск всех записей в репозитории
     @Transactional(readOnly = true)
     public List<Product> findAllProducts() { return productRepository.findAll(); }
 
-/*    //Создание категории через поля
+    //Создание продукта через поля
     @Transactional
-    public Product addProduct(String name, String description, String image_url, Long weight, Double price, String category) {
-        if (!StringUtils.hasText(name) || !StringUtils.hasText(description) || !StringUtils.hasText(category) ||
+    public Product addProduct(String name, String description, String image_url, Long weight, Double price, Long category_id) {
+        if (!StringUtils.hasText(name) || !StringUtils.hasText(description) || category_id == null || category_id < 0 ||
                 weight == null || weight < 0 || price == null || price < 0) {
             throw new IllegalArgumentException("Product fields are null or empty");
         }
@@ -50,23 +56,24 @@ public class ProductService {
         product.setImage_url(image_url);
         product.setWeight(weight);
         product.setPrice(price);
-        final Category category1 = categoryRepository.findOneByNameIgnoreCase(category);
-        product.setCategory(category1);
-        validatorUtil.validate(category);
+        final Category category = categoryService.findById(category_id);
+        product.setCategory(category);
+        validatorUtil.validate(product);
         return productRepository.save(product);
-    }*/
-
-    /*//Создание категории через Dto
-    @Transactional
-    public CategoryDto addCategory(CategoryDto categoryDto) {
-        return new CategoryDto(addCategory(categoryDto.getName(), categoryDto.getDescription()));
     }
 
-    //Поиск категории в репозитории
+    //Создание продукта через Dto
+    @Transactional
+    public ProductDto addProduct(ProductDto productDto) {
+        return new ProductDto(addProduct(productDto.getName(), productDto.getDescription(), productDto.getImage_url(),
+                productDto.getWeight(), productDto.getPrice(), productDto.getCategory_id()));
+    }
+
+    //Поиск продукта в репозитории
     @Transactional(readOnly = true)
-    public Category findCategory(Long id) {
-        final Optional<Category> category = repository.findById(id);
-        return category.orElseThrow(() -> new CategoryNotFoundException(id));
+    public Product findProduct(Long id) {
+        final Optional<Product> product = productRepository.findById(id);
+        return product.orElseThrow(() -> new ProductNotFoundException(id));
     }
 
     @Transactional(readOnly = true)
@@ -74,43 +81,64 @@ public class ProductService {
         return productRepository.findOneByNameIgnoreCase(name);
     }
 
-    //Изменение категории по полям
+    //Изменение продукта по полям
     @Transactional
-    public Category updateCategory(Long id, String name, String description, String image_url) {
-        if (!StringUtils.hasText(name) || !StringUtils.hasText(description)) {
-            throw new IllegalArgumentException("Category fields are null or empty");
+    public Product updateProduct(Long id, String name, String description, String image_url, Long weight, Double price,
+                                 Long category_id, Long combo_id) {
+        if (!StringUtils.hasText(name) || !StringUtils.hasText(description) || id == null || id < 0 || weight == null
+                || weight < 0 || price == null || price < 0 || category_id == null || category_id < 0) {
+            throw new IllegalArgumentException("Product fields are null or empty");
         }
-        final Category current = findCategory(id);
-        if (current == null) {
-            throw new CategoryNotFoundException(id);
+        final Product product = findProduct(id);
+        if (product == null) {
+            throw new ProductNotFoundException(id);
         }
-        current.setName(name);
-        current.setDescription(description);
-        current.setImage_url(image_url);
-        validatorUtil.validate(current);
-        return repository.save(current);
+        product.setName(name);
+        product.setDescription(description);
+        product.setImage_url(image_url);
+        product.setWeight(weight);
+        product.setPrice(price);
+
+        final Category category = categoryService.findById(category_id);
+        if (product.getCategory().getId().equals(category_id)) {
+            product.getCategory().updateProduct(product);
+        }
+        else {
+            product.getCategory().removeProduct(id);
+            product.setCategory(category);
+        }
+
+        if (combo_id != null && combo_id >= 0) {
+            final Combo combo = comboService.findCombo(combo_id);
+            if (product.getCombo().getId().equals(category_id)) {
+                product.getCombo().updateProduct(product);
+            }
+            else {
+                product.getCombo().removeProduct(id);
+                product.setCombo(combo);
+            }
+        }
+
+        validatorUtil.validate(product);
+        return productRepository.save(product);
     }
 
-    //Изменение категории по полям через Dto
+    //Изменение продукта по полям через Dto
     @Transactional
-    public CategoryDto updateCategory(CategoryDto categoryDto) {
-        return new CategoryDto(updateCategory(categoryDto.getId(), categoryDto.getName(), categoryDto.getDescription(), categoryDto.getImage_url()));
+    public ProductDto updateProduct(ProductDto productDto) {
+        return new ProductDto(updateProduct(productDto.getId(), productDto.getName(), productDto.getDescription(),
+                productDto.getImage_url(), productDto.getWeight(), productDto.getPrice(), productDto.getCategory_id(),
+                productDto.getCombo_id()));
     }
 
     @Transactional
-    public Category deleteCategory(Long id) {
-        Category current = findCategory(id);
-        repository.delete(current);
+    public Product deleteProduct(Long id) {
+        Product current = findProduct(id);
+        productRepository.delete(current);
         return current;
     }
 
-    public void deleteAllCategories() throws InCategoryFoundProductsException {
-        List<Category> categories = findAllCategories();
-        for (var c : categories) {
-            if (c.getProducts().size() > 0) {
-                throw new InCategoryFoundProductsException("Category with id [%s] has relational products");
-            }
-        }
-        repository.deleteAll();
-    }*/
+    public void deleteAllProducts() {
+        productRepository.deleteAll();
+    }
 }

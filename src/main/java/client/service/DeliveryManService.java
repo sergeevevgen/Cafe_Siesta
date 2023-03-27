@@ -14,13 +14,16 @@ import client.util.validation.ValidationException;
 import client.util.validation.ValidatorUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class DeliveryManService {
+    //вроде закончен
     private final Logger log = LoggerFactory.getLogger(CategoryService.class);
 
     private final DeliveryManRepository repository;
@@ -80,7 +83,7 @@ public class DeliveryManService {
 
     //Изменение доставщика по полям
     @Transactional
-    public DeliveryMan updateDeliveryMan(Long id, String name, String surname, String password) {
+    public DeliveryMan updateDeliveryMan(Long id, String name, String surname, String password, String image_url) {
         if (!StringUtils.hasText(name) || !StringUtils.hasText(surname) || !StringUtils.hasText(password)) {
             throw new IllegalArgumentException("DeliveryMan fields are null or empty");
         }
@@ -91,14 +94,32 @@ public class DeliveryManService {
         current.setName(name);
         current.setSurname(surname);
         current.setPassword(password);
+        current.setImage_url(image_url);
         validatorUtil.validate(current);
         return repository.save(current);
+    }
+
+    @Transactional
+    public DeliveryMan updateDeliveryManStatus(Long id, DeliveryMan_Status status) {
+        final DeliveryMan current = findById(id);
+        if (current == null) {
+            throw new DeliveryManNotFoundException(id);
+        }
+        current.setStatus(status);
+        validatorUtil.validate(current);
+        return repository.save(current);
+    }
+
+    @Transactional
+    public DeliveryManDto updateDeliveryManStatus(DeliveryManDto deliveryManDto) {
+        return new DeliveryManDto(updateDeliveryManStatus(deliveryManDto.getId(), deliveryManDto.getStatus()));
     }
 
     //Изменение доставщика по полям через Dto
     @Transactional
     public DeliveryManDto updateDeliveryMan(DeliveryManDto deliveryManDto) {
-        return new DeliveryManDto(updateDeliveryMan(deliveryManDto.getId(), deliveryManDto.getName(), deliveryManDto.getSurname(), deliveryManDto.getPassword()));
+        return new DeliveryManDto(updateDeliveryMan(deliveryManDto.getId(), deliveryManDto.getName(),
+                deliveryManDto.getSurname(), deliveryManDto.getPassword(), deliveryManDto.getImage_url()));
     }
 
     //Удаление доставщика

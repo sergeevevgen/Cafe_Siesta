@@ -35,7 +35,7 @@ public class Combo {
     @Column(nullable = false)
     private Double price;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
     @JoinColumn(name = "combo_fk")
     private List<Product> products = new ArrayList<>();
 
