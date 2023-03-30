@@ -1,5 +1,6 @@
 package client.service;
 
+import client.data.model.entity.User;
 import client.data.repository.UserRepository;
 import client.util.validation.ValidatorUtil;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,10 @@ public class UserService {
                        ValidatorUtil validatorUtil) {
         this.userRepository = userRepository;
         this.validatorUtil = validatorUtil;
+    }
+
+    public User loginUser(){
+        return userRepository.getById(1L);
     }
 
 //    @Override
