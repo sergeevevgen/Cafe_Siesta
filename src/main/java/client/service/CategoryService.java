@@ -34,7 +34,7 @@ public class CategoryService {
 
     //Создание категории через поля
     @Transactional
-    public Category addCategory(String name, String description) {
+    public Category addCategory(String name, String description, String image_url) {
         if (!StringUtils.hasText(name) || !StringUtils.hasText(description)) {
             throw new IllegalArgumentException("Category fields are null or empty");
         }
@@ -44,7 +44,7 @@ public class CategoryService {
         final Category category = new Category();
         category.setName(name);
         category.setDescription(description);
-        category.setImage_url(null);
+        category.setImage_url(image_url);
         validatorUtil.validate(category);
         log.info("добавлен: " + category);
         return repository.save(category);
@@ -53,7 +53,7 @@ public class CategoryService {
     //Создание категории через Dto
     @Transactional
     public CategoryDto addCategory(CategoryDto categoryDto) {
-        return new CategoryDto(addCategory(categoryDto.getName(), categoryDto.getDescription()));
+        return new CategoryDto(addCategory(categoryDto.getName(), categoryDto.getDescription(), categoryDto.getImage_url()));
     }
 
     //Поиск категории в репозитории

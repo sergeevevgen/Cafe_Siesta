@@ -19,7 +19,7 @@ public class Combo {
     private Long id;
 
     @NotBlank
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String name;
 
     @NotBlank
@@ -104,6 +104,11 @@ public class Combo {
 
     public void setProducts(List<Product> products) {
         this.products = products;
+        for(var p : products) {
+            if (p.getCombo() != this) {
+                p.setCombo(this);
+            }
+        }
     }
 
     public void updateProduct(Product product) {
