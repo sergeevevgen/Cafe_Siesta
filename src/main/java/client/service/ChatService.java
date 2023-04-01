@@ -27,6 +27,8 @@ public class ChatService {
     private final Logger log = LoggerFactory.getLogger(ChatService.class);
 
     private final ChatRepository repository;
+    private final OrderService orderService;
+    pr
 
     private final ValidatorUtil validatorUtil;
 
