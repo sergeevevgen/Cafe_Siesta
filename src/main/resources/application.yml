@@ -10,6 +10,6 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQL95Dialect
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
-    username: Nikita
-    password: fuckxworld
+    username: zhenya
+    password: 1234
     driver-class-name: org.postgresql.Driver

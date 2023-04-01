@@ -22,7 +22,7 @@ import java.util.Optional;
 @Service
 public class ComboService {
     //не начат
-    private final Logger log = LoggerFactory.getLogger(CategoryService.class);
+    private final Logger log = LoggerFactory.getLogger(ComboService.class);
 
     private final ComboRepository repository;
 

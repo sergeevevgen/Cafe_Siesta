@@ -24,7 +24,7 @@ import java.util.Optional;
 @Service
 public class DeliveryManService {
     //вроде закончен
-    private final Logger log = LoggerFactory.getLogger(CategoryService.class);
+    private final Logger log = LoggerFactory.getLogger(DeliveryManService.class);
 
     private final DeliveryManRepository repository;
 

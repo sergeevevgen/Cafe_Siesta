@@ -24,7 +24,7 @@ import java.util.Optional;
 public class ChatService {
     //Не закончен
 
-    private final Logger log = LoggerFactory.getLogger(CategoryService.class);
+    private final Logger log = LoggerFactory.getLogger(ChatService.class);
 
     private final ChatRepository repository;
 
