@@ -46,6 +46,7 @@ public class CategoryService {
         category.setDescription(description);
         category.setImage_url(null);
         validatorUtil.validate(category);
+        log.info("добавлен: " + category);
         return repository.save(category);
     }
 
@@ -59,6 +60,7 @@ public class CategoryService {
     @Transactional(readOnly = true)
     public Category findById(Long id) {
         final Optional<Category> category = repository.findById(id);
+        log.info("найден: " + category);
         return category.orElseThrow(() -> new CategoryNotFoundException(id));
     }
 
@@ -87,6 +89,7 @@ public class CategoryService {
         current.setDescription(description);
         current.setImage_url(image_url);
         validatorUtil.validate(current);
+        log.info("обновлен" + current);
         return repository.save(current);
     }
 
@@ -100,6 +103,7 @@ public class CategoryService {
     public Category deleteCategory(Long id) {
         Category current = findById(id);
         repository.delete(current);
+        log.info("удален" + current);
         return current;
     }
 
@@ -111,5 +115,6 @@ public class CategoryService {
             }
         }
         repository.deleteAll();
+        log.info("всё удалено");
     }
 }
