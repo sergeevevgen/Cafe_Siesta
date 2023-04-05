@@ -41,8 +41,20 @@ public class Client {
     private String password;
 
     @NotBlank
-    @Column(nullable = false)
-    private String address;
+    @Column
+    private String street;
+
+    @NotBlank
+    @Column
+    private String house;
+
+    @NotBlank
+    @Column
+    private String flat;
+
+    @NotBlank
+    @Column
+    private String entrance;
 
     //Done
     @OneToMany(fetch = FetchType.LAZY)
@@ -52,12 +64,22 @@ public class Client {
     public Client() {
     }
 
-    public Client(String name, String surname, String login, String password, String address) {
+    public Client(String name,
+                  String surname,
+                  String login,
+                  String password,
+                  String street,
+                  String house,
+                  String flat,
+                  String entrance) {
         this.name = name;
         this.surname = surname;
         this.login = login;
         this.password = password;
-        this.address = address;
+        this.street = street;
+        this.house = house;
+        this.flat = flat;
+        this.entrance = entrance;
     }
 
     public String getPassword() {
@@ -96,12 +118,36 @@ public class Client {
         this.password = password;
     }
 
-    public String getAddress() {
-        return address;
+    public String getStreet() {
+        return street;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getHouse() {
+        return house;
+    }
+
+    public void setHouse(String house) {
+        this.house = house;
+    }
+
+    public String getFlat() {
+        return flat;
+    }
+
+    public void setFlat(String flat) {
+        this.flat = flat;
+    }
+
+    public String getEntrance() {
+        return entrance;
+    }
+
+    public void setEntrance(String entrance) {
+        this.entrance = entrance;
     }
 
     public List<Order> getOrders() {

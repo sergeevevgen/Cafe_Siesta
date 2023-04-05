@@ -19,6 +19,7 @@ import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderService {
@@ -110,55 +111,81 @@ public class OrderService {
 
     //Изменение заказа по полям
     @Transactional
-    public Order updateOrder(Long id, String title, Double price, Order_Status status, Long client_id,
-                             Map<Long, Long> products, Map<Long, Long> combos) {
-        if (!StringUtils.hasText(title) || price == null || price <= 0 ||  client_id == null || client_id < 0) {
-            throw new IllegalArgumentException("Order fields are null or empty");
-        }
+    public Order updateOrderProducts(Long id,
+                             Map<Long, Long> products) {
+//        if (!StringUtils.hasText(title) || price == null || price <= 0 ||  client_id == null || client_id < 0) {
+//            throw new IllegalArgumentException("Order fields are null or empty");
+//        }
 
         final Order current = findOrder(id);
         if (current == null) {
             throw new OrderNotFoundException(id);
         }
 
-        current.setTitle(title);
-        current.setPrice(price);
-        current.setStatus(status);
-
-        if (!Objects.equals(current.getClient().getId(), client_id)) {
-            current.setClient(clientService.findById(client_id));
-        }
+//        current.setTitle(title);
+//        current.setPrice(price);
+//        current.setStatus(status);
 
         if (products != null && !products.isEmpty()) {
             //Номера продуктов, которые сейчас используются
-            List<Long> items = current.getItems().stream().map(Order_Item::getProduct).toList()
-                    .stream().map(Product::getId).toList();
+            Map<Long, Long> items = new HashMap<>();
 
-            var presProducts = products.keySet();
-            //List<Order_Item> items1 = order_itemRepository.findByOrderId(current.getId());
+            for(var i : current.getItems()) {
+                if (items.containsKey(i.getProduct().getId())) {
+                    items.put(i.getProduct().getId(), items.get(i.getProduct().getId()) + i.getCount());
+                }
+                else
+                    items.put(i.getProduct().getId(), i.getCount());
+            }
+            //еще подумать над удалением !, возможно ниче не работает
+            for(var i : products.entrySet()) {
+                if (!items.containsKey(i.getKey())) {
+                    Product product = productService.findProduct(i.getKey());
+                    Order_Item order_item = new Order_Item();
+                    order_item.setCount(i.getValue());
 
+                    order_item.setProduct(product);
+                    order_item.setOrder(current);
+
+                    order_itemRepository.save(order_item);
+                }
+                else if (items.containsKey(i.getKey()) && !Objects.equals(items.get(i.getKey()), i.getValue())) {
+                    Order_Item order_item = order_itemRepository.getById(i.getKey());
+                    order_item.setCount(i.getValue());
+                    order_itemRepository.save(order_item);
+                }
+            }
         }
 
-//        if (p != null) {
-//            Product product = productService.findProduct(p.getFirst());
-//            Order_Item order_item = new Order_Item();
-//            order_item.setCount(p.getSecond());
+//        if (combos != null && !combos.isEmpty()) {
+//            //Номера продуктов, которые сейчас используются
+//            Map<Long, Long> items = new HashMap<>();
 //
-//            order_item.setProduct(product);
-//            order_item.setOrder(current);
+//            for(var i : current.getCombo_items()) {
+//                if (items.containsKey(i.getCombo().getId())) {
+//                    items.put(i.getCombo().getId(), items.get(i.getCombo().getId()) + i.getCount());
+//                }
+//                else
+//                    items.put(i.getCombo().getId(), i.getCount());
+//            }
 //
-//            order_itemRepository.save(order_item);
-//        }
+//            for(var i : combos.entrySet()) {
+//                if (!items.containsKey(i.getKey())) {
+//                    Combo combo = comboService.findCombo(i.getKey());
+//                    Combo_Order item = new Combo_Order();
+//                    item.setCount(i.getValue());
 //
-//        if (c != null) {
-//            Combo combo = comboService.findCombo(c.getFirst());
-//            Combo_Order combo_order = new Combo_Order();
-//            combo_order.setCount(c.getSecond());
+//                    item.setCombo(combo);
+//                    item.setOrder(current);
 //
-//            combo_order.setCombo(combo);
-//            combo_order.setOrder(current);
-//
-//            combo_orderRepository.save(combo_order);
+//                    combo_orderRepository.save(item);
+//                }
+//                else if (items.containsKey(i.getKey()) && !Objects.equals(items.get(i.getKey()), i.getValue())) {
+//                    Combo_Order item = combo_orderRepository.getById(i.getKey());
+//                    item.setCount(i.getValue());
+//                    combo_orderRepository.save(item);
+//                }
+//            }
 //        }
 
         validatorUtil.validate(current);
@@ -166,15 +193,14 @@ public class OrderService {
     }
 
     @Transactional
-    public Order deleteOrderProduct(Long id, ) {
-
+    public Order deleteOrderProduct(Long id ) {
+        return null;
     }
 
-    //Изменение категории по полям через Dto
+    //Добавление к заказу продуктов
     @Transactional
-    public OrderDto updateOrder(OrderDto orderDto) {
-        return new OrderDto(updateOrder(orderDto.getId(), orderDto.getTitle(), orderDto.getPrice(), orderDto.getStatus(),
-                orderDto.getClient_id(), orderDto.getProducts(), orderDto.getCombos()));
+    public OrderDto updateOrderProducts(OrderDto orderDto) {
+        return new OrderDto(updateOrderProducts(orderDto.getId(), orderDto.getProducts()));
     }
 
     @Transactional
