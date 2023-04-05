@@ -1,6 +1,7 @@
 package client.service;
 
 import client.data.model.dto.CategoryDto;
+import client.data.model.dto.MessageDto;
 import client.data.model.entity.Category;
 import client.data.model.entity.Chat;
 import client.data.model.entity.Message;
@@ -37,10 +38,16 @@ public class ChatService {
         this.orderService = orderService;
     }
 
-    //Создание категории через поля
+    // Создание категории через дто
     @Transactional
-    public Chat createMessage(String text, LocalDateTime time, Long sender_id, Long chat_id) {
-        if (!StringUtils.hasText(text) || sender_id == null || sender_id <= 0 || chat_id == null || chat_id <= 0 || time == null) {
+    public Chat createMessage(MessageDto messageDto) {
+        if (!StringUtils.hasText(messageDto.getText())
+                || messageDto.getSender_id() == null
+                || messageDto.getSender_id() <= 0
+                || messageDto.getChat_id() == null
+                || messageDto.getChat_id() <= 0
+                || messageDto.getTime() == null
+        ) {
             throw new IllegalArgumentException("Message fields are null or empty");
         }
         return null;

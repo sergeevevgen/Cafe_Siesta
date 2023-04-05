@@ -14,7 +14,7 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
-    @GetMapping("/c")
+    @GetMapping("/getAll")
     public String getAllCategories() {
         return categoryService.findAllCategories().toString();
     }
