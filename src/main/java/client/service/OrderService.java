@@ -2,119 +2,190 @@ package client.service;
 
 import client.data.model.dto.MessageDto;
 import client.data.model.dto.OrderDto;
-import client.data.model.entity.Chat;
-import client.data.model.entity.Message;
-import client.data.model.entity.Order;
-import client.data.repository.MessageRepository;
+import client.data.model.entity.*;
+import client.data.model.enums.Order_Status;
+import client.data.repository.Combo_OrderRepository;
 import client.data.repository.OrderRepository;
+import client.data.repository.Order_ItemRepository;
 import client.service.exception.MessageNotFoundException;
+import client.service.exception.OrderNotFoundException;
 import client.util.validation.ValidatorUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class OrderService {
     //не начат
-    private final Logger log = LoggerFactory.getLogger(MessageService.class);
+    private final Logger log = LoggerFactory.getLogger(OrderService.class);
 
     private final OrderRepository repository;
+    private final Order_ItemRepository order_itemRepository;
+    private final Combo_OrderRepository combo_orderRepository;
+    private final ClientService clientService;
+    private final ProductService productService;
+    private final ComboService comboService;
 
     private final ValidatorUtil validatorUtil;
 
-    public OrderService(OrderRepository repository, ValidatorUtil validatorUtil) {
+    public OrderService(OrderRepository repository, Order_ItemRepository order_itemRepository,
+                        Combo_OrderRepository combo_orderRepository, ClientService clientService,
+                        ProductService productService, ComboService comboService, ValidatorUtil validatorUtil) {
         this.repository = repository;
+        this.order_itemRepository = order_itemRepository;
+        this.combo_orderRepository = combo_orderRepository;
+        this.clientService = clientService;
+        this.productService = productService;
+        this.comboService = comboService;
         this.validatorUtil = validatorUtil;
     }
 
-    //Создание категории через поля
+    //Создание заказа через поля
     @Transactional
-    public Message addMessage(String text, LocalDateTime time, Long sender_id, Long chat_id) {
-        if (!StringUtils.hasText(text) || sender_id == null || sender_id <= 0 || chat_id == null || chat_id <= 0 || time == null) {
-            throw new IllegalArgumentException("Message fields are null or empty");
+    public Order addOrder(String title, Double price, Long client_id, Map<Long, Long> products, Map<Long, Long> combos) {
+        if (!StringUtils.hasText(title) || price == null || price <= 0 ||  client_id == null || client_id < 0) {
+            throw new IllegalArgumentException("Order fields are null or empty");
         }
-//        final Message message = new Message();
-//        message.setText(text);
-//        message.setTime(time);
-//        message.setSender_id(sender_id);
-//        final Chat chat = chatService.findChat(chat_id);
-//        message.setChat(chat);
-//        validatorUtil.validate(message);
-//        return repository.save(message);
-        return null;
+        final Order order = new Order();
+        order.setTitle(title);
+        order.setPrice(price);
+        order.setClient(clientService.findById(client_id));
+        order.setStatus(Order_Status.Is_cart);
+
+        if (products != null && !products.isEmpty()) {
+            for (var p : products.entrySet()) {
+                Product product = productService.findProduct(p.getKey());
+                Order_Item order_item = new Order_Item();
+                order_item.setCount(p.getValue());
+
+                order_item.setProduct(product);
+                order_item.setOrder(order);
+
+                order_itemRepository.save(order_item);
+            }
+        }
+
+        if (combos != null && !combos.isEmpty()) {
+            for (var c : combos.entrySet()) {
+                Combo combo = comboService.findCombo(c.getKey());
+                Combo_Order item = new Combo_Order();
+                item.setCount(c.getValue());
+
+                item.setOrder(order);
+                item.setCombo(combo);
+
+                combo_orderRepository.save(item);
+            }
+        }
+
+        validatorUtil.validate(order);
+        return repository.save(order);
     }
 
-    //Создание категории через Dto
+    //Создание заказа через Dto
     @Transactional
-    public MessageDto addMessage(MessageDto messageDto) {
-        return new MessageDto(addMessage(messageDto.getText(), messageDto.getTime(), messageDto.getSender_id(), messageDto.getChat_id()));
+    public OrderDto addOrder(OrderDto orderDto) {
+        return new OrderDto(addOrder(orderDto.getTitle(), orderDto.getPrice(), orderDto.getClient_id(),
+                orderDto.getProducts(), orderDto.getCombos()));
     }
 
-    //Поиск категории в репозитории
+    //Поиск заказа в репозитории
     @Transactional(readOnly = true)
-    public Order findMessage(Long id) {
-        final Optional<Order> message = repository.findById(id);
-        return message.orElseThrow(() -> new MessageNotFoundException(id));
+    public Order findOrder(Long id) {
+        final Optional<Order> order = repository.findById(id);
+        return order.orElseThrow(() -> new OrderNotFoundException(id));
     }
 
     //Поиск всех записей в репозитории
     @Transactional(readOnly = true)
-    public List<Order> findAllMessages() {
+    public List<Order> findAllOrders() {
         return repository.findAll();
     }
 
-    //Изменение категории по полям
+    //Изменение заказа по полям
     @Transactional
-    public Order updateMessage(Long id, String text, LocalDateTime time, Long sender_id, Long chat_id) {
-        if (!StringUtils.hasText(text) || sender_id == null || sender_id <= 0 || chat_id == null || chat_id <= 0 || time == null) {
-            throw new IllegalArgumentException("Message fields are null or empty");
+    public Order updateOrder(Long id, String title, Double price, Order_Status status, Long client_id,
+                             Map<Long, Long> products, Map<Long, Long> combos) {
+        if (!StringUtils.hasText(title) || price == null || price <= 0 ||  client_id == null || client_id < 0) {
+            throw new IllegalArgumentException("Order fields are null or empty");
         }
-        final Order current = findMessage(id);
+
+        final Order current = findOrder(id);
         if (current == null) {
-            throw new MessageNotFoundException(id);
+            throw new OrderNotFoundException(id);
         }
-//        current.setText(text);
-//        current.setTime(time);
-//        current.setSender_id(sender_id);
+
+        current.setTitle(title);
+        current.setPrice(price);
+        current.setStatus(status);
+
+        if (!Objects.equals(current.getClient().getId(), client_id)) {
+            current.setClient(clientService.findById(client_id));
+        }
+
+        if (products != null && !products.isEmpty()) {
+            //Номера продуктов, которые сейчас используются
+            List<Long> items = current.getItems().stream().map(Order_Item::getProduct).toList()
+                    .stream().map(Product::getId).toList();
+
+            var presProducts = products.keySet();
+            //List<Order_Item> items1 = order_itemRepository.findByOrderId(current.getId());
+
+        }
+
+//        if (p != null) {
+//            Product product = productService.findProduct(p.getFirst());
+//            Order_Item order_item = new Order_Item();
+//            order_item.setCount(p.getSecond());
 //
-//        if (current.getChat().getId().equals(chat_id)) {
-//            current.getChat().updateMessage(current);
+//            order_item.setProduct(product);
+//            order_item.setOrder(current);
+//
+//            order_itemRepository.save(order_item);
 //        }
-//        else {
-//            current.getChat().removeMessage(id);
-//            current.setChat(chatService.findChat(chat_id));
+//
+//        if (c != null) {
+//            Combo combo = comboService.findCombo(c.getFirst());
+//            Combo_Order combo_order = new Combo_Order();
+//            combo_order.setCount(c.getSecond());
+//
+//            combo_order.setCombo(combo);
+//            combo_order.setOrder(current);
+//
+//            combo_orderRepository.save(combo_order);
 //        }
 
         validatorUtil.validate(current);
         return repository.save(current);
     }
 
+    @Transactional
+    public Order deleteOrderProduct(Long id, ) {
+
+    }
+
     //Изменение категории по полям через Dto
     @Transactional
-    public OrderDto updateMessage(MessageDto messageDto) {
-        return new OrderDto(updateMessage(messageDto.getId(), messageDto.getText(), messageDto.getTime(), messageDto.getSender_id(), messageDto.getChat_id()));
+    public OrderDto updateOrder(OrderDto orderDto) {
+        return new OrderDto(updateOrder(orderDto.getId(), orderDto.getTitle(), orderDto.getPrice(), orderDto.getStatus(),
+                orderDto.getClient_id(), orderDto.getProducts(), orderDto.getCombos()));
     }
 
     @Transactional
-    public Order deleteMessage(Long id) {
-        Order current = findMessage(id);
+    public Order deleteOrder(Long id) {
+        Order current = findOrder(id);
         repository.delete(current);
         return current;
     }
 
     @Transactional
-    public void deleteAllMessages() {
+    public void deleteAllOrders() {
         repository.deleteAll();
-    }
-
-    @Transactional
-    public void deleteAllByChat(Long chat_id) {
-        ;
     }
 }

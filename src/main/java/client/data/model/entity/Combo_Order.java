@@ -5,7 +5,6 @@ import lombok.Data;
 import javax.persistence.*;
 
 @Entity
-@Data
 public class Combo_Order {
 
     @Id
@@ -20,12 +19,46 @@ public class Combo_Order {
     @JoinColumn(name = "order_fk")
     private Order order;
 
-    private Integer count;
+    private Long count;
 
     public Combo_Order() {
     }
 
-    public Combo_Order(Integer count) {
+    public Combo_Order(Long count) {
+        this.count = count;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Combo getCombo() {
+        return combo;
+    }
+
+    public void setCombo(Combo combo) {
+        this.combo = combo;
+        if (!combo.getItems().contains(this)) {
+            combo.addItem(this);
+        }
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+        if (!order.getCombo_items().contains(this)) {
+            order.setComboItem(this);
+        }
+    }
+
+    public Long getCount() {
+        return count;
+    }
+
+    public void setCount(Long count) {
         this.count = count;
     }
 }

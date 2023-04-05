@@ -119,6 +119,7 @@ public class Combo {
             }
         }
     }
+
     public Product removeProduct(Long id) {
         for (var p : products) {
             if (Objects.equals(p.getId(), id)) {
@@ -144,5 +145,40 @@ public class Combo {
 
     public void setItems(List<Combo_Order> items) {
         this.items = items;
+    }
+
+    public void updateItems(Combo_Order item) {
+//        Combo_Order temp = null;
+        for (var i : items) {
+            if (Objects.equals(i.getId(), item.getId())) {
+                //temp = i;
+                i = item;
+                return;
+            }
+        }
+//        if (temp != null) {
+//            temp.setCombo(item.getCombo());
+//            temp.setCount(item.getCount());
+//            temp.setOrder(item.getOrder());
+//        }
+    }
+
+    public Combo_Order removeItem(Long id) {
+        for (var i : items) {
+            if (Objects.equals(i.getId(), id)) {
+                items.remove(i);
+                return i;
+            }
+        }
+        return null;
+    }
+
+    public void addItem(Combo_Order item) {
+        if (!items.contains(item)) {
+            items.add(item);
+            if (item.getCombo() != this) {
+                item.setCombo(this);
+            }
+        }
     }
 }

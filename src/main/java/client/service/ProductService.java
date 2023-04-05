@@ -22,7 +22,7 @@ import java.util.Optional;
 
 @Service
 public class ProductService {
-    //не закончен
+    //вроде закончен
     private final ProductRepository productRepository;
     private final CategoryService categoryService;
     private final ValidatorUtil validatorUtil;

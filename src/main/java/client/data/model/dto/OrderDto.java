@@ -5,9 +5,13 @@ import client.data.model.entity.Order;
 import client.data.model.entity.Order_Item;
 import client.data.model.enums.Order_Status;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import groovy.lang.Tuple;
+import org.springframework.data.util.Pair;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class OrderDto {
 
@@ -18,8 +22,8 @@ public class OrderDto {
     private Integer count;
     private Long client_id;
     private Long deliveryman_id;
-    private List<Long> items = new ArrayList<>();
-    private List<Long> combo_items = new ArrayList<>();
+    private final Map<Long, Long> products = new HashMap<>();
+    private final Map<Long, Long> combos = new HashMap<>();
     private Long chat_id;
 
     public OrderDto() {
@@ -35,10 +39,16 @@ public class OrderDto {
         this.deliveryman_id = order.getDeliveryMan().getId();
         this.chat_id = order.getChat().getId();
         if (order.getItems() != null) {
-            this.items = order.getItems().stream().map(Order_Item::getId).toList();
+            List<Order_Item> items = order.getItems();
+            for (var i : items) {
+                products.put(i.getProduct().getId(), i.getCount());
+            }
         }
         if (order.getCombo_items() != null) {
-            this.combo_items = order.getCombo_items().stream().map(Combo_Order::getId).toList();
+            List<Combo_Order> items = order.getCombo_items();
+            for (var i : items) {
+                combos.put(i.getCombo().getId(), i.getCount());
+            }
         }
     }
 
@@ -71,12 +81,12 @@ public class OrderDto {
         return deliveryman_id;
     }
 
-    public List<Long> getItems() {
-        return items;
+    public Map<Long, Long> getProducts() {
+        return products;
     }
 
-    public List<Long> getCombo_items() {
-        return combo_items;
+    public Map<Long, Long> getCombos() {
+        return combos;
     }
 
     public Long getChat_id() {

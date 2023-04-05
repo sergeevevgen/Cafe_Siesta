@@ -26,7 +26,7 @@ import java.util.Set;
 
 @Service
 public class ComboService {
-    //не начат
+    //вроде закончен
     private final Logger log = LoggerFactory.getLogger(ComboService.class);
 
     private final ComboRepository repository;

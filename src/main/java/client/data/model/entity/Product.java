@@ -108,6 +108,18 @@ public class Product {
         this.items = items;
     }
 
+    public void addItem(Order_Item item) {
+        if (!items.contains(item)) {
+            items.add(item);
+            if (item.getProduct() != this) {
+                item.setProduct(this);
+            }
+        }
+    }
+    public void removeItem(Order_Item item) {
+        items.remove(item);
+    }
+
     public Category getCategory() {
         return category;
     }

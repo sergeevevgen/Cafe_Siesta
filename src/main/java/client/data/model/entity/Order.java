@@ -36,7 +36,7 @@ public class Order {
 
     //done
     @ManyToOne
-    @JoinColumn(name = "client_fk")
+    @JoinColumn(name = "client_fk", nullable = false)
     private Client client;
 
     //done
