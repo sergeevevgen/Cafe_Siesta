@@ -14,9 +14,9 @@ public class OrderController {
     }
 
     @GetMapping("/getAll/{user_id}")
-    public String getAllOrders(@PathVariable Long id) {
+    public String getAllOrders(@PathVariable Long clientId) {
         // все заказы клиента
-        return orderService.findAllOrders().toString();
+        return orderService.findAllClientOrders(clientId).toString();
     }
 
     @GetMapping("/getOne/{order_id}")
@@ -33,6 +33,6 @@ public class OrderController {
     @PostMapping("/cancelOne/{order_id}")
     public String cancelOne(@PathVariable Long id) {
         // хочу отменить заказ, нет метода на отмену
-        return "";
+        return orderService.cancelOrder(id).toString();
     }
 }

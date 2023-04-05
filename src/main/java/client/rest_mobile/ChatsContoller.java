@@ -14,10 +14,10 @@ public class ChatsContoller {
     }
 
     @GetMapping("/getAll/{user_id}")
-    public String getAllChats(@PathVariable Long id) {
-        // где возможность запросить чаты ВСЕ у пользователя
+    public String getAllChats(@PathVariable Long user_id) {
+        // возможность запросить чаты ВСЕ у пользователя
         // по всем абсолютно его заказам
-        return "";
+        return chatService.findUserChats(user_id).toString();
     }
 
     @GetMapping("/getOne/{chat_id}")
@@ -25,7 +25,7 @@ public class ChatsContoller {
         return chatService.findChat(id).toString();
     }
 
-    @PostMapping("/postOne/{user_id}")
+    @PostMapping("/postOne")
     public String postOneChat(MessageDto messageDto) {
         return chatService.createMessage(messageDto).toString();
     }

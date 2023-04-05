@@ -109,6 +109,29 @@ public class OrderService {
         return repository.findAll();
     }
 
+    // Поиск всех заказов у клиента
+    @Transactional(readOnly = true)
+    public List<Order> findAllClientOrders(Long clientId) {
+        List<Order> orderList = new ArrayList<>(Collections.emptyList());
+        for (var order: repository.findAll()) {
+            if(order.getClient().getId().equals(clientId)){
+                orderList.add(order);
+            }
+        }
+        return orderList;
+    }
+
+    // Отмена заказа у клиента
+    @Transactional
+    public Order cancelOrder(Long orderId) {
+        Optional<Order> order = repository.findById(orderId);
+        if (order.isPresent()) {
+            order.get().setStatus(Order_Status.Rejected);
+            repository.save(order.get());
+        }
+        return order.orElseThrow(() -> new OrderNotFoundException(orderId));
+    }
+
     //Изменение заказа по полям
     @Transactional
     public Order updateOrderProducts(Long id,

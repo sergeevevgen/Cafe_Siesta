@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -64,6 +65,20 @@ public class ChatService {
     public Chat findChat(Long id) {
         final Optional<Chat> chat = repository.findById(id);
         return chat.orElseThrow(() -> new ChatNotFoundException(id));
+    }
+
+    // Наподобие такого, ищем все чаты у клиента
+    // Все очень просто
+    @Transactional(readOnly = true)
+    public List<Chat> findUserChats(Long clientId) {
+        final List<Chat> chats = repository.findAll();
+        List<Chat> chatsFound = Collections.emptyList();
+        for (var chat: chats) {
+            if(chat.getOrder().getClient().getId().equals(clientId)){
+                chats.add(chat);
+            }
+        }
+        return chatsFound;
     }
 
     //Поиск всех записей в репозитории

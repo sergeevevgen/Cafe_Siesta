@@ -1,13 +1,16 @@
 package client.service;
 
 import client.data.model.dto.CategoryDto;
+import client.data.model.dto.ClientDto;
 import client.data.model.dto.DeliveryManDto;
 import client.data.model.entity.Category;
+import client.data.model.entity.Client;
 import client.data.model.entity.DeliveryMan;
 import client.data.model.enums.DeliveryMan_Status;
 import client.data.repository.CategoryRepository;
 import client.data.repository.DeliveryManRepository;
 import client.service.exception.CategoryNotFoundException;
+import client.service.exception.ClientNotFoundException;
 import client.service.exception.DeliveryManNotFoundException;
 import client.service.exception.InCategoryFoundProductsException;
 import client.util.validation.ValidationException;
@@ -135,5 +138,24 @@ public class DeliveryManService {
         DeliveryMan current = findByLogin(login);
         repository.delete(current);
         return current;
+    }
+
+    public DeliveryMan authorize(DeliveryManDto dto) {
+        // реализовать авторизацию по дто
+        // у DeliveryMan хотел бы видеть поле пароль
+        final List<DeliveryMan> deliveryManList = findAllDeliveryMan();
+        Optional<DeliveryMan> deliveryMan = Optional.empty();
+        for (var delivery: deliveryManList) {
+            if(delivery.getLogin().equals(dto.getLogin())){
+                deliveryMan = Optional.of(delivery);
+            }
+        }
+        return deliveryMan.orElseThrow(() -> new ClientNotFoundException(dto.getId()));
+    }
+
+    public DeliveryMan register(DeliveryManDto dto) {
+        // реализовать регистрацию по дто
+        final Optional<DeliveryMan> deliveryMan = repository.findById(dto.getId());
+        return deliveryMan.orElseThrow(() -> new ClientNotFoundException(dto.getId()));
     }
 }

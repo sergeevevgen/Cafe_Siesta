@@ -33,14 +33,14 @@ public class LoginController {
     public String authDeliveryMan(DeliveryManDto deliveryManDto) {
         // нет сервиса на авторизацию пользователя
         // return authDeliveryMan(DeliveryManDto dto): DeliveryManDto;
-        return "";
+        return deliveryManService.authorize(deliveryManDto).toString();
     }
 
     @PostMapping("/registerClient")
     public String registerClient(ClientDto clientDto) {
         // нет сервиса на авторизацию пользователя
         // return registerClient(ClientDto dto): ClientDto;
-        return "";
+        return clientService.register(clientDto).toString();
     }
 
     @PostMapping("/registerClient")
