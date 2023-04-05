@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/categories_html")
-public class CategoryController {
+public class HtmlCategoryController {
     private final CategoryService categoryService;
 
-    public CategoryController(CategoryService categoryService) {
+    public HtmlCategoryController(CategoryService categoryService) {
         this.categoryService = categoryService;
     }
 

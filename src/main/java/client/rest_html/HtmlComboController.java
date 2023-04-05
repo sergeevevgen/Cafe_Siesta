@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/combos_html")
-public class ComboController {
+public class HtmlComboController {
     private final ComboService comboService;
 
-    public ComboController(ComboService comboService) {
+    public HtmlComboController(ComboService comboService) {
         this.comboService = comboService;
     }
 }

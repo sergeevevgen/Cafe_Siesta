@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/chats_html")
-public class ChatsContoller {
+public class HtmlChatsContoller {
     private final ChatService chatService;
 
-    public ChatsContoller(ChatService chatService) {
+    public HtmlChatsContoller(ChatService chatService) {
         this.chatService = chatService;
     }
 }

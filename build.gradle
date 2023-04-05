@@ -45,6 +45,9 @@ dependencies {
     // postgres
     runtimeOnly 'org.postgresql:postgresql'
 
+    // openapi
+    implementation 'org.springdoc:springdoc-openapi-ui:1.6.5'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
