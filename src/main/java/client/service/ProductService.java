@@ -25,14 +25,12 @@ public class ProductService {
     //не закончен
     private final ProductRepository productRepository;
     private final CategoryService categoryService;
-    private final ComboService comboService;
     private final ValidatorUtil validatorUtil;
 
     public ProductService(ProductRepository productRepository, CategoryService categoryService,
-                          ComboService comboService, ValidatorUtil validatorUtil) {
+                          ValidatorUtil validatorUtil) {
         this.productRepository = productRepository;
         this.validatorUtil = validatorUtil;
-        this.comboService = comboService;
         this.categoryService = categoryService;
     }
 
@@ -84,7 +82,7 @@ public class ProductService {
     //Изменение продукта по полям
     @Transactional
     public Product updateProduct(Long id, String name, String description, String image_url, Long weight, Double price,
-                                 Long category_id, Long combo_id) {
+                                 Long category_id) {
         if (!StringUtils.hasText(name) || !StringUtils.hasText(description) || id == null || id < 0 || weight == null
                 || weight < 0 || price == null || price < 0 || category_id == null || category_id < 0) {
             throw new IllegalArgumentException("Product fields are null or empty");
@@ -108,16 +106,16 @@ public class ProductService {
             product.setCategory(category);
         }
 
-        if (combo_id != null && combo_id >= 0) {
-            final Combo combo = comboService.findCombo(combo_id);
-            if (product.getCombo().getId().equals(category_id)) {
-                product.getCombo().updateProduct(product);
-            }
-            else {
-                product.getCombo().removeProduct(id);
-                product.setCombo(combo);
-            }
-        }
+//        if (combo_id != null && combo_id >= 0) {
+//            final Combo combo = comboService.findCombo(combo_id);
+//            if (product.getCombo().getId().equals(category_id)) {
+//                product.getCombo().updateProduct(product);
+//            }
+//            else {
+//                product.getCombo().removeProduct(id);
+//                product.setCombo(combo);
+//            }
+//        }
 
         validatorUtil.validate(product);
         return productRepository.save(product);
@@ -127,8 +125,7 @@ public class ProductService {
     @Transactional
     public ProductDto updateProduct(ProductDto productDto) {
         return new ProductDto(updateProduct(productDto.getId(), productDto.getName(), productDto.getDescription(),
-                productDto.getImage_url(), productDto.getWeight(), productDto.getPrice(), productDto.getCategory_id(),
-                productDto.getCombo_id()));
+                productDto.getImage_url(), productDto.getWeight(), productDto.getPrice(), productDto.getCategory_id()));
     }
 
     @Transactional

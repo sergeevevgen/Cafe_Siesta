@@ -28,13 +28,13 @@ public class ChatService {
 
     private final ChatRepository repository;
     private final OrderService orderService;
-    pr
 
     private final ValidatorUtil validatorUtil;
 
-    public ChatService(ChatRepository repository, ValidatorUtil validatorUtil) {
+    public ChatService(ChatRepository repository, OrderService orderService, ValidatorUtil validatorUtil) {
         this.repository = repository;
         this.validatorUtil = validatorUtil;
+        this.orderService = orderService;
     }
 
     //Создание категории через поля
