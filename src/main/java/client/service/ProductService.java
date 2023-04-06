@@ -36,8 +36,8 @@ public class ProductService {
 
     //Поиск всех записей в репозитории
     @Transactional(readOnly = true)
-    public List<Product> findAllProducts() {
-        return productRepository.findAll();
+    public List<ProductDto> findAllProducts() {
+        return productRepository.findAll().stream().map(ProductDto::new).toList();
     }
 
     //Создание продукта через поля
@@ -82,6 +82,12 @@ public class ProductService {
     public Product findProduct(Long id) {
         final Optional<Product> product = productRepository.findById(id);
         return product.orElseThrow(() -> new ProductNotFoundException(id));
+    }
+
+    //Поиск продукта в репозитории
+    @Transactional(readOnly = true)
+    public ProductDto findProduct(ProductDto productDto) {
+        return new ProductDto(findProduct(productDto.getId()));
     }
 
     @Transactional(readOnly = true)

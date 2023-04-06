@@ -27,8 +27,10 @@ public class ProductDto {
         this.price = product.getPrice();
         this.category_id = product.getCategory().getId();
         this.category = product.getCategory().getName();
-        this.combo = product.getCombo().getName();
-        this.combo_id = product.getCombo().getId();
+        if (product.getCombo() != null) {
+            this.combo = product.getCombo().getName();
+            this.combo_id = product.getCombo().getId();
+        }
     }
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
