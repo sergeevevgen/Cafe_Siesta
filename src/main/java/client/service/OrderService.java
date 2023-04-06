@@ -104,11 +104,18 @@ public class OrderService {
         return order.orElseThrow(() -> new OrderNotFoundException(id));
     }
 
+    //Поиск заказа в репозитории
+    @Transactional(readOnly = true)
+    public OrderDto findOrder(OrderDto orderDto) {
+        return new OrderDto(findOrder(orderDto.getId()));
+    }
+
     //Поиск всех записей в репозитории
     @Transactional(readOnly = true)
-    public List<Order> findAllOrders() {
-        return repository.findAll();
+    public List<OrderDto> findAllOrders() {
+        return repository.findAll().stream().map(OrderDto::new).toList();
     }
+
 
     // Поиск всех заказов у клиента
     @Transactional(readOnly = true)
@@ -122,15 +129,21 @@ public class OrderService {
         return findAllClientOrders(clientDto.getId()).stream().map(OrderDto::new).toList();
     }
 
-    // Отмена заказа у клиента
+    // Изменение статуса заказа у клиента
     @Transactional
-    public Order cancelOrder(Long orderId) {
+    public Order changeOrderStatus(Long orderId, Order_Status status) {
         Optional<Order> order = repository.findById(orderId);
         if (order.isPresent()) {
-            order.get().setStatus(Order_Status.Rejected);
+            order.get().setStatus(status);
             repository.save(order.get());
         }
         return order.orElseThrow(() -> new OrderNotFoundException(orderId));
+    }
+
+    // Изменение статуса заказа у клиента через Dto
+    @Transactional
+    public OrderDto changeOrderStatus(OrderDto orderDto) {
+        return new OrderDto(changeOrderStatus(orderDto.getId(), orderDto.getStatus()));
     }
 
     //Изменение заказа по полям
