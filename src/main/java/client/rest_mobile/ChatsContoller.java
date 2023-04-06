@@ -25,8 +25,8 @@ public class ChatsContoller {
         return chatService.findChat(id).toString();
     }
 
-    @PostMapping("/postOne")
-    public String postOneChat(MessageDto messageDto) {
-        return chatService.createMessage(messageDto).toString();
-    }
+//    @PostMapping("/postOne")
+//    public String postOneChat(Cha messageDto) {
+//        return chatService.createChat(messageDto).toString();
+//    }
 }

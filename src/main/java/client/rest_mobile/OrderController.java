@@ -31,8 +31,8 @@ public class OrderController {
     }
 
     @PostMapping("/cancelOne/{order_id}")
-    public String cancelOne(@PathVariable Long id) {
+    public OrderDto cancelOne(@RequestBody OrderDto orderDto) {
         // хочу отменить заказ, нет метода на отмену
-        return orderService.cancelOrder(id).toString();
+        return orderService.changeOrderStatus(orderDto);
     }
 }
