@@ -1,10 +1,12 @@
 package client.data.model.entity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 
 @Entity
+@EqualsAndHashCode
 public class Combo_Order {
 
     @Id

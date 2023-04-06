@@ -8,7 +8,6 @@ import javax.persistence.*;
 
 @Entity
 @EqualsAndHashCode
-@ToString
 public class Order_Item {
 
     @Id

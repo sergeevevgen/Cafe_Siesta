@@ -13,7 +13,6 @@ import java.util.Objects;
 
 @Entity
 @EqualsAndHashCode
-@ToString
 public class Client {
 
     //Done

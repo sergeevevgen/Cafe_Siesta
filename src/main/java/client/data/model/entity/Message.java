@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 
 @Entity
 @EqualsAndHashCode
-@ToString
 public class Message {
 
     //Done

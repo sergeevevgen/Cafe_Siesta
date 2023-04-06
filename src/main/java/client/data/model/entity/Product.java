@@ -10,7 +10,6 @@ import java.util.List;
 
 @Entity
 @EqualsAndHashCode
-@ToString
 public class Product {
 
     @Id

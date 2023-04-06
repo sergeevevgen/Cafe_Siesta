@@ -30,4 +30,9 @@ public class ComboController {
     public ComboDto createOne(@RequestBody ComboDto dto) {
         return comboService.addCombo(dto);
     }
+
+    @PostMapping("/updateOne")
+    public ComboDto updateOne(@RequestBody ComboDto dto) {
+        return comboService.updateCombo(dto);
+    }
 }

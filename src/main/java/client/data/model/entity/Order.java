@@ -12,7 +12,6 @@ import java.util.Objects;
 
 @Entity
 @EqualsAndHashCode
-@ToString
 @Table(name = "orders")
 public class Order {
 

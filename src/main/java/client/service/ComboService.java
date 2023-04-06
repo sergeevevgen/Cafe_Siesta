@@ -119,18 +119,19 @@ public class ComboService {
             List<Long> products_prev = current.getProducts().stream().map(Product::getId).toList();
             Set<Long> products = new HashSet<>(products_prev);
             //Получили общие элементы, которые не надо удалять
-            products.retainAll(product_ids);
-            //В продуктс ids остались только те, которые надо добавить
-            product_ids.forEach(products::remove);
+            products.retainAll(product_ids); //Работает верно - оставил общие, которые не надо удалять в products
+            //В products_ids остались только те, которые надо добавить
 
-            //Удалили не нужные
+
+            //Удалили не нужные - работает верно
             for (var i : products_prev) {
                 if (!products.contains(i)) {
                     current.removeProduct(i);
                 }
             }
 
-            //Добавили нужные
+            product_ids.removeAll(products);
+            //Добавили нужные - в продукт айдис должны остаться только новые, которые надо добавить, а сейчас тут все
             for (var i : product_ids) {
                 current.setProduct(productService.findProduct(i));
             }

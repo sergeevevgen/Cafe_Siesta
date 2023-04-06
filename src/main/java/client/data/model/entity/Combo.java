@@ -11,7 +11,6 @@ import java.util.Objects;
 
 @Entity
 @EqualsAndHashCode
-@ToString
 public class Combo {
 
     @Id
