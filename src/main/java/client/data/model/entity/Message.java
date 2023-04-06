@@ -24,7 +24,7 @@ public class Message {
 
     @NotBlank
     @Column(nullable = false)
-    private LocalDateTime time;
+    private Long time;
 
     @NotBlank
     @Column(nullable = false)
@@ -38,7 +38,7 @@ public class Message {
     public Message() {
     }
 
-    public Message(String text, LocalDateTime time, Long sender_id) {
+    public Message(String text, Long time, Long sender_id) {
         this.text = text;
         this.time = time;
         this.sender_id = sender_id;
@@ -56,11 +56,11 @@ public class Message {
         this.text = text;
     }
 
-    public LocalDateTime getTime() {
+    public Long getTime() {
         return time;
     }
 
-    public void setTime(LocalDateTime time) {
+    public void setTime(Long time) {
         this.time = time;
     }
 
