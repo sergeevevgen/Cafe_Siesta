@@ -24,29 +24,21 @@ public class LoginController {
 
     @PostMapping("/authClient")
     public ClientDto authClient(ClientDto clientDto) {
-        // нет сервиса на авторизацию пользователя
-        // return authClient(ClientDto dto): ClientDto;
         return clientService.authorize(clientDto);
     }
 
     @PostMapping("/authDeliveryMan")
-    public String authDeliveryMan(DeliveryManDto deliveryManDto) {
-        // нет сервиса на авторизацию пользователя
-        // return authDeliveryMan(DeliveryManDto dto): DeliveryManDto;
-        return deliveryManService.authorize(deliveryManDto).toString();
+    public DeliveryManDto authDeliveryMan(DeliveryManDto deliveryManDto) {
+        return new DeliveryManDto(deliveryManService.authorize(deliveryManDto));
     }
 
     @PostMapping("/registerClient")
-    public String registerClient(ClientDto clientDto) {
-        // нет сервиса на авторизацию пользователя
-        // return registerClient(ClientDto dto): ClientDto;
-        return clientService.register(clientDto).toString();
+    public ClientDto registerClient(ClientDto clientDto) {
+        return clientService.register(clientDto);
     }
 
     @PostMapping("/registerDeliveryMan")
-    public String registerDeliveryMan(DeliveryManDto deliveryManDto) {
-        // нет сервиса на авторизацию пользователя
-        // return registerDeliveryMan(DeliveryManDto dto): DeliveryManDto;
-        return "";
+    public DeliveryManDto registerDeliveryMan(DeliveryManDto deliveryManDto) {
+        return new DeliveryManDto(deliveryManService.register(deliveryManDto));
     }
 }
