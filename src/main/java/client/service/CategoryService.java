@@ -71,8 +71,8 @@ public class CategoryService {
 
     //Поиск всех записей в репозитории
     @Transactional(readOnly = true)
-    public List<Category> findAllCategories() {
-        return repository.findAll();
+    public List<CategoryDto> findAllCategories() {
+        return repository.findAll().stream().map(CategoryDto::new).toList();
     }
 
     //Изменение категории по полям
@@ -108,7 +108,7 @@ public class CategoryService {
     }
 
     public void deleteAllCategories() throws InCategoryFoundProductsException {
-        List<Category> categories = findAllCategories();
+        List<Category> categories = repository.findAll();
         for (var c : categories) {
             if (c.getProducts().size() > 0) {
                 throw new InCategoryFoundProductsException("Category with id [%s] has relational products");
