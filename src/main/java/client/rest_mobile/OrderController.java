@@ -24,8 +24,8 @@ public class OrderController {
         return orderService.findOrder(id).toString();
     }
 
-    @PostMapping("/cancelOne/{order_id}")
-    public String createOne(OrderDto orderDto) {
+    @PostMapping("/addOne/{order_id}")
+    public String createOne(@RequestBody OrderDto orderDto) {
         // хочу отменить заказ, нет метода на отмену
         return orderService.addOrder(orderDto).toString();
     }

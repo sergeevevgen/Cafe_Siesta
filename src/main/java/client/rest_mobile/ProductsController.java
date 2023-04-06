@@ -1,10 +1,9 @@
 package client.rest_mobile;
 
+import client.data.model.dto.OrderDto;
+import client.data.model.dto.ProductDto;
 import client.service.ProductService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/products")
@@ -23,5 +22,10 @@ public class ProductsController {
     @GetMapping("/getOne/{product_id}")
     public String getOneProduct(@PathVariable Long id) {
         return productService.findProduct(id).toString();
+    }
+
+    @PostMapping("/addOne")
+    public String createOne(@RequestBody ProductDto dto) {
+        return productService.addProduct(dto).toString();
     }
 }

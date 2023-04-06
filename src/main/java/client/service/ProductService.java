@@ -36,7 +36,9 @@ public class ProductService {
 
     //Поиск всех записей в репозитории
     @Transactional(readOnly = true)
-    public List<Product> findAllProducts() { return productRepository.findAll(); }
+    public List<Product> findAllProducts() {
+        return productRepository.findAll();
+    }
 
     //Создание продукта через поля
     @Transactional
@@ -63,8 +65,16 @@ public class ProductService {
     //Создание продукта через Dto
     @Transactional
     public ProductDto addProduct(ProductDto productDto) {
-        return new ProductDto(addProduct(productDto.getName(), productDto.getDescription(), productDto.getImage_url(),
-                productDto.getWeight(), productDto.getPrice(), productDto.getCategory_id()));
+        return new ProductDto(
+                addProduct(
+                        productDto.getName(),
+                        productDto.getDescription(),
+                        productDto.getImage_url(),
+                        productDto.getWeight(),
+                        productDto.getPrice(),
+                        productDto.getCategory_id()
+                )
+        );
     }
 
     //Поиск продукта в репозитории
@@ -100,8 +110,7 @@ public class ProductService {
         final Category category = categoryService.findById(category_id);
         if (product.getCategory().getId().equals(category_id)) {
             product.getCategory().updateProduct(product);
-        }
-        else {
+        } else {
             product.getCategory().removeProduct(id);
             product.setCategory(category);
         }

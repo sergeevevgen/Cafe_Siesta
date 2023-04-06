@@ -29,7 +29,7 @@ public class LoginController {
         return clientService.authorize(clientDto).toString();
     }
 
-    @PostMapping("/authClient")
+    @PostMapping("/authDeliveryMan")
     public String authDeliveryMan(DeliveryManDto deliveryManDto) {
         // нет сервиса на авторизацию пользователя
         // return authDeliveryMan(DeliveryManDto dto): DeliveryManDto;
@@ -43,7 +43,7 @@ public class LoginController {
         return clientService.register(clientDto).toString();
     }
 
-    @PostMapping("/registerClient")
+    @PostMapping("/registerDeliveryMan")
     public String registerDeliveryMan(DeliveryManDto deliveryManDto) {
         // нет сервиса на авторизацию пользователя
         // return registerDeliveryMan(DeliveryManDto dto): DeliveryManDto;

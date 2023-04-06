@@ -23,7 +23,7 @@ public class ClientDto {
         this.name = client.getName();
         this.surname = client.getSurname();
         this.login = client.getLogin();
-        this.address = client.getAddress();
+        this.address = client.getEntrance();
         if (client.getOrders() != null) {
             for (var o : client.getOrders()) {
                 orders.add(o.getId());
