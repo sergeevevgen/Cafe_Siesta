@@ -197,6 +197,9 @@ public class OrderService {
                 }
             }
         }
+        else {
+            order_itemRepository.deleteAllById(current.getItems().stream().map(Order_Item::getId).toList());
+        }
 
         validatorUtil.validate(current);
         return repository.save(current);
@@ -249,6 +252,9 @@ public class OrderService {
                     combo_orderRepository.delete(combo_orderRepository.getById(i.getKey()));
                 }
             }
+        }
+        else {
+            combo_orderRepository.deleteAllById(current.getCombo_items().stream().map(Combo_Order::getId).toList());
         }
 
         validatorUtil.validate(current);

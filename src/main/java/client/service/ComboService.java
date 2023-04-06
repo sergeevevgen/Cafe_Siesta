@@ -2,6 +2,7 @@ package client.service;
 
 import client.data.model.dto.ComboDto;
 import client.data.model.entity.Combo;
+import client.data.model.entity.Order_Item;
 import client.data.model.entity.Product;
 import client.data.repository.ComboRepository;
 import client.service.exception.ComboNotFoundException;
@@ -14,10 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class ComboService {
@@ -117,13 +115,73 @@ public class ComboService {
         current.setPrice(price);
         current.setSale(sale);
 
-        //Вычленение прошлых продуктов и замена новыми с помощью множества
-        List<Long> products_prev = current.getProducts().stream().map(Product::getId).toList();
-        Set<Long> products = new HashSet<>(products_prev);
-        products.addAll(product_ids);
-        for (var i : products) {
-            current.setProduct(productService.findProduct(i));
+        if (product_ids != null && !product_ids.isEmpty()) {
+            List<Long> products_prev = current.getProducts().stream().map(Product::getId).toList();
+            Set<Long> products = new HashSet<>(products_prev);
+            //Получили общие элементы, которые не надо удалять
+            products.retainAll(product_ids);
+            //В продуктс ids остались только те, которые надо добавить
+            product_ids.forEach(products::remove);
+
+            //Удалили не нужные
+            for (var i : products_prev) {
+                if (!products.contains(i)) {
+                    current.removeProduct(i);
+                }
+            }
+
+            //Добавили нужные
+            for (var i : product_ids) {
+                current.setProduct(productService.findProduct(i));
+            }
+
         }
+        else {
+            for (var p : current.getProducts().stream().map(Product::getId).toList()) {
+                current.removeProduct(p);
+            }
+        }
+        //Вычленение прошлых продуктов и замена новыми с помощью множества
+
+
+//        if (products != null && !products.isEmpty()) {
+//            //Номера продуктов, которые сейчас используются
+//            Map<Long, Long> items = new HashMap<>();
+//
+//            //Тут существующие продукты из заказа с количеством
+//            for(var i : current.getItems()) {
+//                if (items.containsKey(i.getProduct().getId())) {
+//                    items.put(i.getProduct().getId(), items.get(i.getProduct().getId()) + i.getCount());
+//                }
+//                else
+//                    items.put(i.getProduct().getId(), i.getCount());
+//            }
+//
+//            //Добавляем новые
+//            for(var i : products.entrySet()) {
+//                if (!items.containsKey(i.getKey())) {
+//                    Product product = productService.findProduct(i.getKey());
+//                    Order_Item order_item = new Order_Item();
+//                    order_item.setCount(i.getValue());
+//
+//                    order_item.setProduct(product);
+//                    order_item.setOrder(current);
+//
+//                    order_itemRepository.save(order_item);
+//                }
+//                else if (items.containsKey(i.getKey()) && !Objects.equals(items.get(i.getKey()), i.getValue())) {
+//                    Order_Item order_item = order_itemRepository.getById(i.getKey());
+//                    order_item.setCount(i.getValue());
+//                    order_itemRepository.save(order_item);
+//                }
+//            }
+//            //Удаляем старые
+//            for(var i : items.entrySet()) {
+//                if (!products.containsKey(i.getKey())) {
+//                    order_itemRepository.delete(order_itemRepository.getById(i.getKey()));
+//                }
+//            }
+//        }
 
         validatorUtil.validate(current);
         return repository.save(current);
