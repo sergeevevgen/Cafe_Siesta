@@ -14,7 +14,6 @@ import java.util.Objects;
 @Entity
 @EqualsAndHashCode
 @ToString
-@Table(name = "client")
 public class Client {
 
     //Done

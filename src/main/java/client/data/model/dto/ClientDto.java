@@ -13,8 +13,12 @@ public class ClientDto {
     private String name;
     private String surname;
     private String login;
-    private String address;
-    private Set<Long> orders = new HashSet<>();
+    private String password;
+    private String street;
+    private String flat;
+    private String entrance;
+    private String house;
+    private final Set<Long> orders = new HashSet<>();
     public ClientDto() {
     }
 
@@ -23,7 +27,11 @@ public class ClientDto {
         this.name = client.getName();
         this.surname = client.getSurname();
         this.login = client.getLogin();
-        this.address = client.getEntrance();
+        this.street = client.getStreet();
+        this.flat = client.getFlat();
+        this.entrance = client.getEntrance();
+        this.house = client.getHouse();
+        this.password = client.getPassword();
         if (client.getOrders() != null) {
             for (var o : client.getOrders()) {
                 orders.add(o.getId());
@@ -48,8 +56,24 @@ public class ClientDto {
         return login;
     }
 
-    public String getAddress() {
-        return address;
+    public String getStreet() {
+        return street;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getFlat() {
+        return flat;
+    }
+
+    public String getEntrance() {
+        return entrance;
+    }
+
+    public String getHouse() {
+        return house;
     }
 
     public Set<Long> getOrders() {

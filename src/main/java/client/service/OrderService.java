@@ -1,5 +1,6 @@
 package client.service;
 
+import client.data.model.dto.ClientDto;
 import client.data.model.dto.MessageDto;
 import client.data.model.dto.OrderDto;
 import client.data.model.entity.*;
@@ -103,56 +104,65 @@ public class OrderService {
         return order.orElseThrow(() -> new OrderNotFoundException(id));
     }
 
+    //Поиск заказа в репозитории
+    @Transactional(readOnly = true)
+    public OrderDto findOrder(OrderDto orderDto) {
+        return new OrderDto(findOrder(orderDto.getId()));
+    }
+
     //Поиск всех записей в репозитории
     @Transactional(readOnly = true)
-    public List<Order> findAllOrders() {
-        return repository.findAll();
+    public List<OrderDto> findAllOrders() {
+        return repository.findAll().stream().map(OrderDto::new).toList();
     }
+
 
     // Поиск всех заказов у клиента
     @Transactional(readOnly = true)
     public List<Order> findAllClientOrders(Long clientId) {
-        List<Order> orderList = new ArrayList<>(Collections.emptyList());
-        for (var order: repository.findAll()) {
-            if(order.getClient().getId().equals(clientId)){
-                orderList.add(order);
-            }
-        }
-        return orderList;
+        return repository.findByClientId(clientId);
     }
 
-    // Отмена заказа у клиента
+    // Поиск всех заказов у клиента по Dto
+    @Transactional(readOnly = true)
+    public List<OrderDto> findAllClientOrders(ClientDto clientDto) {
+        return findAllClientOrders(clientDto.getId()).stream().map(OrderDto::new).toList();
+    }
+
+    // Изменение статуса заказа у клиента
     @Transactional
-    public Order cancelOrder(Long orderId) {
+    public Order changeOrderStatus(Long orderId, Order_Status status) {
         Optional<Order> order = repository.findById(orderId);
         if (order.isPresent()) {
-            order.get().setStatus(Order_Status.Rejected);
+            order.get().setStatus(status);
             repository.save(order.get());
         }
         return order.orElseThrow(() -> new OrderNotFoundException(orderId));
     }
 
+    // Изменение статуса заказа у клиента через Dto
+    @Transactional
+    public OrderDto changeOrderStatus(OrderDto orderDto) {
+        return new OrderDto(changeOrderStatus(orderDto.getId(), orderDto.getStatus()));
+    }
+
     //Изменение заказа по полям
     @Transactional
-    public Order updateOrderProducts(Long id,
-                             Map<Long, Long> products) {
-//        if (!StringUtils.hasText(title) || price == null || price <= 0 ||  client_id == null || client_id < 0) {
-//            throw new IllegalArgumentException("Order fields are null or empty");
-//        }
+    public Order updateOrderProducts(
+            Long id,
+            Map<Long, Long> products
+    ) {
 
         final Order current = findOrder(id);
         if (current == null) {
             throw new OrderNotFoundException(id);
         }
 
-//        current.setTitle(title);
-//        current.setPrice(price);
-//        current.setStatus(status);
-
         if (products != null && !products.isEmpty()) {
             //Номера продуктов, которые сейчас используются
             Map<Long, Long> items = new HashMap<>();
 
+            //Тут существующие продукты из заказа с количеством
             for(var i : current.getItems()) {
                 if (items.containsKey(i.getProduct().getId())) {
                     items.put(i.getProduct().getId(), items.get(i.getProduct().getId()) + i.getCount());
@@ -160,7 +170,8 @@ public class OrderService {
                 else
                     items.put(i.getProduct().getId(), i.getCount());
             }
-            //еще подумать над удалением !, возможно ниче не работает
+
+            //Добавляем новые
             for(var i : products.entrySet()) {
                 if (!items.containsKey(i.getKey())) {
                     Product product = productService.findProduct(i.getKey());
@@ -178,46 +189,75 @@ public class OrderService {
                     order_itemRepository.save(order_item);
                 }
             }
+            //Удаляем старые
+            for(var i : items.entrySet()) {
+                if (!products.containsKey(i.getKey())) {
+                    order_itemRepository.delete(order_itemRepository.getById(i.getKey()));
+                }
+            }
         }
-
-//        if (combos != null && !combos.isEmpty()) {
-//            //Номера продуктов, которые сейчас используются
-//            Map<Long, Long> items = new HashMap<>();
-//
-//            for(var i : current.getCombo_items()) {
-//                if (items.containsKey(i.getCombo().getId())) {
-//                    items.put(i.getCombo().getId(), items.get(i.getCombo().getId()) + i.getCount());
-//                }
-//                else
-//                    items.put(i.getCombo().getId(), i.getCount());
-//            }
-//
-//            for(var i : combos.entrySet()) {
-//                if (!items.containsKey(i.getKey())) {
-//                    Combo combo = comboService.findCombo(i.getKey());
-//                    Combo_Order item = new Combo_Order();
-//                    item.setCount(i.getValue());
-//
-//                    item.setCombo(combo);
-//                    item.setOrder(current);
-//
-//                    combo_orderRepository.save(item);
-//                }
-//                else if (items.containsKey(i.getKey()) && !Objects.equals(items.get(i.getKey()), i.getValue())) {
-//                    Combo_Order item = combo_orderRepository.getById(i.getKey());
-//                    item.setCount(i.getValue());
-//                    combo_orderRepository.save(item);
-//                }
-//            }
-//        }
 
         validatorUtil.validate(current);
         return repository.save(current);
     }
 
     @Transactional
-    public Order deleteOrderProduct(Long id ) {
-        return null;
+    public Order updateOrderCombos(
+            Long id,
+            Map<Long, Long> combos
+    ) {
+        final Order current = findOrder(id);
+        if (current == null) {
+            throw new OrderNotFoundException(id);
+        }
+
+        if (combos != null && !combos.isEmpty()) {
+            //Номера комбо, которые сейчас используются
+            Map<Long, Long> items = new HashMap<>();
+
+            //Тут существующие комбо из заказа с количеством
+            for(var i : current.getCombo_items()) {
+                if (items.containsKey(i.getCombo().getId())) {
+                    items.put(i.getCombo().getId(), items.get(i.getCombo().getId()) + i.getCount());
+                }
+                else
+                    items.put(i.getCombo().getId(), i.getCount());
+            }
+
+            //Добавляем новые
+            for(var i : combos.entrySet()) {
+                if (!items.containsKey(i.getKey())) {
+                    Combo combo = comboService.findCombo(i.getKey());
+                    Combo_Order item = new Combo_Order();
+                    item.setCount(i.getValue());
+
+                    item.setCombo(combo);
+                    item.setOrder(current);
+
+                    combo_orderRepository.save(item);
+                }
+                else if (items.containsKey(i.getKey()) && !Objects.equals(items.get(i.getKey()), i.getValue())) {
+                    Combo_Order item = combo_orderRepository.getById(i.getKey());
+                    item.setCount(i.getValue());
+                    combo_orderRepository.save(item);
+                }
+            }
+            //Удаляем старые
+            for(var i : items.entrySet()) {
+                if (!combos.containsKey(i.getKey())) {
+                    combo_orderRepository.delete(combo_orderRepository.getById(i.getKey()));
+                }
+            }
+        }
+
+        validatorUtil.validate(current);
+        return repository.save(current);
+    }
+
+    //Добавление к заказу комбо
+    @Transactional
+    public OrderDto updateOrderCombos(OrderDto orderDto) {
+        return new OrderDto(updateOrderCombos(orderDto.getId(), orderDto.getCombos()));
     }
 
     //Добавление к заказу продуктов

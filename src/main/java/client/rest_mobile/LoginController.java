@@ -23,10 +23,10 @@ public class LoginController {
     }
 
     @PostMapping("/authClient")
-    public String authClient(ClientDto clientDto) {
+    public ClientDto authClient(ClientDto clientDto) {
         // нет сервиса на авторизацию пользователя
         // return authClient(ClientDto dto): ClientDto;
-        return clientService.authorize(clientDto).toString();
+        return clientService.authorize(clientDto);
     }
 
     @PostMapping("/authDeliveryMan")
