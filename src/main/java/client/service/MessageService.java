@@ -40,7 +40,7 @@ public class MessageService {
 
     //Создание категории через поля
     @Transactional
-    public Message addMessage(String text, LocalDateTime time, Long sender_id, Long chat_id) {
+    public Message addMessage(String text, Long time, Long sender_id, Long chat_id) {
         if (!StringUtils.hasText(text) || sender_id == null || sender_id <= 0 || chat_id == null || chat_id <= 0 || time == null) {
             throw new IllegalArgumentException("Message fields are null or empty");
         }
@@ -75,7 +75,7 @@ public class MessageService {
 
     //Изменение категории по полям
     @Transactional
-    public Message updateMessage(Long id, String text, LocalDateTime time, Long sender_id, Long chat_id) {
+    public Message updateMessage(Long id, String text, Long time, Long sender_id, Long chat_id) {
         if (!StringUtils.hasText(text) || sender_id == null || sender_id <= 0 || chat_id == null || chat_id <= 0 || time == null) {
             throw new IllegalArgumentException("Message fields are null or empty");
         }

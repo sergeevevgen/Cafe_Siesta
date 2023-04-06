@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 public class MessageDto {
     private Long id;
     private String text;
-    private LocalDateTime time;
+    private Long time;
     private Long sender_id;
     private Long chat_id;
 
@@ -32,7 +32,7 @@ public class MessageDto {
         return text;
     }
 
-    public LocalDateTime getTime() {
+    public Long getTime() {
         return time;
     }
 
