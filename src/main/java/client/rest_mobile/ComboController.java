@@ -17,8 +17,8 @@ public class ComboController {
     }
 
     @GetMapping("/getAll")
-    public List<Combo> getAllCombos() {
-        return comboService.findAllCombos();
+    public List<ComboDto> getAllCombos() {
+        return comboService.findAllCombos().stream().map(ComboDto::new).toList();
     }
 
     @GetMapping("/getOne/{combo_id}")

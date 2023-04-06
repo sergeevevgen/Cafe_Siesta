@@ -141,47 +141,6 @@ public class ComboService {
                 current.removeProduct(p);
             }
         }
-        //Вычленение прошлых продуктов и замена новыми с помощью множества
-
-
-//        if (products != null && !products.isEmpty()) {
-//            //Номера продуктов, которые сейчас используются
-//            Map<Long, Long> items = new HashMap<>();
-//
-//            //Тут существующие продукты из заказа с количеством
-//            for(var i : current.getItems()) {
-//                if (items.containsKey(i.getProduct().getId())) {
-//                    items.put(i.getProduct().getId(), items.get(i.getProduct().getId()) + i.getCount());
-//                }
-//                else
-//                    items.put(i.getProduct().getId(), i.getCount());
-//            }
-//
-//            //Добавляем новые
-//            for(var i : products.entrySet()) {
-//                if (!items.containsKey(i.getKey())) {
-//                    Product product = productService.findProduct(i.getKey());
-//                    Order_Item order_item = new Order_Item();
-//                    order_item.setCount(i.getValue());
-//
-//                    order_item.setProduct(product);
-//                    order_item.setOrder(current);
-//
-//                    order_itemRepository.save(order_item);
-//                }
-//                else if (items.containsKey(i.getKey()) && !Objects.equals(items.get(i.getKey()), i.getValue())) {
-//                    Order_Item order_item = order_itemRepository.getById(i.getKey());
-//                    order_item.setCount(i.getValue());
-//                    order_itemRepository.save(order_item);
-//                }
-//            }
-//            //Удаляем старые
-//            for(var i : items.entrySet()) {
-//                if (!products.containsKey(i.getKey())) {
-//                    order_itemRepository.delete(order_itemRepository.getById(i.getKey()));
-//                }
-//            }
-//        }
 
         validatorUtil.validate(current);
         return repository.save(current);
