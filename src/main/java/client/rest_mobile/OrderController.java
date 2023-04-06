@@ -1,8 +1,11 @@
 package client.rest_mobile;
 
 import client.data.model.dto.OrderDto;
+import client.data.model.entity.Order;
 import client.service.OrderService;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/orders")
@@ -14,20 +17,20 @@ public class OrderController {
     }
 
     @GetMapping("/getAll/{user_id}")
-    public String getAllOrders(@PathVariable Long clientId) {
+    public List<OrderDto> getAllOrders(@PathVariable Long clientId) {
         // все заказы клиента
-        return orderService.findAllClientOrders(clientId).toString();
+        return orderService.findAllClientOrders(clientId);
     }
 
     @GetMapping("/getOne/{order_id}")
-    public String getOneOrder(@PathVariable Long id) {
-        return orderService.findOrder(id).toString();
+    public Order getOneOrder(@PathVariable Long id) {
+        return orderService.findOrder(id);
     }
 
     @PostMapping("/addOne/{order_id}")
-    public String createOne(@RequestBody OrderDto orderDto) {
+    public OrderDto createOne(@RequestBody OrderDto orderDto) {
         // хочу отменить заказ, нет метода на отмену
-        return orderService.addOrder(orderDto).toString();
+        return orderService.addOrder(orderDto);
     }
 
     @PostMapping("/cancelOne/{order_id}")

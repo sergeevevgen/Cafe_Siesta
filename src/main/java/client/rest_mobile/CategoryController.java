@@ -1,9 +1,10 @@
 package client.rest_mobile;
 
 import client.data.model.dto.CategoryDto;
-import client.data.model.dto.ProductDto;
 import client.service.CategoryService;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/categories")
@@ -15,12 +16,12 @@ public class CategoryController {
     }
 
     @GetMapping("/getAll")
-    public String getAllCategories() {
-        return categoryService.findAllCategories().toString();
+    public List<CategoryDto> getAllCategories() {
+        return categoryService.findAllCategories();
     }
 
     @PostMapping("/addOne")
-    public String createOne(@RequestBody CategoryDto dto) {
-        return categoryService.addCategory(dto).toString();
+    public CategoryDto createOne(@RequestBody CategoryDto dto) {
+        return categoryService.addCategory(dto);
     }
 }

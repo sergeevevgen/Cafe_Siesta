@@ -1,6 +1,5 @@
 package client.service;
 
-import client.data.model.dto.ClientDto;
 import client.data.model.dto.OrderDto;
 import client.data.model.entity.*;
 import client.data.model.enums.Order_Status;
@@ -72,7 +71,7 @@ public class OrderService {
 
         if (combos != null && !combos.isEmpty()) {
             for (var c : combos.entrySet()) {
-                Combo combo = comboService.findCombo(c.getKey());
+                Combo combo = comboService.findComboEntity(c.getKey());
                 Combo_Order item = new Combo_Order();
                 item.setCount(c.getValue());
 
@@ -121,15 +120,15 @@ public class OrderService {
 
     // Поиск всех заказов у клиента
     @Transactional(readOnly = true)
-    public List<Order> findAllClientOrders(Long clientId) {
-        return repository.findByClientId(clientId);
+    public List<OrderDto> findAllClientOrders(Long clientId) {
+        return repository.findByClientId(clientId).stream().map(OrderDto::new).toList();
     }
 
-    // Поиск всех заказов у клиента по Dto
-    @Transactional(readOnly = true)
-    public List<OrderDto> findAllClientOrders(ClientDto clientDto) {
-        return findAllClientOrders(clientDto.getId()).stream().map(OrderDto::new).toList();
-    }
+    // Поиск всех заказов у клиента по Dto НЕ НУЖЕН
+//    @Transactional(readOnly = true)
+//    public List<OrderDto> findAllClientOrders(Long clientId) {
+//        return findAllClientOrders(clientId).stream().map(OrderDto::new).toList();
+//    }
 
     // Изменение статуса заказа у клиента
     @Transactional
@@ -229,7 +228,7 @@ public class OrderService {
             //Добавляем новые
             for(var i : combos.entrySet()) {
                 if (!items.containsKey(i.getKey())) {
-                    Combo combo = comboService.findCombo(i.getKey());
+                    Combo combo = comboService.findComboEntity(i.getKey());
                     Combo_Order item = new Combo_Order();
                     item.setCount(i.getValue());
 

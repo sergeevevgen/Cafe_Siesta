@@ -1,15 +1,10 @@
 package client.service;
 
-import client.data.model.dto.CategoryDto;
 import client.data.model.dto.ComboDto;
-import client.data.model.entity.Category;
 import client.data.model.entity.Combo;
 import client.data.model.entity.Product;
-import client.data.repository.CategoryRepository;
 import client.data.repository.ComboRepository;
-import client.service.exception.CategoryNotFoundException;
 import client.service.exception.ComboNotFoundException;
-import client.service.exception.InCategoryFoundProductsException;
 import client.service.exception.InComboFoundCombo_OrderException;
 import client.util.validation.ValidationException;
 import client.util.validation.ValidatorUtil;
@@ -67,13 +62,26 @@ public class ComboService {
     //Создание комбо через Dto
     @Transactional
     public ComboDto addCombo(ComboDto comboDto) {
-        return new ComboDto(addCombo(comboDto.getName(), comboDto.getDescription(), comboDto.getImage_url(),
-                comboDto.getSale(), comboDto.getPrice(), comboDto.getProducts()));
+        return new ComboDto(
+                addCombo(
+                        comboDto.getName(),
+                        comboDto.getDescription(),
+                        comboDto.getImage_url(),
+                        comboDto.getSale(),
+                        comboDto.getPrice(),
+                        comboDto.getProducts()
+                ));
     }
 
     //Поиск комбо в репозитории
     @Transactional(readOnly = true)
-    public Combo findCombo(Long id) {
+    public ComboDto findCombo(Long id) {
+        final Optional<ComboDto> combo = repository.findById(id).map(ComboDto::new);
+        return combo.orElseThrow(() -> new ComboNotFoundException(id));
+    }
+
+    @Transactional(readOnly = true)
+    public Combo findComboEntity(Long id) {
         final Optional<Combo> combo = repository.findById(id);
         return combo.orElseThrow(() -> new ComboNotFoundException(id));
     }
@@ -95,7 +103,7 @@ public class ComboService {
         if (!StringUtils.hasText(name) || !StringUtils.hasText(description) || price == null || price < 0) {
             throw new IllegalArgumentException("Combo fields are null or empty");
         }
-        final Combo current = findCombo(id);
+        final var current = findComboEntity(id);
         if (current == null) {
             throw new ComboNotFoundException(id);
         }
@@ -131,7 +139,7 @@ public class ComboService {
 
     @Transactional
     public Combo deleteCombo(Long id) {
-        Combo current = findCombo(id);
+        Combo current = findComboEntity(id);
         repository.delete(current);
         return current;
     }

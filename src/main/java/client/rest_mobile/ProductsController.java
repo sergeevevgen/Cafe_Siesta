@@ -1,6 +1,5 @@
 package client.rest_mobile;
 
-import client.data.model.dto.OrderDto;
 import client.data.model.dto.ProductDto;
 import client.service.ProductService;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +26,7 @@ public class ProductsController {
     }
 
     @PostMapping("/addOne")
-    public String createOne(@RequestBody ProductDto dto) {
-        return productService.addProduct(dto).toString();
+    public ProductDto createOne(@RequestBody ProductDto dto) {
+        return productService.addProduct(dto);
     }
 }
