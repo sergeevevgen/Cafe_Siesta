@@ -21,7 +21,7 @@ public class ComboController {
         return comboService.findAllCombos().stream().map(ComboDto::new).toList();
     }
 
-    @GetMapping("/getOne/{combo_id}")
+    @GetMapping("/getOne/{id}")
     public ComboDto getOneCombo(@PathVariable Long id) {
         return comboService.findCombo(id);
     }
