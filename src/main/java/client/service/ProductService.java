@@ -43,7 +43,7 @@ public class ProductService {
     //Создание продукта через поля
     @Transactional
     public Product addProduct(String name, String description, String image_url, Long weight, Double price, Long category_id) {
-        if (!StringUtils.hasText(name) || !StringUtils.hasText(description) || category_id == null || category_id < 0 ||
+        if (!StringUtils.hasText(name) || !StringUtils.hasText(description) || category_id == null || category_id <= 0 ||
                 weight == null || weight < 0 || price == null || price < 0) {
             throw new IllegalArgumentException("Product fields are null or empty");
         }
@@ -99,8 +99,8 @@ public class ProductService {
     @Transactional
     public Product updateProduct(Long id, String name, String description, String image_url, Long weight, Double price,
                                  Long category_id) {
-        if (!StringUtils.hasText(name) || !StringUtils.hasText(description) || id == null || id < 0 || weight == null
-                || weight < 0 || price == null || price < 0 || category_id == null || category_id < 0) {
+        if (!StringUtils.hasText(name) || !StringUtils.hasText(description) || id == null || id <= 0 || weight == null
+                || weight < 0 || price == null || price < 0 || category_id == null || category_id <= 0) {
             throw new IllegalArgumentException("Product fields are null or empty");
         }
         final Product product = findProduct(id);

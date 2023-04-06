@@ -28,11 +28,8 @@ public class Combo {
 
     private String image_url;
 
-    @Transient
     private Double sale;
 
-    @NotBlank
-    @Column(nullable = false)
     private Double price;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
