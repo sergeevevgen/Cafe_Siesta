@@ -29,29 +29,26 @@ public class ChatService {
     private final Logger log = LoggerFactory.getLogger(ChatService.class);
 
     private final ChatRepository repository;
-    private final OrderService orderService;
 
     private final ValidatorUtil validatorUtil;
 
-    public ChatService(ChatRepository repository, OrderService orderService, ValidatorUtil validatorUtil) {
+    public ChatService(ChatRepository repository, ValidatorUtil validatorUtil) {
         this.repository = repository;
         this.validatorUtil = validatorUtil;
-        this.orderService = orderService;
     }
 
     // Создание категории через дто
     @Transactional
-    public Chat createMessage(MessageDto messageDto) {
-        if (!StringUtils.hasText(messageDto.getText())
-                || messageDto.getSender_id() == null
-                || messageDto.getSender_id() <= 0
-                || messageDto.getChat_id() == null
-                || messageDto.getChat_id() <= 0
-                || messageDto.getTime() == null
+    public Chat createChat(String title) {
+        if (!StringUtils.hasText(title)
         ) {
-            throw new IllegalArgumentException("Message fields are null or empty");
+            throw new IllegalArgumentException("Chat fields are null or empty");
         }
-        return null;
+
+        final Chat chat = new Chat();
+        chat.setTitle(title);
+        validatorUtil.validate(chat);
+        return repository.save(chat);
     }
 
     //Создание категории через Dto

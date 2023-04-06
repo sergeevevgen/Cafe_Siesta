@@ -1,26 +1,21 @@
 package client.service;
 
 import client.data.model.dto.ClientDto;
-import client.data.model.dto.MessageDto;
 import client.data.model.dto.OrderDto;
 import client.data.model.entity.*;
 import client.data.model.enums.Order_Status;
 import client.data.repository.Combo_OrderRepository;
 import client.data.repository.OrderRepository;
 import client.data.repository.Order_ItemRepository;
-import client.service.exception.MessageNotFoundException;
 import client.service.exception.OrderNotFoundException;
 import client.util.validation.ValidatorUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class OrderService {
@@ -33,18 +28,20 @@ public class OrderService {
     private final ClientService clientService;
     private final ProductService productService;
     private final ComboService comboService;
+    private final ChatService chatService;
 
     private final ValidatorUtil validatorUtil;
 
     public OrderService(OrderRepository repository, Order_ItemRepository order_itemRepository,
                         Combo_OrderRepository combo_orderRepository, ClientService clientService,
-                        ProductService productService, ComboService comboService, ValidatorUtil validatorUtil) {
+                        ProductService productService, ComboService comboService, ChatService chatService, ValidatorUtil validatorUtil) {
         this.repository = repository;
         this.order_itemRepository = order_itemRepository;
         this.combo_orderRepository = combo_orderRepository;
         this.clientService = clientService;
         this.productService = productService;
         this.comboService = comboService;
+        this.chatService = chatService;
         this.validatorUtil = validatorUtil;
     }
 
@@ -85,8 +82,13 @@ public class OrderService {
                 combo_orderRepository.save(item);
             }
         }
+        //Создание чата при создании заказа
+        Chat chat = chatService.createChat(order.getTitle());
+        order.setChat(chat);
+
 
         validatorUtil.validate(order);
+
         return repository.save(order);
     }
 

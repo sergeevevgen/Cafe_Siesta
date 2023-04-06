@@ -6,7 +6,7 @@ spring:
         jdbc.time.zone: UTC
     show-sql: true
     hibernate:
-      ddl-auto: validate
+      ddl-auto: create-drop
     database-platform: org.hibernate.dialect.PostgreSQL95Dialect
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
