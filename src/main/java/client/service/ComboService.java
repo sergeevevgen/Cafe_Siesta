@@ -76,8 +76,7 @@ public class ComboService {
     //Поиск комбо в репозитории
     @Transactional(readOnly = true)
     public ComboDto findCombo(Long id) {
-        final Optional<ComboDto> combo = repository.findById(id).map(ComboDto::new);
-        return combo.orElseThrow(() -> new ComboNotFoundException(id));
+        return new ComboDto(findComboEntity(id));
     }
 
     @Transactional(readOnly = true)

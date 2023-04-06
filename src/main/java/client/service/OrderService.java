@@ -121,14 +121,14 @@ public class OrderService {
     // Поиск всех заказов у клиента
     @Transactional(readOnly = true)
     public List<OrderDto> findAllClientOrders(Long clientId) {
-        return repository.findByClientId(clientId).stream().map(OrderDto::new).toList();
+        return findAllClientOrdersEntities(clientId).stream().map(OrderDto::new).toList();
     }
 
     // Поиск всех заказов у клиента по Dto НЕ НУЖЕН
-//    @Transactional(readOnly = true)
-//    public List<OrderDto> findAllClientOrders(Long clientId) {
-//        return findAllClientOrders(clientId).stream().map(OrderDto::new).toList();
-//    }
+    @Transactional(readOnly = true)
+    public List<Order> findAllClientOrdersEntities(Long clientId) {
+        return repository.findByClientId(clientId);
+    }
 
     // Изменение статуса заказа у клиента
     @Transactional
