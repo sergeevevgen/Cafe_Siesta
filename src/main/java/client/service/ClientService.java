@@ -49,7 +49,8 @@ public class ClientService {
     }
 
     //регистрация
-    public Client register(String name, String surname, String password, String login, String street, String entrance, String flat, String house) {
+    public Client register(String name, String surname, String password, String login, String street,
+                           String entrance, String flat, String house) {
 //        if (!StringUtils.hasText(name) || !StringUtils.hasText(surname) || !StringUtils.hasText(password)
 //                || !StringUtils.hasText(login) || !PatternMatchUtils.simpleMatch(pattern, login)) {
 //            throw new IllegalArgumentException("Client fields are null or empty");

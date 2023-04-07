@@ -17,24 +17,24 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    @GetMapping("/getAll/{user_id}")
+    @GetMapping("/getAll/{clientId}")
     public List<OrderDto> getAllOrders(@PathVariable Long clientId) {
         // все заказы клиента
         return orderService.findAllClientOrders(clientId);
     }
 
-    @GetMapping("/getOne/{order_id}")
-    public Order getOneOrder(@PathVariable Long id) {
-        return orderService.findOrder(id);
+    @GetMapping("/getOne/{id}")
+    public OrderDto getOneOrder(@PathVariable Long id) {
+        return new OrderDto(orderService.findOrder(id));
     }
 
-    @PostMapping("/addOne/{order_id}")
+    @PostMapping("/addOne")
     public OrderDto createOne(@RequestBody OrderDto orderDto) {
         // хочу отменить заказ, нет метода на отмену
         return orderService.addOrder(orderDto);
     }
 
-    @PostMapping("/cancelOne/{order_id}")
+    @PostMapping("/changeOrderStatus")
     public OrderDto cancelOne(@RequestBody OrderDto orderDto) {
         // хочу отменить заказ, нет метода на отмену
         return orderService.changeOrderStatus(orderDto);

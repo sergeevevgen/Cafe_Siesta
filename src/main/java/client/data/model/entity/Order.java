@@ -19,7 +19,6 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotBlank
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Order_Status status;
@@ -140,6 +139,9 @@ public class Order {
     public Integer getCount() {
         int k = 0;
         for (var i : items) {
+            k += i.getCount();
+        }
+        for (var i : combo_items) {
             k += i.getCount();
         }
         return k;

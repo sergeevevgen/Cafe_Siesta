@@ -36,8 +36,13 @@ public class OrderDto {
         this.title = order.getTitle();
         this.count = order.getCount();
         this.client_id = order.getClient().getId();
-        this.deliveryman_id = order.getDeliveryMan().getId();
-        this.chat_id = order.getChat().getId();
+        if (order.getDeliveryMan() != null) {
+            this.deliveryman_id = order.getDeliveryMan().getId();
+        }
+        if (order.getChat() != null) {
+            this.chat_id = order.getChat().getId();
+        }
+
         if (order.getItems() != null) {
             List<Order_Item> items = order.getItems();
             for (var i : items) {

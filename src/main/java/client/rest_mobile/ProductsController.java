@@ -21,7 +21,7 @@ public class ProductsController {
         return productService.findAllProducts();
     }
 
-    @GetMapping("/getOne/{product_id}")
+    @GetMapping("/getOne")
     public ProductDto getOneProduct(@RequestBody ProductDto productDto) {
         return productService.findProduct(productDto);
     }
