@@ -1,16 +1,16 @@
 package client.mvc;
 
 import client.service.UserService;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
 @RequestMapping("/login_html")
-public class HtmlLoginController {
+public class ClientMvcController {
     private final UserService loginService;
 
-    public HtmlLoginController(UserService loginService) {
+    public ClientMvcController(UserService loginService) {
         this.loginService = loginService;
     }
 

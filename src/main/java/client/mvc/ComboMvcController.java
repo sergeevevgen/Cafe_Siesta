@@ -1,15 +1,15 @@
 package client.mvc;
 
 import client.service.ComboService;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
 @RequestMapping("/combos_html")
-public class HtmlComboController {
+public class ComboMvcController {
     private final ComboService comboService;
 
-    public HtmlComboController(ComboService comboService) {
+    public ComboMvcController(ComboService comboService) {
         this.comboService = comboService;
     }
 }

@@ -1,16 +1,16 @@
 package client.mvc;
 
 import client.service.CategoryService;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
 @RequestMapping("/categories_html")
-public class HtmlCategoryController {
+public class CategoryMvcController {
     private final CategoryService categoryService;
 
-    public HtmlCategoryController(CategoryService categoryService) {
+    public CategoryMvcController(CategoryService categoryService) {
         this.categoryService = categoryService;
     }
 

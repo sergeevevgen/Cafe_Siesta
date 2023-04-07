@@ -1,15 +1,15 @@
 package client.mvc;
 
 import client.service.OrderService;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
 @RequestMapping("/orders_html")
-public class HtmlOrderController {
+public class OrderMvcController {
     private final OrderService orderService;
 
-    public HtmlOrderController(OrderService orderService) {
+    public OrderMvcController(OrderService orderService) {
         this.orderService = orderService;
     }
 }

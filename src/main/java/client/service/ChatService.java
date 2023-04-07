@@ -51,12 +51,6 @@ public class ChatService {
         return repository.save(chat);
     }
 
-    //Создание категории через Dto
-//    @Transactional
-//    public CategoryDto addCategory(CategoryDto categoryDto) {
-//        return new CategoryDto(addCategory(categoryDto.getName(), categoryDto.getDescription()));
-//    }
-
     //Поиск категории в репозитории
     @Transactional(readOnly = true)
     public Chat findChat(Long id) {
@@ -68,57 +62,13 @@ public class ChatService {
     // Все очень просто
     @Transactional(readOnly = true)
     public List<Chat> findUserChats(Long clientId) {
-        final List<Chat> chats = repository.findAll();
-        List<Chat> chatsFound = Collections.emptyList();
-        for (var chat: chats) {
-            if(chat.getOrder().getClient().getId().equals(clientId)){
-                chats.add(chat);
-            }
-        }
-        return chatsFound;
+        return repository.findByClientId(clientId);
     }
 
-    //Поиск всех записей в репозитории
-//    @Transactional(readOnly = true)
-//    public List<Category> findAllCategories() {
-//        return repository.findAll();
-//    }
-//
-//    //Изменение категории по полям
-//    @Transactional
-//    public Category updateCategory(Long id, String name, String description, String image_url) {
-//        if (!StringUtils.hasText(name) || !StringUtils.hasText(description)) {
-//            throw new IllegalArgumentException("Category fields are null or empty");
-//        }
-//
-//        final Category current = findCategory(id);
-//        current.setName(name);
-//        current.setDescription(description);
-//        current.setImage_url(image_url);
-//        validatorUtil.validate(current);
-//        return repository.save(current);
-//    }
-//
-//    //Изменение категории по полям через Dto
-//    @Transactional
-//    public CategoryDto updateCategory(CategoryDto categoryDto) {
-//        return new CategoryDto(updateCategory(categoryDto.getId(), categoryDto.getName(), categoryDto.getDescription(), categoryDto.getImage_url()));
-//    }
-//
-//    @Transactional
-//    public Category deleteCategory(Long id) {
-//        Category current = findCategory(id);
-//        repository.delete(current);
-//        return current;
-//    }
-//
-//    public void deleteAllCategories() throws InCategoryFoundProductsException {
-//        List<Category> categories = findAllCategories();
-//        for (var c : categories) {
-//            if (c.getProducts().size() > 0) {
-//                throw new InCategoryFoundProductsException("Category with id [%s] has relational products");
-//            }
-//        }
-//        repository.deleteAll();
-//    }
+    @Transactional
+    public Chat deleteChat(Long id) {
+        Chat current = findChat(id);
+        repository.delete(current);
+        return current;
+    }
 }

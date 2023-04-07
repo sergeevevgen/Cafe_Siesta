@@ -47,7 +47,7 @@ public class OrderService {
     //Создание заказа через поля
     @Transactional
     public Order addOrder(String title, Double price, Long client_id, Map<Long, Long> products, Map<Long, Long> combos) {
-        if (!StringUtils.hasText(title) || price == null || price <= 0 ||  client_id == null || client_id < 0) {
+        if (!StringUtils.hasText(title) || price == null || price < 0 ||  client_id == null || client_id < 0) {
             throw new IllegalArgumentException("Order fields are null or empty");
         }
         final Order order = new Order();
@@ -259,6 +259,25 @@ public class OrderService {
 
         validatorUtil.validate(current);
         return repository.save(current);
+    }
+
+    @Transactional
+    public Order updateOrderFields(
+            Long id,
+            Double price,
+            String title
+    ) {
+        if (!StringUtils.hasText(title) || price == null || price < 0) {
+            throw new IllegalArgumentException("Order fields are null or empty");
+        }
+        final Order order = findOrder(id);
+        if (order == null) {
+            throw new OrderNotFoundException(id);
+        }
+        order.setTitle(title);
+        order.setPrice(price);
+        validatorUtil.validate(order);
+        return repository.save(order);
     }
 
     //Добавление к заказу комбо
