@@ -1,5 +1,6 @@
 package client.rest_mobile;
 
+import client.configuration.WebConfiguration;
 import client.data.model.dto.CategoryDto;
 import client.service.CategoryService;
 import org.springframework.web.bind.annotation.*;
@@ -7,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/categories")
+@RequestMapping(WebConfiguration.REST_API + "/category")
 public class CategoryController {
     private final CategoryService categoryService;
 

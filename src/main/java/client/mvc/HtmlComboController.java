@@ -1,4 +1,4 @@
-package client.rest_html;
+package client.mvc;
 
 import client.service.ComboService;
 import org.springframework.web.bind.annotation.RequestMapping;

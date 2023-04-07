@@ -1,5 +1,6 @@
 package client.rest_mobile;
 
+import client.configuration.WebConfiguration;
 import client.data.model.dto.ClientDto;
 import client.data.model.dto.DeliveryManDto;
 import client.service.ClientService;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/login")
+@RequestMapping(WebConfiguration.REST_API + "/login")
 public class LoginController {
     private final UserService loginService;
     private final ClientService clientService;

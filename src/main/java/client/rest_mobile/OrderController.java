@@ -1,5 +1,6 @@
 package client.rest_mobile;
 
+import client.configuration.WebConfiguration;
 import client.data.model.dto.OrderDto;
 import client.data.model.entity.Order;
 import client.service.OrderService;
@@ -8,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/orders")
+@RequestMapping(WebConfiguration.REST_API + "/order")
 public class OrderController {
     private final OrderService orderService;
 

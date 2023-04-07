@@ -1,5 +1,6 @@
 package client.rest_mobile;
 
+import client.configuration.WebConfiguration;
 import client.data.model.dto.ProductDto;
 import client.service.ProductService;
 import org.springframework.web.bind.annotation.*;
@@ -7,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/products")
+@RequestMapping(WebConfiguration.REST_API + "/product")
 public class ProductsController {
     private final ProductService productService;
 

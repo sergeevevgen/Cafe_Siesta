@@ -1,11 +1,12 @@
 package client.rest_mobile;
 
+import client.configuration.WebConfiguration;
 import client.data.model.dto.MessageDto;
 import client.service.ChatService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/chats")
+@RequestMapping(WebConfiguration.REST_API + "/chat")
 public class ChatsContoller {
     private final ChatService chatService;
 
