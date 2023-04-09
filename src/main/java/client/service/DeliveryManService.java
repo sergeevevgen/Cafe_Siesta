@@ -1,18 +1,11 @@
 package client.service;
 
-import client.data.model.dto.CategoryDto;
-import client.data.model.dto.ClientDto;
 import client.data.model.dto.DeliveryManDto;
-import client.data.model.entity.Category;
-import client.data.model.entity.Client;
 import client.data.model.entity.DeliveryMan;
 import client.data.model.enums.DeliveryMan_Status;
-import client.data.repository.CategoryRepository;
 import client.data.repository.DeliveryManRepository;
-import client.service.exception.CategoryNotFoundException;
 import client.service.exception.ClientNotFoundException;
 import client.service.exception.DeliveryManNotFoundException;
-import client.service.exception.InCategoryFoundProductsException;
 import client.util.validation.ValidationException;
 import client.util.validation.ValidatorUtil;
 import org.slf4j.Logger;
@@ -40,7 +33,7 @@ public class DeliveryManService {
 
     //Создание доставщика через поля
     @Transactional
-    public DeliveryMan createDeliveryMan(String name, String surname, String login, String password) {
+    public DeliveryMan register(String name, String surname, String login, String password) {
         if (!StringUtils.hasText(name) || !StringUtils.hasText(surname) || !StringUtils.hasText(login) || !StringUtils.hasText(password)) {
             throw new IllegalArgumentException("DeliveryMan fields are null or empty");
         }
@@ -60,8 +53,8 @@ public class DeliveryManService {
 
     //Создание доставщика через Dto
     @Transactional
-    public DeliveryManDto creteDeliveryMan(DeliveryManDto deliveryManDto) {
-        return new DeliveryManDto(createDeliveryMan(deliveryManDto.getName(), deliveryManDto.getSurname(),
+    public DeliveryManDto register(DeliveryManDto deliveryManDto) {
+        return new DeliveryManDto(register(deliveryManDto.getName(), deliveryManDto.getSurname(),
                 deliveryManDto.getLogin(), deliveryManDto.getPassword()));
     }
 
@@ -150,12 +143,6 @@ public class DeliveryManService {
                 deliveryMan = Optional.of(delivery);
             }
         }
-        return deliveryMan.orElseThrow(() -> new ClientNotFoundException(dto.getId()));
-    }
-
-    public DeliveryMan register(DeliveryManDto dto) {
-        // реализовать регистрацию по дто
-        final Optional<DeliveryMan> deliveryMan = repository.findById(dto.getId());
         return deliveryMan.orElseThrow(() -> new ClientNotFoundException(dto.getId()));
     }
 }

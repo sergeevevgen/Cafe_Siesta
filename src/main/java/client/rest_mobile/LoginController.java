@@ -41,6 +41,6 @@ public class LoginController {
 
     @PostMapping("/registerDeliveryMan")
     public DeliveryManDto registerDeliveryMan(@RequestBody DeliveryManDto deliveryManDto) {
-        return new DeliveryManDto(deliveryManService.register(deliveryManDto));
+        return deliveryManService.register(deliveryManDto);
     }
 }
