@@ -41,7 +41,6 @@ public class DeliveryMan {
 
     private String image_url;
 
-    @NotBlank
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private DeliveryMan_Status status;

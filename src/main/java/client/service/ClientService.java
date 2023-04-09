@@ -76,7 +76,10 @@ public class ClientService {
     }
 
     public ClientDto register(ClientDto dto) {
-        // реализовать регистрацию по дто
         return new ClientDto(register(dto.getName(), dto.getSurname(), dto.getPassword(), dto.getLogin(), dto.getStreet(), dto.getEntrance(), dto.getFlat(), dto.getHouse()));
+    }
+
+    public List<ClientDto> getClients() {
+        return clientRepository.findAll().stream().map(ClientDto::new).toList();
     }
 }

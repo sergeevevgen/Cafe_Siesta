@@ -6,10 +6,9 @@ import client.data.model.dto.DeliveryManDto;
 import client.service.ClientService;
 import client.service.DeliveryManService;
 import client.service.UserService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(WebConfiguration.REST_API + "/login")
@@ -42,5 +41,15 @@ public class LoginController {
     @PostMapping("/registerDeliveryMan")
     public DeliveryManDto registerDeliveryMan(@RequestBody DeliveryManDto deliveryManDto) {
         return deliveryManService.register(deliveryManDto);
+    }
+
+    @GetMapping("/getClients")
+    public List<ClientDto> getClients() {
+        return clientService.getClients();
+    }
+
+    @GetMapping("/getDeliveryMen")
+    public List<DeliveryManDto> getDeliveryMen() {
+        return deliveryManService.getDeliveryMen();
     }
 }

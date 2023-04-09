@@ -1,5 +1,6 @@
 package client.service;
 
+import client.data.model.dto.ClientDto;
 import client.data.model.dto.DeliveryManDto;
 import client.data.model.entity.DeliveryMan;
 import client.data.model.enums.DeliveryMan_Status;
@@ -144,5 +145,9 @@ public class DeliveryManService {
             }
         }
         return deliveryMan.orElseThrow(() -> new ClientNotFoundException(dto.getId()));
+    }
+
+    public List<DeliveryManDto> getDeliveryMen() {
+        return repository.findAll().stream().map(DeliveryManDto::new).toList();
     }
 }
