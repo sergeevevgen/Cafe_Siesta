@@ -7,6 +7,7 @@ import client.data.repository.Combo_OrderRepository;
 import client.data.repository.OrderRepository;
 import client.data.repository.Order_ItemRepository;
 import client.service.exception.ClientNotFoundException;
+import client.service.exception.DeliveryManNotFoundException;
 import client.service.exception.OrderNotFoundException;
 import client.util.validation.ValidatorUtil;
 import org.slf4j.Logger;
@@ -29,12 +30,13 @@ public class OrderService {
     private final ProductService productService;
     private final ComboService comboService;
     private final ChatService chatService;
+    private final DeliveryManService deliveryManService;
 
     private final ValidatorUtil validatorUtil;
 
     public OrderService(OrderRepository repository, Order_ItemRepository order_itemRepository,
                         Combo_OrderRepository combo_orderRepository, ClientService clientService,
-                        ProductService productService, ComboService comboService, ChatService chatService, ValidatorUtil validatorUtil) {
+                        ProductService productService, ComboService comboService, ChatService chatService, DeliveryManService deliveryManService, ValidatorUtil validatorUtil) {
         this.repository = repository;
         this.order_itemRepository = order_itemRepository;
         this.combo_orderRepository = combo_orderRepository;
@@ -42,34 +44,35 @@ public class OrderService {
         this.productService = productService;
         this.comboService = comboService;
         this.chatService = chatService;
+        this.deliveryManService = deliveryManService;
         this.validatorUtil = validatorUtil;
     }
 
     //Создание заказа через поля
     @Transactional
-    public Order addOrder(String title, Double price, Long client_id, Map<Long, Long> products, Map<Long, Long> combos) {
-        if (!StringUtils.hasText(title) || price == null || price < 0 ||  client_id == null || client_id < 0) {
+    public Order addOrder(Double price, Long client_id, Map<Long, Long> products, Map<Long, Long> combos) {
+        if (price == null || price < 0 ||  client_id == null || client_id < 0) {
             throw new IllegalArgumentException("Order fields are null or empty");
         }
         final Order order = new Order();
-        order.setTitle(title);
         order.setPrice(price);
+        order.setTitle("Заказ #" + UUID.randomUUID().toString().substring(0, 8));
         final Client client = clientService.findById(client_id);
         if (client == null) {
             throw new ClientNotFoundException(client_id);
         }
         order.setClient(client);
         order.setStatus(Order_Status.Is_cart);
-        if (order.getStreet() != null) {
+        if (client.getStreet() != null) {
             order.setStreet(client.getStreet());
         }
-        if (order.getHouse() != null) {
+        if (client.getHouse() != null) {
             order.setHouse(client.getHouse());
         }
-        if (order.getFlat() != null) {
+        if (client.getFlat() != null) {
             order.setFlat(client.getFlat());
         }
-        if (order.getEntrance() != null) {
+        if (client.getEntrance() != null) {
             order.setEntrance(client.getEntrance());
         }
 
@@ -101,7 +104,6 @@ public class OrderService {
         //Создание чата при создании заказа
         Chat chat = chatService.createChat(order.getTitle());
         order.setChat(chat);
-
 
         validatorUtil.validate(order);
 
@@ -137,7 +139,7 @@ public class OrderService {
     //Создание заказа через Dto
     @Transactional
     public OrderDto addOrder(OrderDto orderDto) {
-        return new OrderDto(addOrder(orderDto.getTitle(), orderDto.getPrice(), orderDto.getClient_id(),
+        return new OrderDto(addOrder(orderDto.getPrice(), orderDto.getClient_id(),
                 orderDto.getProducts(), orderDto.getCombos()));
     }
 
@@ -175,19 +177,25 @@ public class OrderService {
 
     // Изменение статуса заказа у клиента
     @Transactional
-    public Order changeOrderStatus(Long orderId, Order_Status status) {
+    public Order changeOrderStatus(Long client_id, Long orderId, Order_Status status) {
         Optional<Order> order = repository.findById(orderId);
-        if (order.isPresent()) {
-            order.get().setStatus(status);
-            repository.save(order.get());
+        if (order.isEmpty()) {
+            throw new OrderNotFoundException(orderId);
         }
-        return order.orElseThrow(() -> new OrderNotFoundException(orderId));
+        Order current = order.get();
+        if (status == Order_Status.Accepted) {
+            current.setStatus(status);
+            addOrder(0.0, client_id, null, null);
+        } else {
+            current.setStatus(status);
+        }
+        return repository.save(current);
     }
 
     // Изменение статуса заказа у клиента через Dto
     @Transactional
     public OrderDto changeOrderStatus(OrderDto orderDto) {
-        return new OrderDto(changeOrderStatus(orderDto.getId(), orderDto.getStatus()));
+        return new OrderDto(changeOrderStatus(orderDto.getClient_id(), orderDto.getId(), orderDto.getStatus()));
     }
 
     //Изменение заказа по полям
@@ -322,6 +330,62 @@ public class OrderService {
         validatorUtil.validate(order);
         return repository.save(order);
     }
+
+    @Transactional
+    public OrderDto updateOrderFields(
+            OrderDto orderDto
+    ) {
+        return new OrderDto(updateOrderFields(orderDto.getId(), orderDto.getPrice(), orderDto.getTitle()));
+    }
+
+    @Transactional
+    public Order updateOrderDeliveryMan(
+            Long id,
+            Long deliveryman_id
+    ) {
+        if (id == null || id <= 0 || deliveryman_id == null || deliveryman_id <= 0) {
+            throw new IllegalArgumentException("Order fields are null or empty");
+        }
+        final Order order = findOrder(id);
+        if (order == null) {
+            throw new OrderNotFoundException(id);
+        }
+        final DeliveryMan deliveryMan = deliveryManService.findById(deliveryman_id);
+        if (deliveryMan == null) {
+            throw new DeliveryManNotFoundException(deliveryman_id);
+        }
+        order.setDeliveryMan(deliveryMan);
+        return repository.save(order);
+    }
+
+    @Transactional
+    public Order findClientCart(
+            Long client_id
+    ) {
+        if (client_id == null || client_id <= 0) {
+            throw new IllegalArgumentException("Client_id is null");
+        }
+        final Client client = clientService.findById(client_id);
+        if (client == null) {
+            throw new ClientNotFoundException(client_id);
+        }
+        return repository.findCartByClient(client_id);
+    }
+
+    @Transactional
+    public OrderDto findClientCart(
+            OrderDto orderDto
+    ) {
+        return new OrderDto(findClientCart(orderDto.getClient_id()));
+    }
+
+    @Transactional
+    public OrderDto updateOrderDeliveryMan(
+            OrderDto orderDto
+    ) {
+        return new OrderDto(updateOrderDeliveryMan(orderDto.getId(), orderDto.getDeliveryman_id()));
+    }
+
 
     //Добавление к заказу комбо
     @Transactional
