@@ -30,4 +30,9 @@ public class ProductsController {
     public ProductDto createOne(@RequestBody ProductDto dto) {
         return productService.addProduct(dto);
     }
+
+    @PostMapping("/updateOne")
+    public ProductDto updateOne(@RequestBody ProductDto dto) {
+        return productService.updateProduct(dto);
+    }
 }

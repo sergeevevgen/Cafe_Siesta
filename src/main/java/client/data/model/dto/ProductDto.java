@@ -33,7 +33,6 @@ public class ProductDto {
         }
     }
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     public Long getId() {
         return id;
     }

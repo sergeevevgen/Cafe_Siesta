@@ -20,7 +20,6 @@ public class CategoryDto {
         this.image_url = category.getImage_url();
     }
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     public Long getId() { return id; }
 
     public String getName() {

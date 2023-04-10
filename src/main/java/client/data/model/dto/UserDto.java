@@ -24,7 +24,6 @@ public class UserDto {
         this.user_id = user.getUser_id();
     }
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     public Long getId() {
         return id;
     }

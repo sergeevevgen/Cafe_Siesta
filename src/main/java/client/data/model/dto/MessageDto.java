@@ -23,7 +23,6 @@ public class MessageDto {
         this.chat_id = message.getChat().getId();
     }
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     public Long getId() {
         return id;
     }
