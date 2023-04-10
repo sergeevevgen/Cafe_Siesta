@@ -194,14 +194,17 @@ public class OrderService {
                 else {
                     throw new WrongOrderStatusException(current.getId(), current.getStatus());
                 }
+                break;
             }
-            case In_process: {
+            case In_process:
+            case Rejected: {
                 if (current.getStatus() == Order_Status.Accepted) {
                     current.setStatus(status);
                 }
                 else {
                     throw new WrongOrderStatusException(current.getId(), current.getStatus());
                 }
+                break;
             }
             case Done: {
                 if (current.getStatus() == Order_Status.In_process) {
@@ -210,6 +213,7 @@ public class OrderService {
                 else {
                     throw new WrongOrderStatusException(current.getId(), current.getStatus());
                 }
+                break;
             }
             case On_the_way: {
                 if (current.getStatus() == Order_Status.Done) {
@@ -218,6 +222,7 @@ public class OrderService {
                 else {
                     throw new WrongOrderStatusException(current.getId(), current.getStatus());
                 }
+                break;
             }
             case Finish: {
                 if (current.getStatus() == Order_Status.On_the_way) {
@@ -226,14 +231,7 @@ public class OrderService {
                 else {
                     throw new WrongOrderStatusException(current.getId(), current.getStatus());
                 }
-            }
-            case Rejected: {
-                if (current.getStatus() == Order_Status.Accepted) {
-                    current.setStatus(status);
-                }
-                else {
-                    throw new WrongOrderStatusException(current.getId(), current.getStatus());
-                }
+                break;
             }
         }
 
