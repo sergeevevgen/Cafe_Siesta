@@ -9,7 +9,9 @@ import client.data.repository.Order_ItemRepository;
 import client.service.exception.ClientNotFoundException;
 import client.service.exception.DeliveryManNotFoundException;
 import client.service.exception.OrderNotFoundException;
+import client.service.exception.WrongOrderStatusException;
 import client.util.validation.ValidatorUtil;
+import org.aspectj.weaver.ast.Or;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -177,25 +179,71 @@ public class OrderService {
 
     // Изменение статуса заказа у клиента
     @Transactional
-    public Order changeOrderStatus(Long client_id, Long orderId, Order_Status status) {
+    public Order changeOrderStatus(Long orderId, Order_Status status) {
         Optional<Order> order = repository.findById(orderId);
         if (order.isEmpty()) {
             throw new OrderNotFoundException(orderId);
         }
         Order current = order.get();
-        if (status == Order_Status.Accepted) {
-            current.setStatus(status);
-            addOrder(0.0, client_id, null, null);
-        } else {
-            current.setStatus(status);
+        switch (status) {
+            case Accepted: {
+                if (current.getStatus() == Order_Status.Is_cart) {
+                    current.setStatus(status);
+                    addOrder(0.0, current.getClient().getId(), null, null);
+                }
+                else {
+                    throw new WrongOrderStatusException(current.getId(), current.getStatus());
+                }
+            }
+            case In_process: {
+                if (current.getStatus() == Order_Status.Accepted) {
+                    current.setStatus(status);
+                }
+                else {
+                    throw new WrongOrderStatusException(current.getId(), current.getStatus());
+                }
+            }
+            case Done: {
+                if (current.getStatus() == Order_Status.In_process) {
+                    current.setStatus(status);
+                }
+                else {
+                    throw new WrongOrderStatusException(current.getId(), current.getStatus());
+                }
+            }
+            case On_the_way: {
+                if (current.getStatus() == Order_Status.Done) {
+                    current.setStatus(status);
+                }
+                else {
+                    throw new WrongOrderStatusException(current.getId(), current.getStatus());
+                }
+            }
+            case Finish: {
+                if (current.getStatus() == Order_Status.On_the_way) {
+                    current.setStatus(status);
+                }
+                else {
+                    throw new WrongOrderStatusException(current.getId(), current.getStatus());
+                }
+            }
+            case Rejected: {
+                if (current.getStatus() == Order_Status.Accepted) {
+                    current.setStatus(status);
+                }
+                else {
+                    throw new WrongOrderStatusException(current.getId(), current.getStatus());
+                }
+            }
         }
+
         return repository.save(current);
     }
 
     // Изменение статуса заказа у клиента через Dto
     @Transactional
     public OrderDto changeOrderStatus(OrderDto orderDto) {
-        return new OrderDto(changeOrderStatus(orderDto.getClient_id(), orderDto.getId(), orderDto.getStatus()));
+        return new OrderDto(changeOrderStatus(orderDto.getId(), orderDto.getStatus()));
     }
 
     //Изменение заказа по полям
