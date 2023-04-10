@@ -38,19 +38,15 @@ public class Client {
     @Size(min = 8, max = 64)
     private String password;
 
-    @NotBlank
     @Column
     private String street;
 
-    @NotBlank
     @Column
     private String house;
 
-    @NotBlank
     @Column
     private String flat;
 
-    @NotBlank
     @Column
     private String entrance;
 

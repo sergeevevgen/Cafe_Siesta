@@ -32,6 +32,18 @@ public class Order {
     @Column(nullable = false)
     private String title;
 
+    @Column
+    private String street;
+
+    @Column
+    private String house;
+
+    @Column
+    private String flat;
+
+    @Column
+    private String entrance;
+
     //done
     @ManyToOne
     @JoinColumn(name = "client_fk", nullable = false)
@@ -58,11 +70,16 @@ public class Order {
     public Order() {
     }
 
-    public Order(Order_Status status, Double price, Integer count, String title) {
+    public Order(Order_Status status, Double price, Integer count, String title, String street, String house,
+                 String flat, String entrance) {
         this.status = status;
         this.price = price;
         this.count = count;
         this.title = title;
+        this.street = street;
+        this.house = house;
+        this.flat = flat;
+        this.entrance = entrance;
     }
 
     public Chat getChat() {
@@ -215,5 +232,37 @@ public class Order {
                 item.setOrder(this);
             }
         }
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getHouse() {
+        return house;
+    }
+
+    public void setHouse(String house) {
+        this.house = house;
+    }
+
+    public String getFlat() {
+        return flat;
+    }
+
+    public void setFlat(String flat) {
+        this.flat = flat;
+    }
+
+    public String getEntrance() {
+        return entrance;
+    }
+
+    public void setEntrance(String entrance) {
+        this.entrance = entrance;
     }
 }

@@ -5,6 +5,7 @@ import client.data.model.entity.Client;
 import client.data.model.entity.Combo;
 import client.data.repository.ClientRepository;
 import client.service.exception.ClientNotFoundException;
+import client.service.exception.ComboNotFoundException;
 import client.util.validation.ValidationException;
 import client.util.validation.ValidatorUtil;
 import org.springframework.stereotype.Service;
@@ -77,6 +78,43 @@ public class ClientService {
 
     public ClientDto register(ClientDto dto) {
         return new ClientDto(register(dto.getName(), dto.getSurname(), dto.getPassword(), dto.getLogin(), dto.getStreet(), dto.getEntrance(), dto.getFlat(), dto.getHouse()));
+    }
+
+    @Transactional(readOnly = true)
+    public Client findClientEntity(Long id) {
+        final Optional<Client> client = clientRepository.findById(id);
+        return client.orElseThrow(() -> new ClientNotFoundException(id));
+    }
+
+    public Client updateData(Long id, String name, String surname, String password, String login, String street,
+                             String entrance, String flat, String house) {
+        if (id == null || id < 0 || !StringUtils.hasText(name) || !StringUtils.hasText(surname) || !StringUtils.hasText(password)
+                || !StringUtils.hasText(login)) {
+            throw new IllegalArgumentException("Client fields are null or empty");
+        }
+        final Client client = findClientEntity(id);
+        if (client == null) {
+            throw new ClientNotFoundException(id);
+        }
+        if (!client.getLogin().equals(login) && clientRepository.findByLogin(login) != null) {
+            throw new ValidationException(String.format("Client '%s' is already exist", login));
+        }
+        client.setLogin(login);
+        client.setName(name);
+        client.setSurname(surname);
+        client.setPassword(password);
+        client.setStreet(street);
+        client.setFlat(flat);
+        client.setHouse(house);
+        client.setEntrance(entrance);
+        validatorUtil.validate(client);
+        return clientRepository.save(client);
+    }
+
+    public ClientDto updateData(ClientDto clientDto) {
+        return new ClientDto(updateData(clientDto.getId(), clientDto.getName(), clientDto.getSurname(), clientDto.getPassword(),
+                clientDto.getLogin(), clientDto.getStreet(), clientDto.getEntrance(), clientDto.getFlat(),
+                clientDto.getHouse()));
     }
 
     public List<ClientDto> getClients() {

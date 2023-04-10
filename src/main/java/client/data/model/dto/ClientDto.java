@@ -27,10 +27,20 @@ public class ClientDto {
         this.name = client.getName();
         this.surname = client.getSurname();
         this.login = client.getLogin();
-        this.street = client.getStreet();
-        this.flat = client.getFlat();
-        this.entrance = client.getEntrance();
-        this.house = client.getHouse();
+        if (client.getStreet() != null) {
+            this.street = client.getStreet();
+        }
+        if (client.getHouse() != null) {
+            this.house = client.getHouse();
+        }
+        if (client.getFlat() != null) {
+            this.flat = client.getFlat();
+        }
+        if (client.getEntrance() != null) {
+            this.entrance = client.getEntrance();
+        }
+
+
         this.password = client.getPassword();
         if (client.getOrders() != null) {
             for (var o : client.getOrders()) {

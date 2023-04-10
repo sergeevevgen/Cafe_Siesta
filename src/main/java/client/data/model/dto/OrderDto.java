@@ -22,6 +22,11 @@ public class OrderDto {
     private Integer count;
     private Long client_id;
     private Long deliveryman_id;
+    private String street;
+    private String house;
+    private String flat;
+    private String entrance;
+
     private final Map<Long, Long> products = new HashMap<>();
     private final Map<Long, Long> combos = new HashMap<>();
     private Long chat_id;
@@ -36,6 +41,19 @@ public class OrderDto {
         this.title = order.getTitle();
         this.count = order.getCount();
         this.client_id = order.getClient().getId();
+        if (order.getStreet() != null) {
+            this.street = order.getStreet();
+        }
+        if (order.getHouse() != null) {
+            this.house = order.getHouse();
+        }
+        if (order.getFlat() != null) {
+            this.flat = order.getFlat();
+        }
+        if (order.getEntrance() != null) {
+            this.entrance = order.getEntrance();
+        }
+
         if (order.getDeliveryMan() != null) {
             this.deliveryman_id = order.getDeliveryMan().getId();
         }
@@ -96,5 +114,21 @@ public class OrderDto {
 
     public Long getChat_id() {
         return chat_id;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public String getHouse() {
+        return house;
+    }
+
+    public String getFlat() {
+        return flat;
+    }
+
+    public String getEntrance() {
+        return entrance;
     }
 }

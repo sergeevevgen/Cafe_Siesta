@@ -6,6 +6,7 @@ import client.data.model.enums.Order_Status;
 import client.data.repository.Combo_OrderRepository;
 import client.data.repository.OrderRepository;
 import client.data.repository.Order_ItemRepository;
+import client.service.exception.ClientNotFoundException;
 import client.service.exception.OrderNotFoundException;
 import client.util.validation.ValidatorUtil;
 import org.slf4j.Logger;
@@ -53,8 +54,24 @@ public class OrderService {
         final Order order = new Order();
         order.setTitle(title);
         order.setPrice(price);
-        order.setClient(clientService.findById(client_id));
+        final Client client = clientService.findById(client_id);
+        if (client == null) {
+            throw new ClientNotFoundException(client_id);
+        }
+        order.setClient(client);
         order.setStatus(Order_Status.Is_cart);
+        if (order.getStreet() != null) {
+            order.setStreet(client.getStreet());
+        }
+        if (order.getHouse() != null) {
+            order.setHouse(client.getHouse());
+        }
+        if (order.getFlat() != null) {
+            order.setFlat(client.getFlat());
+        }
+        if (order.getEntrance() != null) {
+            order.setEntrance(client.getEntrance());
+        }
 
         if (products != null && !products.isEmpty()) {
             for (var p : products.entrySet()) {
@@ -89,6 +106,32 @@ public class OrderService {
         validatorUtil.validate(order);
 
         return repository.save(order);
+    }
+
+    @Transactional
+    public Order setAddress(Long id,
+                            String street,
+                            String house,
+                            String flat,
+                            String entrance) {
+        if (id == null || id <= 0 || !StringUtils.hasText(street) || !StringUtils.hasText(house)) {
+            throw new IllegalArgumentException("Order address fields are null or empty");
+        }
+        final Order current = findOrder(id);
+        if (current == null) {
+            throw new OrderNotFoundException(id);
+        }
+        current.setStreet(street);
+        current.setHouse(house);
+        current.setFlat(flat);
+        current.setEntrance(entrance);
+        validatorUtil.validate(current);
+        return repository.save(current);
+    }
+
+    @Transactional
+    public OrderDto setAddress(OrderDto orderDto) {
+        return new OrderDto(setAddress(orderDto.getId(), orderDto.getStreet(), orderDto.getHouse(), orderDto.getFlat(), orderDto.getEntrance()));
     }
 
     //Создание заказа через Dto
