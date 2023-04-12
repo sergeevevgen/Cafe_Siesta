@@ -14,6 +14,6 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     @Query(value = "select * from orders o where o.client_fk = :clientId", nativeQuery = true)
     List<Order> findByClientId(Long clientId);
 
-    @Query(value = "select * from orders o where o.client_fk = :clientId and o.status = 'is_cart'", nativeQuery = true)
+    @Query(value = "select * from orders o where o.client_fk = :clientId and o.status = 'Is_cart'", nativeQuery = true)
     Order findCartByClient(Long clientId);
 }

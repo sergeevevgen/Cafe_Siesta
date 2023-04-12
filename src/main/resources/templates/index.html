@@ -24,7 +24,7 @@
     <div class="products-main-pg">
         <div th:each="pr : ${products}">
              <div class="product-main-pg">
-                <img class="product-image-main-pg" th:src="@{../images/${pr.imageUrl}}" alt="Product image">
+                <img class="product-image-main-pg" th:src="@{/images/{image}(image=${pr.image_url})}" alt="Product image">
                 <div class="product-info-main-pg">
                     <div class="info-name-main-pg" th:text="${pr.name}"></div>
                     <div class="info-dop-main-pg">
