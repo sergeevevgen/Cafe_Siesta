@@ -12,6 +12,12 @@ a {
     text-decoration: none;
 }
 
+h4 {
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 34px;
+}
+
 .main {
     display: flex;
     flex-direction: column;
@@ -48,7 +54,9 @@ a {
     border-radius: 15px;
 }
 
-.products {
+/*   main page   */
+
+.products-main-pg {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -57,7 +65,7 @@ a {
     gap: 50px;
 }
 
-.product {
+.product-main-pg {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -71,7 +79,7 @@ a {
     border-radius: 15px;
 }
 
-.product-image-menu {
+.product-image-main-pg {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -85,7 +93,7 @@ a {
     border-radius: 15px 15px 0px 0px;
 }
 
-.product-info {
+.product-info-main-pg {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -95,21 +103,7 @@ a {
     height: 167px;
 }
 
-h2 {
-    font-weight: 600;
-    font-size: 24px;
-    line-height: 29px;
-
-    color: #000000;
-}
-
-h3 {
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 24px;
-}
-
-.info-name {
+.info-name-main-pg {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -118,9 +112,15 @@ h3 {
 
     width: 230px;
     height: 72px;
+
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 29px;
+
+    color: #000000;
 }
 
-.info-dop {
+.info-dop-main-pg {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
@@ -131,7 +131,17 @@ h3 {
     height: 28px;
 }
 
-.info-price {
+.dop-weight-main-pg {
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+}
+
+.dop-rating-main-pg {
+
+}
+
+.info-price-main-pg {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -143,7 +153,7 @@ h3 {
     height: 67px;
 }
 
-.price-btn {
+.price-btn-main-pg {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -152,7 +162,7 @@ h3 {
     gap: 10px;
 
     width: 131px;
-    height: 37px;
+    height: 40px;
 
     background: #FFFFFF;
     border-radius: 15px;
@@ -165,6 +175,8 @@ h3 {
     text-align: center;
     color: #121219;
 }
+
+/*   card page   */
 
 .product-card {
     display: flex;
@@ -279,6 +291,8 @@ h3 {
     text-align: center;
     color: #FFFFFF;
 }
+
+/*   product page   */
 
 .back-pr-pg {
     display: flex;
@@ -553,8 +567,6 @@ h3 {
 .user-txt-ordr-pg {
     width: 123px;
 
-    font-family: 'Inter';
-    font-style: normal;
     font-weight: 500;
     font-size: 20px;
     line-height: 24px;
@@ -565,8 +577,6 @@ h3 {
 .user-ordr-pg {
     width: 487px;
 
-    font-family: 'Inter';
-    font-style: normal;
     font-weight: 400;
     font-size: 20px;
     line-height: 24px;
@@ -636,12 +646,6 @@ h3 {
     gap: 10px;
 
     width: 777px;
-}
-
-h4 {
-    font-weight: 400;
-    font-size: 28px;
-    line-height: 34px;
 }
 
 .address-prf-pg {
