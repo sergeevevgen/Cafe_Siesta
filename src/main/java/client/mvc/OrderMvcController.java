@@ -22,7 +22,7 @@ public class OrderMvcController {
                 orderService.findClientCart(14L));
         return "cart";
     }
-    @GetMapping("/all")
+    @GetMapping
     public String getOrders(Model model) {
         model.addAttribute("orders",
                 orderService.findAllClientOrders(14L));

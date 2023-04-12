@@ -21,18 +21,18 @@
 <header class="header">
     <div th:fragment="navbar" class="navbar">
         <div class="logo-lvl">
-            <div class="logo"><a class="logo-s" th:href="@{/}">Siesta</a></div>
+            <div class="logo"><a class="logo-s" th:href="@{/product}">Siesta</a></div>
             <div class="search-box">
                 <input type="text" class="search-text" placeholder="Поиск">
                 <input type="submit" class="search-btn" value="Найти">
             </div>
-            <a class="action-btn" th:href="@{/product/login}">Войти</a>
+            <a class="action-btn" th:href="@{/login}">Войти</a>
         </div>
         <div class="links-lvl">
-            <a class="link" th:href="@{/}">Продукты</a>
-            <a class="link" th:href="@{/product/card}">Корзина</a>
-            <a class="link" th:href="@{/product/profile}">Профиль</a>
-            <a class="link" th:href="@{/product/orders}">Заказы</a>
+            <a class="link" th:href="@{/product}">Продукты</a>
+            <a class="link" th:href="@{/order/cart}">Корзина</a>
+            <a class="link" th:href="@{/client/profile}">Профиль</a>
+            <a class="link" th:href="@{/order}">Заказы</a>
         </div>
     </div>
 </header>

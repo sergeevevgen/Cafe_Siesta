@@ -28,8 +28,8 @@ public class ProductMvcController {
 
     @GetMapping("/product")
     public String getProduct(Model model) {
-        model.addAttribute("products",
-                productService.findAllProducts());
+        model.addAttribute("product",
+                productService.findProduct(2L));
         return "product";
     }
 }
