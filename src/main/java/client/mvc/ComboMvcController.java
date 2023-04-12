@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/combos_html")
+@RequestMapping("/combo")
 public class ComboMvcController {
     private final ComboService comboService;
 
