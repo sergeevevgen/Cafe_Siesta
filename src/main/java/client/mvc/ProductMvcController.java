@@ -20,51 +20,16 @@ public class ProductMvcController {
 
 
     @GetMapping
-    public String getAllCategories(Model model) {
+    public String getAllProducts(Model model) {
         model.addAttribute("products",
                 productService.findAllProducts());
         return "index";
     }
-    @GetMapping("/card")
-    public String getCard(Model model) {
-        model.addAttribute("products",
-                productService.findAllProducts());
-        return "card";
-    }
-    @GetMapping("/login")
-    public String getLogin(Model model) {
-        model.addAttribute("products",
-                productService.findAllProducts());
-        return "login";
-    }
-    @GetMapping("/signup")
-    public String getSignup(Model model) {
-        model.addAttribute("products",
-                productService.findAllProducts());
-        return "signup";
-    }
+
     @GetMapping("/product")
     public String getProduct(Model model) {
         model.addAttribute("products",
                 productService.findAllProducts());
         return "product";
-    }
-    @GetMapping("/orders")
-    public String getOrders(Model model) {
-        model.addAttribute("products",
-                productService.findAllProducts());
-        return "orders";
-    }
-    @GetMapping("/order")
-    public String getOrder(Model model) {
-        model.addAttribute("products",
-                productService.findAllProducts());
-        return "order";
-    }
-    @GetMapping("/profile")
-    public String getProfile(Model model) {
-        model.addAttribute("products",
-                productService.findAllProducts());
-        return "profile";
     }
 }
