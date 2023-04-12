@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+            integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <script src="/js/navbar.js"></script>
+    <link rel="stylesheet" href="/css/index.css"/>
+    <title>Корзина</title>
+</head>
+<body>
+<div th:insert="navbar"></div>
+<main class="main">
+    <div class="back">
+        <div class="product-cart-pg">
+            <img class="product-image-cart-pg" src="../images/image1.jpg" alt="Описание изображения">
+            <div class="product-info-cart-pg">
+                <div class="info-name-cart-pg">Паста с зеленью</div>
+                <div class="count-frame-cart-pg">
+                    <div class="count-txt-cart-pg">Количество:</div>
+                    <div class="count-cart-pg">1</div>
+                </div>
+                <div class="info-price-cart-pg">120 ₽</div>
+            </div>
+        </div>
+        <input type="submit" class="order-btn-cart-pg" value="Заказать">
+    </div>
+</main>
+</body>
+</html>
