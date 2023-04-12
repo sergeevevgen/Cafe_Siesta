@@ -19,7 +19,7 @@ public class ProductMvcController {
     }
 
 
-    @GetMapping("/index")
+    @GetMapping
     public String getAllCategories(Model model) {
         model.addAttribute("products",
                 productService.findAllProducts());
