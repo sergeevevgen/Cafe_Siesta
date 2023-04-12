@@ -23,14 +23,20 @@
 <main class="main">
     <div class="back">
         <div class="name-email-prf-pg">
-            <div class="name-prf-pg">Иван Иванов</div>
-            <div class="email-prf-pg">qwerty1234@mail.ru</div>
+            <div class="name-and-surname-prf-pg">
+                <div class="name-prf-pg" th:text="${client.name}"></div>
+                <div class="surname-prf-pg" th:text="${client.surname}"></div>
+            </div>
+            <div class="email-prf-pg" th:text="${client.login}"></div>
         </div>
         <div class="info-prf-pg">
-            <div class="address-bl-prf-pg">
+            <div class="address-frame-prf-pg">
                 <h4>Адрес</h4>
-                <div class="address-prf-pg">
-                    г. Ульяновск, ул. Ленина 32, кв. 10
+                <div class="address-prf-pg">г. Ульяновск,
+                    <div class="address-street-prf-pg" th:text="${client.street}"></div>,
+                    <div class="address-house-prf-pg" th:text="${client.house}"></div>,
+                    <div class="address-entrance-prf-pg" th:text="${client.entrance}"></div>,
+                    <div class="address-flat-prf-pg" th:text="${client.flat}"></div>
                 </div>
             </div>
             <div class="phone-number-bl-prf-pg">
