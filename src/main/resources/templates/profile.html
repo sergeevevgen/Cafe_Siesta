@@ -16,25 +16,29 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/index.css"/>
-    <title>Продукт</title>
+    <title>Профиль</title>
 </head>
 <body>
 <div th:insert="navbar"></div>
 <main class="main">
-    <div class="back-pr-pg">
-        <div class="product-pr-pg">
-            <img class="product-image-pr-pg" src="../images/image1-hq.jpg" alt="Описание изображения">
-            <div class="product-name-pr-pg">
-                Сытный обед на сто человек за ноль рублей в кредит без регистрации
-                <div class="product-weight-pr-pg"> 200 г</div>
+    <div class="back">
+        <div class="name-email-prf-pg">
+            <div class="name-prf-pg">Иван Иванов</div>
+            <div class="email-prf-pg">qwerty1234@mail.ru</div>
+        </div>
+        <div class="info-prf-pg">
+            <div class="address-bl-prf-pg">
+                <h4>Адрес</h4>
+                <div class="address-prf-pg">
+                    г. Ульяновск, ул. Ленина 32, кв. 10
+                </div>
             </div>
-        </div>
-        <div class="product-info-pr-pg">
-            Мы готовим его из мясного и рыбного паштета, очень вкусно получается я того все
-        </div>
-        <div class="price-and-btn-pr-pg">
-            <div class="price-pr-pg">350 ₽</div>
-            <input type="submit" class="to-card-btn-pr-pg" value="В корзину">
+            <div class="phone-number-bl-prf-pg">
+                <h4>Телефон</h4>
+                <div class="phone-number-prf-pg">
+                    89057379898
+                </div>
+            </div>
         </div>
     </div>
 </main>

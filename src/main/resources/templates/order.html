@@ -15,23 +15,36 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700&display=swap" rel="stylesheet">
-    <script src="/js/navbar.js"></script>
     <link rel="stylesheet" href="/css/index.css"/>
-    <title>Корзина</title>
+    <title>Заказ</title>
 </head>
 <body>
 <div th:insert="navbar"></div>
 <main class="main">
     <div class="back">
-        <div class="product-card">
-            <img class="product-image-card" src="../images/image1.jpg" alt="Описание изображения">
-            <div class="product-card-info">
-                <div class="card-info-name">Паста с зеленью</div>
-                <div class="card-count-frame-ordr-pg">
-                    <div class="count-txt-ordr-pg">Количество:</div>
-                    <div class="count-ordr-pg">1</div>
+        <div class="order-ordr-pg">
+            <div class="number-order-and-price-ordr-pg">
+                <div class="number-frame-ordr-pg">
+                    <div class="number-txt-ordr-pg">Заказ номер:</div>
+                    <div class="number-ordr-pg">000315</div>
                 </div>
-                <div class="card-info-price">120 ₽</div>
+                <div class="price-frame-ordr-pg">
+                    <div class="price-txt-ordr-pg">Стоимость:</div>
+                    <div class="price-ordr-pg">625 ₽</div>
+                </div>
+            </div>
+            <div class="info-ordr-pg">
+                <div class="address-frame-ordr-pg">
+                    <div class="address-txt-ordr-pg">Адрес доставки:</div>
+                    <div class="adress-ordr-pg">г. Ульяновск, ул. Ленина 32, кв. 10</div>
+                </div>
+                <div class="user-frame-ordr-pg">
+                    <div class="user-txt-ordr-pg">Получатель:</div>
+                    <div class="user-ordr-pg">Иван Иванов</div>
+                </div>
+                <div class="status-ordr-pg">
+                    В доставке
+                </div>
             </div>
         </div>
         <div class="product-card">
@@ -56,7 +69,18 @@
                 <div class="card-info-price">120 ₽</div>
             </div>
         </div>
-        <input type="submit" class="order-btn" value="Заказать">
+        <div class="product-card">
+            <img class="product-image-card" src="../images/image1.jpg" alt="Описание изображения">
+            <div class="product-card-info">
+                <div class="card-info-name">Паста с зеленью</div>
+                <div class="card-count-frame-ordr-pg">
+                    <div class="count-txt-ordr-pg">Количество:</div>
+                    <div class="count-ordr-pg">1</div>
+                </div>
+                <div class="card-info-price">120 ₽</div>
+            </div>
+        </div>
+        <a class="btn-back-ordr-pg" th:href="@{/product/orders}">К заказам</a>
     </div>
 </main>
 </body>

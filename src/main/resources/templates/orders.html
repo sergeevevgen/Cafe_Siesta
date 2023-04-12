@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+            integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/index.css"/>
+    <title>Заказы</title>
+</head>
+<body>
+<div th:insert="navbar"></div>
+<main class="main">
+    <div class="back">
+        <div class="order-ordr-pg">
+            <a class="number-order-and-price-ordr-pg" th:href="@{/product/order}">
+                <div class="number-frame-ordr-pg">
+                    <div class="number-txt-ordr-pg">Заказ номер:</div>
+                    <div class="number-ordr-pg">000315</div>
+                </div>
+                <div class="price-frame-ordr-pg">
+                    <div class="price-txt-ordr-pg">Стоимость:</div>
+                    <div class="price-ordr-pg">625 ₽</div>
+                </div>
+            </a>
+            <div class="info-ordr-pg">
+                <div class="address-frame-ordr-pg">
+                    <div class="address-txt-ordr-pg">Адрес доставки:</div>
+                    <div class="adress-ordr-pg">г. Ульяновск, ул. Ленина 32, кв. 10</div>
+                </div>
+                <div class="status-ordr-pg">
+                    В доставке
+                </div>
+            </div>
+        </div>
+        <div class="order-ordr-pg">
+            <a class="number-order-and-price-ordr-pg" th:href="@{/product/order}">
+                <div class="number-frame-ordr-pg">
+                    <div class="number-txt-ordr-pg">Заказ номер:</div>
+                    <div class="number-ordr-pg">000315</div>
+                </div>
+                <div class="price-frame-ordr-pg">
+                    <div class="price-txt-ordr-pg">Стоимость:</div>
+                    <div class="price-ordr-pg">625 ₽</div>
+                </div>
+            </a>
+            <div class="info-ordr-pg">
+                <div class="address-frame-ordr-pg">
+                    <div class="address-txt-ordr-pg">Адрес доставки:</div>
+                    <div class="adress-ordr-pg">г. Ульяновск, ул. Ленина 32, кв. 10</div>
+                </div>
+                <div class="status-ordr-pg">
+                    В доставке
+                </div>
+            </div>
+        </div>
+        <a class="btn-back-ordr-pg" th:href="@{/}">На главную</a>
+    </div>
+</main>
+</body>
+</html>
