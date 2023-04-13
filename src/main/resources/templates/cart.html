@@ -24,7 +24,9 @@
 <main class="main">
     <div class="back">
         <div class="product-cart-pg">
-            <img class="product-image-cart-pg" src="../images/image2.jpg" alt="Описание изображения">
+            <a th:href="@{/product}">
+                <img class="product-image-cart-pg" src="../images/image2.jpg" alt="Описание изображения">
+            </a>
             <div class="product-info-cart-pg">
                 <div class="info-name-cart-pg">Паста с зеленью</div>
                 <div class="count-frame-cart-pg">
@@ -34,7 +36,48 @@
                 <div class="info-price-cart-pg">120 ₽</div>
             </div>
         </div>
-        <input type="submit" class="order-btn-cart-pg" value="Заказать">
+        <div class="product-cart-pg">
+            <a th:href="@{/product}">
+                <img class="product-image-cart-pg" src="../images/image4.jpg" alt="Описание изображения">
+            </a>
+            <div class="product-info-cart-pg">
+                <div class="info-name-cart-pg">Паста с зеленью</div>
+                <div class="count-frame-cart-pg">
+                    <div class="count-txt-cart-pg">Количество:</div>
+                    <div class="count-cart-pg">1</div>
+                </div>
+                <div class="info-price-cart-pg">120 ₽</div>
+            </div>
+        </div>
+        <div class="product-cart-pg">
+            <a th:href="@{/product}">
+                <img class="product-image-cart-pg" src="../images/image5.jpg" alt="Описание изображения">
+            </a>
+            <div class="product-info-cart-pg">
+                <div class="info-name-cart-pg">Паста с зеленью</div>
+                <div class="count-frame-cart-pg">
+                    <div class="count-txt-cart-pg">Количество:</div>
+                    <div class="count-cart-pg">1</div>
+                </div>
+                <div class="info-price-cart-pg">120 ₽</div>
+            </div>
+        </div>
+        <div class="product-cart-pg">
+            <a th:href="@{/product}">
+                <img class="product-image-cart-pg" src="../images/image2.jpg" alt="Описание изображения">
+            </a>
+            <div class="product-info-cart-pg">
+                <div class="info-name-cart-pg">Паста с зеленью</div>
+                <div class="count-frame-cart-pg">
+                    <div class="count-txt-cart-pg">Количество:</div>
+                    <div class="count-cart-pg">1</div>
+                </div>
+                <div class="info-price-cart-pg">120 ₽</div>
+            </div>
+        </div>
+        <a th:href="@{/}">
+            <div class="order-btn-cart-pg" th:text="Заказать"></div>
+        </a>
     </div>
 </main>
 </body>

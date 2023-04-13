@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.w3.org/1999/xhtml">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:fmt="http://www.springframework.org/tags/form"
+      xmlns:util="http://www.thymeleaf.org/extras/spring-utility">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -24,15 +26,26 @@
     <div class="products-main-pg">
         <div th:each="pr : ${products}">
              <div class="product-main-pg">
-                <img class="product-image-main-pg" th:src="@{/images/{image}(image=${pr.image_url})}" alt="Product image">
+                 <a th:href="@{/product/{id}(id=${pr.id})}">
+                     <img class="product-image-main-pg" th:src="@{/images/{image}(image=${pr.image_url})}" alt="Product image">
+                 </a>
+
                 <div class="product-info-main-pg">
                     <div class="info-name-main-pg" th:text="${pr.name}"></div>
                     <div class="info-dop-main-pg">
-                        <div class="dop-weight-main-pg" th:text="${pr.weight}"></div>
+                        <div class="dop-weight-frame-main-pg">
+                            <div class="dop-weight-main-pg" th:text="${pr.weight}"></div>
+                            <div>г</div>
+                        </div>
                         <div class="dop-rating-main-pg"></div>
                     </div>
                     <div class="info-price-main-pg">
-                        <input type="submit" class="price-btn-main-pg" th:value="${pr.price}">
+                        <a th:href="@{/orders/cart}">
+                            <div class="price-btn-frame-main-pg">
+                                <div class="price-btn-main-pg" th:text="${pr.price}"></div>
+                                <div>₽</div>
+                            </div>
+                        </a>
                     </div>
                 </div>
              </div>

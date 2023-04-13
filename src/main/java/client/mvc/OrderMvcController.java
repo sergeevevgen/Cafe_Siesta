@@ -5,10 +5,11 @@ import client.service.OrderService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/order")
+@RequestMapping("/orders")
 public class OrderMvcController {
     private final OrderService orderService;
 
@@ -31,7 +32,7 @@ public class OrderMvcController {
     @GetMapping("/order")
     public String getOrder(Model model) {
         model.addAttribute("order",
-                orderService.findOrder(1L));
+                orderService.findAllClientOrders(14L));
         return "order";
     }
 

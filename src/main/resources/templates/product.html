@@ -23,18 +23,24 @@
 <main class="main">
     <div class="back-pr-pg">
         <div class="product-pr-pg">
-            <img class="product-image-pr-pg" src="../images/image1-hq.jpg" alt="Описание изображения">
-            <div class="product-name-pr-pg">
-                Сытный обед на сто человек за ноль рублей в кредит без регистрации
-                <div class="product-weight-pr-pg"> 200 г</div>
+            <img class="product-image-pr-pg" th:src="@{/images/{image}(image=${product.image_url})}" alt="Описание изображения">
+            <div class="product-name-pr-pg" th:text="${product.name}"></div>
+            <div class="product-weight-text-pr-pg">
+                <div class="product-weight-pr-pg" th:text="${product.weight}"></div>
+                <div>г</div>
             </div>
+
         </div>
-        <div class="product-info-pr-pg">
-            Мы готовим его из мясного и рыбного паштета, очень вкусно получается я того все
-        </div>
+        <div class="product-info-pr-pg" th:text="${product.description}"></div>
         <div class="price-and-btn-pr-pg">
-            <div class="price-pr-pg">350 ₽</div>
-            <input type="submit" class="to-card-btn-pr-pg" value="В корзину">
+            <div class="price-text-pr-pg">
+                <div class="price-pr-pg" th:text="${product.price}"></div>
+                <div>₽</div>
+            </div>
+
+            <a th:href="@{/orders/cart}">
+                <div class="to-card-btn-pr-pg">В корзину</div>
+            </a>
         </div>
     </div>
 </main>
