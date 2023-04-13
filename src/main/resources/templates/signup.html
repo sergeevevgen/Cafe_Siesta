@@ -30,7 +30,9 @@
                placeholder="Пароль" required>
     </div>
     <div class="input-form">
-        <input type="submit" value="Зарегистрироваться">
+        <a th:href="@{/}">
+            <input type="submit" value="Зарегистрироваться">
+        </a>
     </div>
     <a href="/client/login" class="forget">Вход</a>
 </div>
