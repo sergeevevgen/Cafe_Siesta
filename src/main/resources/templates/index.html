@@ -23,6 +23,22 @@
 <body>
 <div th:insert="navbar"></div>
 <main class="main">
+    <div class="combo-back-main-pg">
+        <div class="combo-info-main-pg">
+            <div class="combo-info-discount-frame-main-pg">
+                <div class="combo-info-discount-text-main-pg">Блюдо дня</div>
+                <div class="combo-info-discount-sum-main-pg">10%</div>
+            </div>
+            <div class="combo-info-name-main-pg">Вареники с перцем</div>
+            <div class="combo-info-price-btn-main-pg">
+                <div class="combo-info-price-btn-text-main-pg">Заказать</div>
+                <div class="combo-info-price-btn-sum-main-pg">3200 ₽</div>
+            </div>
+        </div>
+        <a href="product.html">
+            <img class="combo-image-main-pg" src="../images/combo-image.jpg" alt="Описание изображения">
+        </a>
+    </div>
     <div class="products-main-pg">
         <div th:each="pr : ${products}">
              <div class="product-main-pg">
