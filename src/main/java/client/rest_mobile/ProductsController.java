@@ -5,6 +5,7 @@ import client.data.model.dto.ProductDto;
 import client.service.ProductService;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -31,8 +32,8 @@ public class ProductsController {
         return productService.addProduct(dto);
     }
 
-    @PostMapping("/updateOne")
-    public ProductDto updateOne(@RequestBody ProductDto dto) {
-        return productService.updateProduct(dto);
+    @PostMapping("/updateOne/{id}")
+    public ProductDto updateOne(@PathVariable Long id, @RequestBody ProductDto productDto) {
+        return productService.updateProduct(id, productDto);
     }
 }

@@ -58,4 +58,28 @@ public class ComboDto {
     public List<Long> getProducts() {
         return products;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setImage_url(String image_url) {
+        this.image_url = image_url;
+    }
+
+    public void setSale(Double sale) {
+        this.sale = sale;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public void setProducts(List<Long> products) {
+        this.products = products;
+    }
 }

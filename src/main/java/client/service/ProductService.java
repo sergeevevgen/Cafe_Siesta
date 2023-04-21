@@ -116,6 +116,9 @@ public class ProductService {
         if (product == null) {
             throw new ProductNotFoundException(id);
         }
+        if (!product.getName().equals(name) && findProductByName(name) != null) {
+            throw new IllegalArgumentException(String.format("Product with name [%s] is existed", name));
+        }
         product.setName(name);
         product.setDescription(description);
         product.setImage_url(image_url);
@@ -136,8 +139,8 @@ public class ProductService {
 
     //Изменение продукта по полям через Dto
     @Transactional
-    public ProductDto updateProduct(ProductDto productDto) {
-        return new ProductDto(updateProduct(productDto.getId(), productDto.getName(), productDto.getDescription(),
+    public ProductDto updateProduct(Long id, ProductDto productDto) {
+        return new ProductDto(updateProduct(id, productDto.getName(), productDto.getDescription(),
                 productDto.getImage_url(), productDto.getWeight(), productDto.getPrice(), productDto.getCategory_id()));
     }
 

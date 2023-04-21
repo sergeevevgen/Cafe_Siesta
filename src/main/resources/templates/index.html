@@ -27,23 +27,23 @@
         <div class="combo-info-main-pg">
             <div class="combo-info-discount-frame-main-pg">
                 <div class="combo-info-discount-text-main-pg">Блюдо дня</div>
-                <div class="combo-info-discount-sum-main-pg">10%</div>
+                <div th:text="${combo.sale + '%'}" class="combo-info-discount-sum-main-pg" ></div>
             </div>
-            <div class="combo-info-name-main-pg">Вареники с перцем</div>
+            <div th:text="${combo.name}" class="combo-info-name-main-pg"></div>
             <div class="combo-info-price-btn-main-pg">
                 <div class="combo-info-price-btn-text-main-pg">Заказать</div>
-                <div class="combo-info-price-btn-sum-main-pg">3200 ₽</div>
+                <div th:text="${combo.price + 'р.'}" class="combo-info-price-btn-sum-main-pg"></div>
             </div>
         </div>
-        <a href="product.html">
-            <img class="combo-image-main-pg" src="../images/combo-image.jpg" alt="Описание изображения">
+        <a th:href="@{/combo/{id}(id=${combo.id})}">
+            <img class="combo-image-main-pg" th:src="@{/images/{image}(image=${combo.image_url})}" alt="*картинка комбо*">
         </a>
     </div>
     <div class="products-main-pg">
         <div th:each="pr : ${products}">
              <div class="product-main-pg">
                  <a th:href="@{/product/{id}(id=${pr.id})}">
-                     <img class="product-image-main-pg" th:src="@{/images/{image}(image=${pr.image_url})}" alt="Product image">
+                     <img class="product-image-main-pg" th:src="@{/images/{image}(image=${pr.image_url})}" alt="*картинка продукта*">
                  </a>
 
                 <div class="product-info-main-pg">
