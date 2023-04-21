@@ -27,8 +27,8 @@ public class CategoryController {
         return categoryService.addCategory(dto);
     }
 
-    @PostMapping("/updateOne")
-    public CategoryDto updateOne(@RequestBody CategoryDto dto) {
-        return categoryService.updateCategory(dto);
+    @PostMapping("/updateOne/{id}")
+    public CategoryDto updateOne(@PathVariable Long id, @RequestBody CategoryDto dto) {
+        return categoryService.updateCategory(id, dto);
     }
 }

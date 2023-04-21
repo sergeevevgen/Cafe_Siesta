@@ -5,15 +5,14 @@ import client.data.model.dto.ProductDto;
 import client.service.ProductService;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
 @RequestMapping(WebConfiguration.REST_API + "/product")
-public class ProductsController {
+public class ProductController {
     private final ProductService productService;
 
-    public ProductsController(ProductService productService) {
+    public ProductController(ProductService productService) {
         this.productService = productService;
     }
 

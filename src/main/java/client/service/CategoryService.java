@@ -91,8 +91,8 @@ public class CategoryService {
 
     //Изменение категории по полям через Dto
     @Transactional
-    public CategoryDto updateCategory(CategoryDto categoryDto) {
-        return new CategoryDto(updateCategory(categoryDto.getId(), categoryDto.getName(), categoryDto.getDescription(), categoryDto.getImage_url()));
+    public CategoryDto updateCategory(Long id, CategoryDto categoryDto) {
+        return new CategoryDto(updateCategory(id, categoryDto.getName(), categoryDto.getDescription(), categoryDto.getImage_url()));
     }
 
     @Transactional

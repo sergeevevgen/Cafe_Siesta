@@ -18,6 +18,7 @@
     <title>Продукты</title>
 </head>
 <body>
+<div th:insert="navbar"></div>
     <main class="main">
         <div>
             <a class="btn btn-success button-fixed"
@@ -47,16 +48,18 @@
                 <tr th:each="product, iterator: ${products}">
                     <th scope="row" th:text="${iterator.index} + 1"></th>
                     <td th:text="${product.id}"></td>
-                    <td th:text="${product.name}" style="width: 60%"></td>
+                    <td th:text="${product.name}" style="width: 20%"></td>
                     <td th:text="${product.description}" style="width: 60%"></td>
-                    <td th:text="${product.image_url}" style="width: 60%"></td>
-                    <td th:text="${product.weight} + 'гр.'" style="width: 60%"></td>
-                    <td th:text="${product.price} + 'р.'" style="width: 60%"></td>
-                    <td th:text="${product.category_id}" style="width: 60%"></td>
-                    <td th:text="${product.category}" style="width: 60%"></td>
-                    <td th:text="${product.combo_id}" style="width: 60%"></td>
-                    <td th:text="${product.combo}" style="width: 60%"></td>
-                    <td style="width: 10%">
+                    <td th:text="${product.image_url}" style="width: 20%"><img
+                            th:src="@{/images/{image}(image=${product.image_url})}"
+                            style="width: 100px; height: 50px;"></td>
+                    <td th:text="${product.weight} + 'гр.'" style="width: 20%"></td>
+                    <td th:text="${product.price} + 'р.'" style="width: 15%"></td>
+                    <td th:text="${product.category_id}" style="width: 10%"></td>
+                    <td th:text="${product.category}" style="width: 20%"></td>
+                    <td th:text="${product.combo_id}" style="width: 10%"></td>
+                    <td th:text="${product.combo}" style="width: 20%"></td>
+                    <td style="width: 20%">
                         <div class="btn-group" role="group" aria-label="Basic example">
                             <a class="btn btn-warning button-fixed button-sm"
                                th:href="@{/admin/products/edit/{id}(id=${product.id})}">

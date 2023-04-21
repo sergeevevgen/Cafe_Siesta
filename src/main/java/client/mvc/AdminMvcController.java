@@ -1,7 +1,9 @@
 package client.mvc;
 
+import client.data.model.dto.CategoryDto;
 import client.data.model.dto.ProductDto;
 import client.service.CategoryService;
+import client.service.ComboService;
 import client.service.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,14 +18,19 @@ public class AdminMvcController {
 
     private final ProductService productService;
     private final CategoryService categoryService;
+    private final ComboService comboService;
 
-    public AdminMvcController(ProductService productService, CategoryService categoryService) {
+    public AdminMvcController(ProductService productService,
+                              CategoryService categoryService,
+                              ComboService comboService) {
         this.productService = productService;
         this.categoryService = categoryService;
+        this.comboService = comboService;
     }
 
+    //Products
     @GetMapping("/products")
-    public String getAll(Model model) {
+    public String getAllProducts(Model model) {
         model.addAttribute("products",
                 productService.findAllProducts());
         return "products";
@@ -60,8 +67,52 @@ public class AdminMvcController {
     }
 
     @PostMapping("/products/delete/{id}")
-    public String deleteCar(@PathVariable Long id) {
+    public String deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);
         return "redirect:/admin/products";
+    }
+
+
+    //Categories
+    @GetMapping("/categories")
+    public String getAllCategories(Model model) {
+        model.addAttribute("categories",
+                categoryService.findAllCategories());
+        return "categories";
+    }
+
+    @GetMapping(value = {"/categories/edit", "/categories/edit/{id}"})
+    public String editCategory(@PathVariable(required = false) Long id, Model model) {
+        if (id == null || id <= 0) {
+            model.addAttribute("categoryDto", new CategoryDto());
+        }
+        else {
+            model.addAttribute("categoryId", id);
+            model.addAttribute("categoryDto", new CategoryDto(categoryService.findById(id)));
+        }
+        return "category-edit";
+    }
+
+    @PostMapping(value = {"/categories/save", "/categories/save/{id}"})
+    public String saveCategory(@PathVariable(required = false) Long id,
+                              @ModelAttribute @Valid CategoryDto categoryDto,
+                              BindingResult bindingResult,
+                              Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("errors", bindingResult.getAllErrors());
+            return "category-edit";
+        }
+        if (id == null || id <= 0) {
+            categoryService.addCategory(categoryDto);
+        } else {
+            categoryService.updateCategory(id, categoryDto);
+        }
+        return "redirect:/admin/categories";
+    }
+
+    @PostMapping("/categories/delete/{id}")
+    public String deleteCategory(@PathVariable Long id) {
+        categoryService.deleteCategory(id);
+        return "redirect:/admin/categories";
     }
 }
