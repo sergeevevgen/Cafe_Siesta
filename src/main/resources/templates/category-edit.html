@@ -21,19 +21,20 @@
 <main class="main">
     <div th:text="${errors}" class="margin-bottom alert-danger"></div>
     <form action="#" th:action="@{/admin/categories/save/{id}(id=${id})}" th:object="${categoryDto}" method="post">
-        <div class="mb-3">
-            <label for="name" class="form-label">Название</label>
-            <input type="text" class="form-control" id="name" th:field="${categoryDto.name}" required>
-        </div>
-        <div class="mb-3">
-            <label for="description" class="form-label">Описание</label>
-            <input type="text" class="form-control" id="description" th:field="${categoryDto.description}" required>
-        </div>
-        <div class="mb-3">
-            <label for="image" class="form-label">Изображение</label>
-            <input type="text" class="form-control" id="image" th:field="${categoryDto.image_url}" required>
-        </div>
-        <div class="mb-3">
+        <div class="back-edit-pg">
+            <div class="name-category-edit-pg">Категория</div>
+            <div class="mb-3">
+                <label for="name" class="form-label">Название</label>
+                <input type="text" class="form-control" id="name" th:field="${categoryDto.name}" required>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Описание</label>
+                <input type="text" class="form-control" id="description" th:field="${categoryDto.description}" required>
+            </div>
+            <div class="mb-3">
+                <label for="image" class="form-label">Изображение</label>
+                <input type="text" class="form-control" id="image" th:field="${categoryDto.image_url}" required>
+            </div>
             <button type="submit" class="btn btn-primary button-fixed">
                 <span th:if="${id == null}">Добавить</span>
                 <span th:if="${id != null}">Обновить</span>
