@@ -33,9 +33,9 @@
             <a class="link" th:href="@{/orders/cart}">Корзина</a>
             <a class="link" th:href="@{/client/profile/14}">Профиль</a>
             <a class="link" th:href="@{/orders}">Заказы</a>
-            <a class="link" th:href="@{/admin/products}">Для админа (продукты)</a>
-            <a class="link" th:href="@{/admin/categories}">Для админа (категории)</a>
-            <a class="link" th:href="@{/admin/combos}" style="display: none;">Для админа (комбо)</a>
+            <a class="link" th:href="@{/admin/products}" th:if="${#httpServletRequest.getRequestURI().startsWith('/admin')}">Для админа (продукты)</a>
+            <a class="link" th:href="@{/admin/categories}" th:if="${#httpServletRequest.getRequestURI().startsWith('/admin')}">Для админа (категории)</a>
+            <a class="link" th:href="@{/admin/combos}" style="display: none;" th:if="${#httpServletRequest.getRequestURI().startsWith('/admin')}">Для админа (комбо)</a>
         </div>
     </div>
 </header>
