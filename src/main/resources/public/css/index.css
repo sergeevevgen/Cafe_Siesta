@@ -41,7 +41,7 @@ h4 {
     min-width: 1200px;
     left: 0px;
     right: 0px;
-    top: 174px;
+    top: 125px;
     padding: 80px;
     padding-bottom: 180px;
 
@@ -786,19 +786,15 @@ h4 {
 }
 
 .address-street-prf-pg {
-    margin-left: 10px;
 }
 
 .address-house-prf-pg {
-    margin-left: 10px;
 }
 
 .address-entrance-prf-pg {
-    margin-left: 10px;
 }
 
 .address-flat-prf-pg {
-    margin-left: 10px;
 }
 
 .phone-number-bl-prf-pg {

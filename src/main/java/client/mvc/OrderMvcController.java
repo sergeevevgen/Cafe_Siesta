@@ -20,19 +20,19 @@ public class OrderMvcController {
     @GetMapping("/cart")
     public String getCart(Model model) {
         model.addAttribute("cart",
-                orderService.findClientCart(14L));
+                orderService.findClientCart(1L));
         return "cart";
     }
     @GetMapping
     public String getOrders(Model model) {
         model.addAttribute("orders",
-                orderService.findAllClientOrders(14L));
+                orderService.findAllClientOrders(1L));
         return "orders";
     }
     @GetMapping("/order")
     public String getOrder(Model model) {
         model.addAttribute("order",
-                orderService.findAllClientOrders(14L));
+                orderService.findAllClientOrders(1L));
         return "order";
     }
 

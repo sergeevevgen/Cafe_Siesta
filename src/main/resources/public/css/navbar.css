@@ -14,7 +14,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 0px;
-    gap: 170px;
+    gap: 50px;
 
     width: 100%;
     height: 56px;
@@ -171,7 +171,7 @@ a.logo-s {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    padding: 30px 20px 0px;
+    padding: 5px 20px;
     gap: 30px;
 
     width: 100%;
@@ -208,12 +208,11 @@ a.logo-s {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 32px 80px;
+    padding: 15px 80px 0px;
 
     position: fixed;
     width: 100%;
     min-width: 1200px;
-    height: 174px;
     left: 0px;
     right: 0px;
     top: 0px;

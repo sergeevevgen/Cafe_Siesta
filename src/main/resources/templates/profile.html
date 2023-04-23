@@ -33,9 +33,9 @@
             <div class="address-frame-prf-pg">
                 <h4>Адрес</h4>
                 <div class="address-prf-pg">г. Ульяновск,
-                    <div class="address-street-prf-pg" th:text="${client.street}"></div>,
-                    <div class="address-house-prf-pg" th:text="${client.house}"></div>,
-                    <div class="address-entrance-prf-pg" th:text="${client.entrance}"></div>,
+                    <div class="address-street-prf-pg" th:text="' '+${client.street}+','+' '"></div>
+                    <div class="address-house-prf-pg" th:text="${client.house}+','+' '"></div>
+                    <div class="address-entrance-prf-pg" th:text="${client.entrance}+','+' '"></div>
                     <div class="address-flat-prf-pg" th:text="${client.flat}"></div>
                 </div>
             </div>
