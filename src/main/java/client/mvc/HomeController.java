@@ -27,7 +27,7 @@ public class HomeController {
         model.addAttribute("products",
                 productService.findAllProducts());
         model.addAttribute("combo",
-                comboService.findCombo(1L));
+                comboService.findAllCombos().get(0));
         return "index";
     }
 }

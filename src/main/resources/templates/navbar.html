@@ -31,7 +31,7 @@
         <div class="links-lvl">
             <a class="link" th:href="@{/}">Продукты</a>
             <a class="link" th:href="@{/orders/cart}">Корзина</a>
-            <a class="link" th:href="@{/client/profile/1}">Профиль</a>
+            <a class="link" th:href="@{/client/profile/5}">Профиль</a>
             <a class="link" th:href="@{/orders}">Заказы</a>
             <a class="link" th:href="@{/admin/products}" th:if="${#httpServletRequest.getRequestURI().startsWith('/admin')}">Для админа (продукты)</a>
             <a class="link" th:href="@{/admin/categories}" th:if="${#httpServletRequest.getRequestURI().startsWith('/admin')}">Для админа (категории)</a>

@@ -50,14 +50,14 @@ public class ClientService {
     }
 
     //регистрация
-    public Client register(String name, String surname, String password, String login, String street,
+    public Client register(String name, String surname, String password, String login, String phone_number, String street,
                            String entrance, String flat, String house) {
 //        if (!StringUtils.hasText(name) || !StringUtils.hasText(surname) || !StringUtils.hasText(password)
 //                || !StringUtils.hasText(login) || !PatternMatchUtils.simpleMatch(pattern, login)) {
 //            throw new IllegalArgumentException("Client fields are null or empty");
 //        }
         if (!StringUtils.hasText(name) || !StringUtils.hasText(surname) || !StringUtils.hasText(password)
-                || !StringUtils.hasText(login)) {
+                || !StringUtils.hasText(login) || !StringUtils.hasText(phone_number)) {
             throw new IllegalArgumentException("Client fields are null or empty");
         }
         if (clientRepository.findByLogin(login) != null) {
@@ -72,12 +72,13 @@ public class ClientService {
         client.setFlat(flat);
         client.setHouse(house);
         client.setEntrance(entrance);
+        client.setPhone_number(phone_number);
         validatorUtil.validate(client);
         return clientRepository.save(client);
     }
 
     public ClientDto register(ClientDto dto) {
-        return new ClientDto(register(dto.getName(), dto.getSurname(), dto.getPassword(), dto.getLogin(), dto.getStreet(), dto.getEntrance(), dto.getFlat(), dto.getHouse()));
+        return new ClientDto(register(dto.getName(), dto.getSurname(), dto.getPassword(), dto.getLogin(), dto.getPhone_number(), dto.getStreet(), dto.getEntrance(), dto.getFlat(), dto.getHouse()));
     }
 
     @Transactional(readOnly = true)

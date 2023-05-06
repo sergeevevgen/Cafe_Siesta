@@ -137,14 +137,15 @@ public class DeliveryManService {
     public DeliveryMan authorize(DeliveryManDto dto) {
         // реализовать авторизацию по дто
         // у DeliveryMan хотел бы видеть поле пароль
-        final List<DeliveryMan> deliveryManList = findAllDeliveryMan();
-        Optional<DeliveryMan> deliveryMan = Optional.empty();
-        for (var delivery: deliveryManList) {
-            if(delivery.getLogin().equals(dto.getLogin())){
-                deliveryMan = Optional.of(delivery);
-            }
-        }
-        return deliveryMan.orElseThrow(() -> new ClientNotFoundException(dto.getId()));
+//        final List<DeliveryMan> deliveryManList = findAllDeliveryMan();
+//        Optional<DeliveryMan> deliveryMan = Optional.empty();
+//        for (var delivery: deliveryManList) {
+//            if(delivery.getLogin().equals(dto.getLogin())){
+//                deliveryMan = Optional.of(delivery);
+//            }
+//        }
+//        return deliveryMan.orElseThrow(() -> new ClientNotFoundException(dto.getId()));
+        return findByLogin(dto.getLogin());
     }
 
     public List<DeliveryManDto> getDeliveryMen() {
