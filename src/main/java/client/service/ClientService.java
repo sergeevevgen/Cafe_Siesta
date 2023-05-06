@@ -111,7 +111,7 @@ public class ClientService {
         return clientRepository.save(client);
     }
 
-    public ClientDto updateData(ClientDto clientDto) {
+    public ClientDto updateData(Long id, ClientDto clientDto) {
         return new ClientDto(updateData(clientDto.getId(), clientDto.getName(), clientDto.getSurname(), clientDto.getPassword(),
                 clientDto.getLogin(), clientDto.getStreet(), clientDto.getEntrance(), clientDto.getFlat(),
                 clientDto.getHouse()));

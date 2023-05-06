@@ -1,12 +1,14 @@
 package client.mvc;
 
+import client.data.model.dto.ClientDto;
+import client.data.model.dto.ProductDto;
 import client.service.ClientService;
-import client.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/client")
@@ -32,5 +34,24 @@ public class ClientMvcController {
         model.addAttribute("client",
                 userService.findById(id));
         return "profile";
+    }
+    @GetMapping("/profile/edit/{id}")
+    public String editProfile(@PathVariable(required = false) Long id, Model model) {
+        model.addAttribute("clientId", id);
+        model.addAttribute("clientDto", new ClientDto(userService.findClientEntity(id)));
+        return "profile-edit";
+    }
+
+    @PostMapping("/profile/save/{id}")
+    public String saveProfile(@PathVariable(required = false) Long id,
+                              @ModelAttribute @Valid ClientDto clientDto,
+                              BindingResult bindingResult,
+                              Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("errors", bindingResult.getAllErrors());
+            return "profile-edit";
+        }
+        userService.updateData(id, clientDto);
+        return "redirect:/profile/{id}";
     }
 }

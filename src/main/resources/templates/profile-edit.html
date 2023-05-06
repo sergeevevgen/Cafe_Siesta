@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+            integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/index.css"/>
+    <title>Профиль</title>
+</head>
+<body>
+<main class="main">
+    <div class="back">
+        <form action="#" th:action="@{/profile/save/{id}(id=${id})}" th:object="${ClientDto}" method="post">
+            <div class="back-edit-pg">
+                <div class="name-category-edit-pg">Личные данные</div>
+                <div class="mb-3">
+                    <label for="name" class="form-label">Имя</label>
+                    <input type="text" class="form-control" id="name" th:field="${clientDto.name}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="surname" class="form-label">Фамилия</label>
+                    <input type="text" class="form-control" id="surname" th:field="${clientDto.surname}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="street" class="form-label">Улица</label>
+                    <input type="text" class="form-control" id="street" th:field="${clientDto.street}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="house" class="form-label">Дом</label>
+                    <input type="text" class="form-control" id="house" th:field="${clientDto.house}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="entrance" class="form-label">Подъезд</label>
+                    <input type="text" class="form-control" id="entrance" th:field="${clientDto.entrance}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="flat" class="form-label">Квартира</label>
+                    <input type="text" class="form-control" id="flat" th:field="${clientDto.flat}" required>
+                </div>
+                <button type="submit" class="btn btn-primary button-fixed">
+                    <span th:if="${id == null}">Подтвердить</span>
+                    <span th:if="${id != null}">Обновить данные</span>
+                </button>
+                <a class="btn btn-secondary button-fixed" th:href="@{/profile/{id}}">
+                    Назад
+                </a>
+            </div>
+        </form>
+    </div>
+</main>
+</body>
+</html>

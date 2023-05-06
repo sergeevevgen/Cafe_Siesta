@@ -76,7 +76,8 @@
             </div>
         </div>
         <a th:href="@{/}">
-            <div class="order-btn-cart-pg" th:text="Заказать"></div>
+            <div class="order-btn-cart-pg" th:text="Заказать"
+                 th:href="@{/cart/submit/{id}(id=${category.id})}"></div>
         </a>
     </div>
 </main>
