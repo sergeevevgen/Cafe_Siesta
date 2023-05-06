@@ -34,15 +34,14 @@
                 <h4>Адрес</h4>
                 <div class="address-prf-pg">г. Ульяновск,
                     <div class="address-street-prf-pg" th:text="' '+${client.street}+','+' '"></div>
-                    <div class="address-house-prf-pg" th:text="${client.house}+','+' '"></div>
-                    <div class="address-entrance-prf-pg" th:text="${client.entrance}+','+' '"></div>
-                    <div class="address-flat-prf-pg" th:text="${client.flat}"></div>
+                    <div class="address-house-prf-pg" th:text="${client.house}"></div>
+                    <div class="address-entrance-prf-pg" th:if="${client.entrance != null}" th:text="', '+ ${client.entrance}"></div>
+                    <div class="address-flat-prf-pg" th:if="${client.flat != null}" th:text="', '+ ${client.flat}"></div>
                 </div>
             </div>
             <div class="phone-number-bl-prf-pg">
                 <h4>Телефон</h4>
-                <div class="phone-number-prf-pg">
-                    89057379898
+                <div class="phone-number-prf-pg" th:text="${client.phone_number}">
                 </div>
             </div>
         </div>

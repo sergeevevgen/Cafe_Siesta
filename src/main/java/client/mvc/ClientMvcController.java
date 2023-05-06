@@ -32,13 +32,13 @@ public class ClientMvcController {
     @GetMapping("/profile/{id}")
     public String getProfile(@PathVariable Long id, Model model) {
         model.addAttribute("client",
-                userService.findById(id));
+                userService.findClient(id));
         return "profile";
     }
     @GetMapping("/profile/edit/{id}")
     public String editProfile(@PathVariable(required = false) Long id, Model model) {
         model.addAttribute("clientId", id);
-        model.addAttribute("clientDto", new ClientDto(userService.findClientEntity(id)));
+        model.addAttribute("clientDto", userService.findClient(id));
         return "profile-edit";
     }
 
@@ -52,6 +52,6 @@ public class ClientMvcController {
             return "/profile/edit/{id}";
         }
         userService.updateData(id, clientDto);
-        return "redirect:/profile/{id}";
+        return "redirect:/client/profile/{id}";
     }
 }

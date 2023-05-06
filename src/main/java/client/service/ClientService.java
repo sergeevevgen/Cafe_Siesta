@@ -82,28 +82,24 @@ public class ClientService {
     }
 
     @Transactional(readOnly = true)
-    public Client findClientEntity(Long id) {
-        final Optional<Client> client = clientRepository.findById(id);
-        return client.orElseThrow(() -> new ClientNotFoundException(id));
+    public ClientDto findClient(Long id) {
+        return new ClientDto(findById(id));
     }
 
-    public Client updateData(Long id, String name, String surname, String password, String login, String street,
+    public Client updateData(Long id, String name, String surname, String street,
                              String entrance, String flat, String house) {
-        if (id == null || id < 0 || !StringUtils.hasText(name) || !StringUtils.hasText(surname) || !StringUtils.hasText(password)
-                || !StringUtils.hasText(login)) {
+        if (id == null || id < 0 || !StringUtils.hasText(name) || !StringUtils.hasText(surname)) {
             throw new IllegalArgumentException("Client fields are null or empty");
         }
-        final Client client = findClientEntity(id);
+        final Client client = findById(id);
         if (client == null) {
             throw new ClientNotFoundException(id);
         }
-        if (!client.getLogin().equals(login) && clientRepository.findByLogin(login) != null) {
-            throw new ValidationException(String.format("Client '%s' is already exist", login));
-        }
-        client.setLogin(login);
+//        if (!client.getLogin().equals(login) && clientRepository.findByLogin(login) != null) {
+//            throw new ValidationException(String.format("Client '%s' is already exist", login));
+//        }
         client.setName(name);
         client.setSurname(surname);
-        client.setPassword(password);
         client.setStreet(street);
         client.setFlat(flat);
         client.setHouse(house);
@@ -113,8 +109,7 @@ public class ClientService {
     }
 
     public ClientDto updateData(Long id, ClientDto clientDto) {
-        return new ClientDto(updateData(clientDto.getId(), clientDto.getName(), clientDto.getSurname(), clientDto.getPassword(),
-                clientDto.getLogin(), clientDto.getStreet(), clientDto.getEntrance(), clientDto.getFlat(),
+        return new ClientDto(updateData(id, clientDto.getName(), clientDto.getSurname(), clientDto.getStreet(), clientDto.getEntrance(), clientDto.getFlat(),
                 clientDto.getHouse()));
     }
 
