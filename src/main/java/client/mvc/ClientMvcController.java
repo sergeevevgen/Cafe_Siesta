@@ -49,7 +49,7 @@ public class ClientMvcController {
                               Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("errors", bindingResult.getAllErrors());
-            return "profile-edit";
+            return "/profile/edit/{id}";
         }
         userService.updateData(id, clientDto);
         return "redirect:/profile/{id}";

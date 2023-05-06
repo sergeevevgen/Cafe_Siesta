@@ -20,44 +20,41 @@
 </head>
 <body>
 <main class="main">
-    <div class="back">
-        <form action="#" th:action="@{/profile/save/{id}(id=${id})}" th:object="${ClientDto}" method="post">
-            <div class="back-edit-pg">
-                <div class="name-category-edit-pg">Личные данные</div>
-                <div class="mb-3">
-                    <label for="name" class="form-label">Имя</label>
-                    <input type="text" class="form-control" id="name" th:field="${clientDto.name}" required>
-                </div>
-                <div class="mb-3">
-                    <label for="surname" class="form-label">Фамилия</label>
-                    <input type="text" class="form-control" id="surname" th:field="${clientDto.surname}" required>
-                </div>
-                <div class="mb-3">
-                    <label for="street" class="form-label">Улица</label>
-                    <input type="text" class="form-control" id="street" th:field="${clientDto.street}" required>
-                </div>
-                <div class="mb-3">
-                    <label for="house" class="form-label">Дом</label>
-                    <input type="text" class="form-control" id="house" th:field="${clientDto.house}" required>
-                </div>
-                <div class="mb-3">
-                    <label for="entrance" class="form-label">Подъезд</label>
-                    <input type="text" class="form-control" id="entrance" th:field="${clientDto.entrance}" required>
-                </div>
-                <div class="mb-3">
-                    <label for="flat" class="form-label">Квартира</label>
-                    <input type="text" class="form-control" id="flat" th:field="${clientDto.flat}" required>
-                </div>
-                <button type="submit" class="btn btn-primary button-fixed">
-                    <span th:if="${id == null}">Подтвердить</span>
-                    <span th:if="${id != null}">Обновить данные</span>
-                </button>
-                <a class="btn btn-secondary button-fixed" th:href="@{/profile/{id}}">
-                    Назад
-                </a>
+    <form action="#" th:action="@{/client/profile/save/{id}(id=${id})}" th:object="${clientDto}" method="post">
+        <div class="back-edit-pg">
+            <div class="name-category-edit-pg">Личные данные</div>
+            <div class="mb-3">
+                <label for="name" class="form-label">Имя</label>
+                <input type="text" class="form-control" id="name" th:field="${clientDto.name}" required>
             </div>
-        </form>
-    </div>
+            <div class="mb-3">
+                <label for="surname" class="form-label">Фамилия</label>
+                <input type="text" class="form-control" id="surname" th:field="${clientDto.surname}" required>
+            </div>
+            <div class="mb-3">
+                <label for="street" class="form-label">Улица</label>
+                <input type="text" class="form-control" id="street" th:field="${clientDto.street}" required>
+            </div>
+            <div class="mb-3">
+                <label for="house" class="form-label">Дом</label>
+                <input type="text" class="form-control" id="house" th:field="${clientDto.house}" required>
+            </div>
+            <div class="mb-3">
+                <label for="entrance" class="form-label">Подъезд</label>
+                <input type="text" class="form-control" id="entrance" th:field="${clientDto.entrance}" required>
+            </div>
+            <div class="mb-3">
+                <label for="flat" class="form-label">Квартира</label>
+                <input type="text" class="form-control" id="flat" th:field="${clientDto.flat}" required>
+            </div>
+            <button type="submit" class="btn btn-primary button-fixed">
+                Подтвердить
+            </button>
+            <a class="btn btn-secondary button-fixed" th:href="@{/client/profile/{id}(id=${id})}">
+                Назад
+            </a>
+        </div>
+    </form>
 </main>
 </body>
 </html>
