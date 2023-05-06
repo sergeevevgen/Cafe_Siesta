@@ -44,7 +44,6 @@
                  <a th:href="@{/product/{id}(id=${pr.id})}">
                      <img class="product-image-main-pg" th:src="@{/images/{image}(image=${pr.image_url})}" alt="*картинка продукта*">
                  </a>
-
                 <div class="product-info-main-pg">
                     <div class="info-name-main-pg" th:text="${pr.name}"></div>
                     <div class="info-dop-main-pg">
@@ -54,14 +53,14 @@
                         </div>
                         <div class="dop-rating-main-pg"></div>
                     </div>
-                    <div class="info-price-main-pg">
-                        <a th:href="@{/orders/cart}">
-                            <div class="price-btn-frame-main-pg">
-                                <div class="price-btn-main-pg" th:text="${pr.price}"></div>
+                    <form action="#" th:action="@{/orders/cart}">
+                        <div class="info-price-main-pg">
+                            <button type="submit" class="price-btn-frame-main-pg">
+                                <div class="price-btn-main-pg" th:text="${#numbers.formatDecimal(pr.price, 0, 'WHITESPACE', 2, 'COMMA')}"></div>
                                 <div>₽</div>
-                            </div>
-                        </a>
-                    </div>
+                            </button>
+                        </div>
+                    </form>
                 </div>
              </div>
         </div>
