@@ -87,7 +87,7 @@ public class ClientService {
     }
 
     public Client updateData(Long id, String name, String surname, String street,
-                             String entrance, String flat, String house) {
+                             String entrance, String flat, String house, String phone_number) {
         if (id == null || id < 0 || !StringUtils.hasText(name) || !StringUtils.hasText(surname)) {
             throw new IllegalArgumentException("Client fields are null or empty");
         }
@@ -104,13 +104,14 @@ public class ClientService {
         client.setFlat(flat);
         client.setHouse(house);
         client.setEntrance(entrance);
+        client.setPhone_number(phone_number);
         validatorUtil.validate(client);
         return clientRepository.save(client);
     }
 
     public ClientDto updateData(Long id, ClientDto clientDto) {
         return new ClientDto(updateData(id, clientDto.getName(), clientDto.getSurname(), clientDto.getStreet(), clientDto.getEntrance(), clientDto.getFlat(),
-                clientDto.getHouse()));
+                clientDto.getHouse(), clientDto.getPhone_number()));
     }
 
     public List<ClientDto> getClients() {
