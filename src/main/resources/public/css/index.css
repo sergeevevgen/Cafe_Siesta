@@ -526,6 +526,82 @@ h4 {
     line-height: 36px;
 }
 
+/*  reviews  */
+
+.reviews-back-pr-pg {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0px;
+    gap: 40px;
+}
+
+.reviews-header-pr-pg {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 29px;
+
+    color: #000000;
+}
+
+.review-pr-pg {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+    gap: 10px;
+
+    width: 800px;
+
+    background: #FFFFFF;
+
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
+    border-radius: 15px;
+}
+
+.name-and-rating-review-pr-pg {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 10px;
+
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+}
+
+.rating-frame-review-pr-pg {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 5px;
+    color: #D4A600;
+}
+
+.rating-review-pr-pg{
+    font-size: 24px;
+}
+
+.comment-review-pr-pg {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 10px;
+
+    font-size: 20px;
+    line-height: 30px;
+}
+
+.comment-header-review-pr-pg {
+    font-weight: 700;
+}
+
+.comment-text-review-pr-pg {
+    font-weight: 500;
+}
+
+
 /*  orders  */
 
 .btn-back-ordr-pg {
