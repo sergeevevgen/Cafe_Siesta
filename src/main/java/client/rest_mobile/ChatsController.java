@@ -2,6 +2,7 @@ package client.rest_mobile;
 
 import client.configuration.WebConfiguration;
 import client.data.model.dto.ChatDto;
+import client.data.model.dto.MessageDto;
 import client.service.ChatService;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,5 +32,23 @@ public class ChatsController {
 //    @PostMapping("/postOne")
 //    public String postOneChat(Cha messageDto) {
 //        return chatService.createChat(messageDto).toString();
+//    }
+    // логика сообщений
+
+//    @GetMapping("/getAll/{user_id}")
+//    public List<MessageDto> getAllMessages(@PathVariable Long user_id) {
+//        // возможность запросить чаты ВСЕ у пользователя
+//        // по всем абсолютно его заказам
+//        return chatService.findUserChats(user_id).stream().map(ChatDto::new).toList();
+//    }
+//
+//    @GetMapping("/getOneMessage/{message_id}")
+//    public MessageDto getMessage(@PathVariable Long message_id) {
+//        return chatService.findUserChats(message_id).stream().map(ChatDto::new).toList();
+//    }
+//
+//    @PostMapping("/postOneMessage/{user_id}")
+//    public String postOneChat(MessageDto messageDto) {
+//        return chatService.(messageDto).toString();
 //    }
 }
