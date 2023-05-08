@@ -212,7 +212,8 @@ public class OrderService {
                 break;
             }
             case Done: {
-                if (current.getStatus() == Order_Status.In_process) {
+                if (current.getStatus() == Order_Status.In_process
+                        || current.getStatus() == Order_Status.On_the_way) {
                     current.setStatus(status);
                 }
                 else {
