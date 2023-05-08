@@ -202,6 +202,7 @@ public class OrderService {
                 break;
             }
             case In_process:
+                break;
             case Rejected: {
                 if (current.getStatus() == Order_Status.Accepted) {
                     current.setStatus(status);
