@@ -43,7 +43,6 @@ h4 {
     right: 0px;
     top: 125px;
     padding: 80px;
-    padding-top: 40px;
     padding-bottom: 180px;
 
 }
@@ -70,9 +69,9 @@ h4 {
     flex-direction: row;
     align-items: center;
     padding: 0px 20px;
-    margin: 60px;
-    margin-left: 60px;
     gap: 20px;
+
+    width: 800px;
 
     background: #FFFFFF;
 
@@ -145,37 +144,6 @@ h4 {
     width: 370px;
     height: 300px;
 }
-
-/*     slider     */
-
-.swiper {
-    width: 900px;
-}
-
-.swiper-wrapper {
-    align-items: center;
-}
-
-.swiper-pagination-bullet {
-    --swiper-pagination-bullet-width: 26px;
-    --swiper-pagination-bullet-height: 7px;
-    --swiper-pagination-bullet-border-radius: 25px;
-    --swiper-theme-color: #FF0000;
-    z-index: 100;
-}
-
-.swiper-button-next, .swiper-button-prev {
-    opacity: 0.7;
-    --swiper-theme-color: #FF0000;
-    transition: all 0.3s ease;
-}
-
-.swiper-button-next:hover, .swiper-button-prev:hover {
-    opacity: 1;
-    --swiper-theme-color: #FF0000;
-}
-
-/*        -----        */
 
 .products-main-pg {
     display: flex;
@@ -1071,48 +1039,25 @@ form {
     color: #000000;
 }
 
-/*   categories   */
+/*  review edit  */
 
-.category-back {
-    display: flex;
-
-
-    filter: drop-shadow(0px 0px 20px rgba(0, 0, 0, 0.25));
-    border-radius: 15px;
-
-    width: 500px;
-    height: 250px;
-
+.star:hover,
+.star:hover ~ .star,
+.star.active,
+.star.active ~ .star {
+    color: #ff9800;
 }
 
-.category-image {
-    object-fit: cover;
-    width: 500px;
-    height: 230px;
-    border-radius: 15px;
+.rating {
+    direction: rtl;
+    text-align: left;
 }
 
-.category-name {
-    display: flex;
-    justify-content: center;
-    text-align: center;
-    padding: 10px;
-
-
-    background: rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(2px);
-    /* Note: backdrop-filter has minimal browser support */
-
-    border-radius: 15px;
-
-    position: absolute;
-    width: 100%;
-    min-height: 56px;
-    box-sizing: border-box;
-
-    font-weight: 700;
-    font-size: 30px;
-    line-height: 36px;
-
-    color: #FFFFFF;
+.star {
+    font-size: 2rem;
+    color: #ccc;
+    cursor: pointer;
+    display: inline-block;
+    transition: color .2s;
+    direction: ltr;
 }
