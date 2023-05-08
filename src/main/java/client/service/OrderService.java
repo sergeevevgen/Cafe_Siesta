@@ -177,6 +177,11 @@ public class OrderService {
         return repository.findByClientId(clientId);
     }
 
+    @Transactional(readOnly = true)
+    public List<OrderDto> findAllDeliveryOrdersEntities(Long deliveryId) {
+        return repository.findByDeliveryId(deliveryId).stream().map(OrderDto::new).toList();
+    }
+
     // Изменение статуса заказа у клиента
     @Transactional
     public Order changeOrderStatus(Long orderId, Order_Status status) {

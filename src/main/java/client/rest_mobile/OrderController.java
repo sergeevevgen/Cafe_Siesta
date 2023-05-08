@@ -17,10 +17,16 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    @GetMapping("/getAll/{clientId}")
+    @GetMapping("/getAllClient/{clientId}")
     public List<OrderDto> getAllOrders(@PathVariable Long clientId) {
         // все заказы клиента
         return orderService.findAllClientOrders(clientId);
+    }
+
+    @GetMapping("/getAllDelivery/{deliveryId}")
+    public List<OrderDto> getAllDeliveryOrders(@PathVariable Long deliveryId) {
+        // все заказы доставщика
+        return orderService.findAllDeliveryOrdersEntities(deliveryId);
     }
 
     @GetMapping("/getOne/{id}")
