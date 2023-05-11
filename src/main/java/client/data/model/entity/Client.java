@@ -56,8 +56,13 @@ public class Client {
 
     //Done
     @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_fk")
+    @JoinColumn(name = "client_fk")
     private List<Order> orders = new ArrayList<>();
+
+    //Done
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "client_fk")
+    private List<Comment> comments = new ArrayList<>();
 
     public Client() {
     }
@@ -198,5 +203,34 @@ public class Client {
                 return;
             }
         }
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public void setComment(Comment comment) {
+        if(!comments.contains(comment))
+        {
+            comments.add(comment);
+            if(comment.getClient() != this)
+            {
+                comment.setClient(this);
+            }
+        }
+    }
+
+    public Boolean removeComment(Long commentId) {
+        for (var comment : comments) {
+            if (Objects.equals(comment.getId(), commentId)){
+                comments.remove(comment);
+                return true;
+            }
+        }
+        return false;
     }
 }
