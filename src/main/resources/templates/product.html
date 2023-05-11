@@ -32,12 +32,15 @@
         </div>
         <div class="product-info-pr-pg" th:text="${product.description}"></div>
         <div class="price-and-btn-pr-pg">
+            <a th:href="@{/orders/cart}">
+                <div class="to-card-btn-pr-pg">В корзину</div>
+            </a>
             <div class="price-text-pr-pg">
                 <div class="price-pr-pg" th:text="${product.price}"></div>
                 <div>₽</div>
             </div>
             <a th:href="@{/orders/cart}">
-                <div class="to-card-btn-pr-pg">В корзину</div>
+                <div class="to-card-btn-pr-pg">Оставить отзыв</div>
             </a>
         </div>
         <div class="reviews-back-pr-pg">
