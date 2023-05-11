@@ -6,13 +6,13 @@ import javax.persistence.*;
 
 @Entity
 @EqualsAndHashCode
-public class Comment {
+public class Review {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private Long score;
+    private Integer score;
 
     private String text;
 
@@ -24,26 +24,26 @@ public class Comment {
     @JoinColumn(name = "client_fk")
     private Client client;
 
-    private Long like;
+    private Integer liked;
 
-    public Comment() {
+    public Review() {
     }
 
-    public Comment(Long score, String text, Long like) {
+    public Review(Integer score, String text, Integer like) {
         this.score = score;
         this.text = text;
-        this.like = like;
+        this.liked = like;
     }
 
     public Long getId() {
         return id;
     }
 
-    public Long getScore() {
+    public Integer getScore() {
         return score;
     }
 
-    public void setScore(Long score) {
+    public void setScore(Integer score) {
         this.score = score;
     }
 
@@ -61,8 +61,8 @@ public class Comment {
 
     public void setProduct(Product product) {
         this.product = product;
-        if (!product.getComments().contains(this)) {
-            product.setComment(this);
+        if (!product.getReviews().contains(this)) {
+            product.setReview(this);
         }
     }
 
@@ -72,16 +72,16 @@ public class Comment {
 
     public void setClient(Client client) {
         this.client = client;
-        if (!client.getComments().contains(this)) {
-            client.setComment(this);
+        if (!client.getReviews().contains(this)) {
+            client.setReview(this);
         }
     }
 
-    public Long getLike() {
-        return like;
+    public Integer getLike() {
+        return liked;
     }
 
-    public void setLike(Long like) {
-        this.like = like;
+    public void setLike(Integer like) {
+        this.liked = like;
     }
 }

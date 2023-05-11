@@ -60,9 +60,9 @@ public class Client {
     private List<Order> orders = new ArrayList<>();
 
     //Done
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "client_fk")
-    private List<Comment> comments = new ArrayList<>();
+    private List<Review> reviews = new ArrayList<>();
 
     public Client() {
     }
@@ -205,29 +205,29 @@ public class Client {
         }
     }
 
-    public List<Comment> getComments() {
-        return comments;
+    public List<Review> getReviews() {
+        return reviews;
     }
 
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
     }
 
-    public void setComment(Comment comment) {
-        if(!comments.contains(comment))
+    public void setReview(Review review) {
+        if(!reviews.contains(review))
         {
-            comments.add(comment);
-            if(comment.getClient() != this)
+            reviews.add(review);
+            if(review.getClient() != this)
             {
-                comment.setClient(this);
+                review.setClient(this);
             }
         }
     }
 
-    public Boolean removeComment(Long commentId) {
-        for (var comment : comments) {
-            if (Objects.equals(comment.getId(), commentId)){
-                comments.remove(comment);
+    public Boolean removeReview(Long reviewId) {
+        for (var review : reviews) {
+            if (Objects.equals(review.getId(), reviewId)){
+                reviews.remove(review);
                 return true;
             }
         }

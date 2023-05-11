@@ -157,6 +157,7 @@ public class ProductService {
         return current;
     }
 
+    @Transactional
     public void deleteAllProducts() {
         productRepository.deleteAll();
     }

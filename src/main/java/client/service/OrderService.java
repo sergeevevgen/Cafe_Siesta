@@ -127,8 +127,14 @@ public class OrderService {
         }
         current.setStreet(street);
         current.setHouse(house);
-        current.setFlat(flat);
-        current.setEntrance(entrance);
+        if (StringUtils.hasText(flat))
+        {
+            current.setFlat(flat);
+        }
+        if (StringUtils.hasText(entrance))
+        {
+            current.setEntrance(entrance);
+        }
         validatorUtil.validate(current);
         return repository.save(current);
     }
