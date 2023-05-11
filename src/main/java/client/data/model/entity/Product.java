@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @EqualsAndHashCode
@@ -43,6 +44,10 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "combo_fk")
     private Combo combo;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_fk")
+    private List<Comment> comments = new ArrayList<>();
 
     public Product() {
     }
@@ -149,5 +154,34 @@ public class Product {
     public void removeCombo() {
         combo.removeProduct(getId());
         combo = null;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public void setComment(Comment comment) {
+        if(!comments.contains(comment))
+        {
+            comments.add(comment);
+            if(comment.getProduct() != this)
+            {
+                comment.setProduct(this);
+            }
+        }
+    }
+
+    public Boolean removeComment(Long commentId) {
+        for (var comment : comments) {
+            if (Objects.equals(comment.getId(), commentId)){
+                comments.remove(comment);
+                return true;
+            }
+        }
+        return false;
     }
 }

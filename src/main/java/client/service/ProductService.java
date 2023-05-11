@@ -100,6 +100,12 @@ public class ProductService {
         return productRepository.findOneByNameIgnoreCase(name);
     }
 
+    @Transactional(readOnly = true)
+    public List<ProductDto> findProductsByCategory(String name) { return productRepository.findProductsByCategory(name)
+            .stream()
+            .map(ProductDto::new)
+            .toList(); }
+
     //Изменение продукта по полям
     @Transactional
     public Product updateProduct(Long id, String name,

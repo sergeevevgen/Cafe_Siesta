@@ -12,10 +12,8 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(nullable = false)
-    private Integer score;
+    private Long score;
 
-    @Column(nullable = false)
     private String text;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -26,13 +24,12 @@ public class Comment {
     @JoinColumn(name = "client_fk")
     private Client client;
 
-    @Column(nullable = false)
-    private Boolean like;
+    private Long like;
 
     public Comment() {
     }
 
-    public Comment(Integer score, String text, Boolean like) {
+    public Comment(Long score, String text, Long like) {
         this.score = score;
         this.text = text;
         this.like = like;
@@ -42,11 +39,11 @@ public class Comment {
         return id;
     }
 
-    public Integer getScore() {
+    public Long getScore() {
         return score;
     }
 
-    public void setScore(Integer score) {
+    public void setScore(Long score) {
         this.score = score;
     }
 
@@ -80,11 +77,11 @@ public class Comment {
         }
     }
 
-    public Boolean getLike() {
+    public Long getLike() {
         return like;
     }
 
-    public void setLike(Boolean like) {
+    public void setLike(Long like) {
         this.like = like;
     }
 }
