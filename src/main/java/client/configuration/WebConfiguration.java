@@ -1,13 +1,9 @@
 package client.configuration;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-import java.text.NumberFormat;
-import java.util.Locale;
 
 @Configuration
 public class WebConfiguration implements WebMvcConfigurer {

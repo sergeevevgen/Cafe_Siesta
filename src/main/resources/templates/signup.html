@@ -11,31 +11,29 @@
     Пользователь '<span th:text="${param.created}"></span>' успешно создан
 </div>
 
-<div class="form" th:action="@{/signup}" method="post">
+<form action="#" class="form" th:action="@{/signup}" method="post" th:object="${userDto}">
     <h1>Регистрация</h1>
     <div class="input-form">
-        <input type="text" name="name" id="name"
-               placeholder="Имя" required autofocus>
+        <input type="text" placeholder="Имя" th:field="${userDto.name}"
+               required autofocus maxlength="64">
     </div>
     <div class="input-form">
-        <input type="text" name="surname" id="surname"
-               placeholder="Фамилия" required>
+        <input type="text" placeholder="Фамилия" th:field="${userDto.surname}" required maxlength="32">
     </div>
     <div class="input-form">
-        <input type="text" name="username" id="username"
-               placeholder="Почта" required>
+        <input type="text" placeholder="Номер телефона" th:field="${userDto.phone_number}" required maxlength="32">
     </div>
     <div class="input-form">
-        <input type="password" name="password" id="password"
-               placeholder="Пароль" required>
+        <input type="text" placeholder="Почта" th:field="${userDto.login}" required>
     </div>
     <div class="input-form">
-        <a th:href="@{/}">
-            <input type="submit" value="Зарегистрироваться">
-        </a>
+        <input type="password" placeholder="Пароль" th:field="${userDto.password}" required minlength="8">
     </div>
-    <a href="/client/login" class="forget">Вход</a>
-</div>
+    <div class="input-form">
+        <button type="submit" class="btn btn-primary button-fixed">Зарегистрироваться</button>
+    </div>
+    <a href="/login" class="forget">Вход</a>
+</form>
 
 </body>
 </html>

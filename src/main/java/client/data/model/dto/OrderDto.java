@@ -27,8 +27,8 @@ public class OrderDto {
     private String flat;
     private String entrance;
 
-    private final Map<Long, Long> products = new HashMap<>();
-    private final Map<Long, Long> combos = new HashMap<>();
+    private Map<Long, Long> products = new HashMap<>();
+    private Map<Long, Long> combos = new HashMap<>();
     private Long chat_id;
 
     public OrderDto() {
@@ -129,5 +129,57 @@ public class OrderDto {
 
     public String getEntrance() {
         return entrance;
+    }
+
+    public void setStatus(Order_Status status) {
+        this.status = status;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
+    }
+
+    public void setClient_id(Long client_id) {
+        this.client_id = client_id;
+    }
+
+    public void setDeliveryman_id(Long deliveryman_id) {
+        this.deliveryman_id = deliveryman_id;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public void setHouse(String house) {
+        this.house = house;
+    }
+
+    public void setFlat(String flat) {
+        this.flat = flat;
+    }
+
+    public void setEntrance(String entrance) {
+        this.entrance = entrance;
+    }
+
+    public void setChat_id(Long chat_id) {
+        this.chat_id = chat_id;
+    }
+
+    public void setProducts(Map<Long, Long> products) {
+        this.products = products;
+    }
+
+    public void setCombos(Map<Long, Long> combos) {
+        this.combos = combos;
     }
 }

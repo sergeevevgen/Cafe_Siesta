@@ -20,7 +20,7 @@ public class ComboMvcController {
     }
 
     @GetMapping
-    public String GetAllCombos(Model model) {
+    public String getAllCombos(Model model) {
         model.addAttribute("combos",
                 comboService.findAllCombos());
         return "combos";
@@ -29,8 +29,7 @@ public class ComboMvcController {
     @GetMapping("/{id}")
     public String getCombo(@PathVariable Long id, Model model) {
         ComboDto dto = comboService.findCombo(id);
-        model.addAttribute("combo",
-                dto);
+        model.addAttribute("combo", dto);
         model.addAttribute("products", productService.findProducts(dto.getProducts()));
         return "combo";
     }

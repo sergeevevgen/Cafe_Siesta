@@ -42,6 +42,7 @@ public class UserSignUpMvcController {
         }
         try {
             final User user = userService.createUser(userDto);
+            user.setRole(UserRole.CLIENT);
             return "redirect:/login?created=" + user.getLogin();
         } catch (ValidationException e) {
             model.addAttribute("errors", e.getMessage());

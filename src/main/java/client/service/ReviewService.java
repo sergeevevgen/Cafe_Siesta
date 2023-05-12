@@ -1,7 +1,6 @@
 package client.service;
 
 import client.data.model.dto.ReviewDto;
-import client.data.model.entity.Category;
 import client.data.model.entity.Client;
 import client.data.model.entity.Product;
 import client.data.model.entity.Review;

@@ -1,10 +1,13 @@
 package client.service;
 
+import client.data.model.dto.ClientDto;
 import client.data.model.dto.UserDto;
 import client.data.model.entity.Client;
 import client.data.model.entity.User;
 import client.data.model.enums.UserRole;
 import client.data.repository.UserRepository;
+import client.service.exception.ClientNotFoundException;
+import client.service.exception.UserNotFoundException;
 import client.util.validation.ValidatorUtil;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -62,6 +65,7 @@ public class UserService implements UserDetailsService {
         validatorUtil.validate(user);
         return userRepository.save(user);
     }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         final User userEntity = findByLogin(username);
@@ -70,5 +74,43 @@ public class UserService implements UserDetailsService {
         }
         return new org.springframework.security.core.userdetails.User(
                 userEntity.getLogin(), userEntity.getPassword(), Collections.singleton(userEntity.getRole()));
+    }
+
+    public  User updateUser(ClientDto dto) {
+        return updateUser(dto.getLogin(), dto.getName(), dto.getSurname(), dto.getStreet(), dto.getEntrance(),
+                dto.getFlat(), dto.getHouse(), dto.getPhone_number());
+    }
+
+    public User updateUser(String login, String name, String surname, String street,
+                             String entrance, String flat, String house, String phone_number) {
+        if (!StringUtils.hasText(login) || !StringUtils.hasText(name) || !StringUtils.hasText(surname)) {
+            throw new IllegalArgumentException("User fields are null or empty");
+        }
+        final User user = findByLogin(login);
+        if (user == null) {
+            throw new UserNotFoundException(login);
+        }
+        user.setName(name);
+        user.setSurname(surname);
+        ClientDto clientDto = new ClientDto();
+        clientDto.setName(name);
+        clientDto.setSurname(surname);
+        clientDto.setPhone_number(phone_number);
+        if (StringUtils.hasText(street)) {
+            clientDto.setStreet(street);
+        }
+        if (StringUtils.hasText(entrance)) {
+            clientDto.setEntrance(entrance);
+        }
+        if (StringUtils.hasText(flat)) {
+            clientDto.setFlat(flat);
+        }
+        if (StringUtils.hasText(house)) {
+            clientDto.setHouse(house);
+        }
+        clientService.updateData(user.getUser_id(), clientDto);
+
+        validatorUtil.validate(user);
+        return userRepository.save(user);
     }
 }

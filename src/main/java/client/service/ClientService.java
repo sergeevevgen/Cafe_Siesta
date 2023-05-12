@@ -95,9 +95,7 @@ public class ClientService {
         if (client == null) {
             throw new ClientNotFoundException(id);
         }
-//        if (!client.getLogin().equals(login) && clientRepository.findByLogin(login) != null) {
-//            throw new ValidationException(String.format("Client '%s' is already exist", login));
-//        }
+
         client.setName(name);
         client.setSurname(surname);
         client.setStreet(street);

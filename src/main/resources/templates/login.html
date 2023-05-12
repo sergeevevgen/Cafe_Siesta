@@ -12,7 +12,7 @@
 </div>
 
 
-<div class="form" th:action="@{/login}" method="post">
+<form action="#" class="form" th:action="@{/login}" method="post">
     <h1>Вход</h1>
     <div class="input-form">
         <input type="text" name="username" id="username"
@@ -23,12 +23,10 @@
                placeholder="Пароль" required>
     </div>
     <div class="input-form">
-        <a th:href="@{/}">
-            <input type="submit" value="Войти">
-        </a>
+        <button type="submit" class="btn btn-primary button-fixed">Войти</button>
     </div>
     <a href="/signup" class="forget">Регистрация</a>
-</div>
+</form>
 
 </body>
 </html>

@@ -1,47 +1,52 @@
 package client.mvc;
 
 import client.data.model.dto.ClientDto;
-import client.data.model.dto.ProductDto;
+import client.data.model.entity.User;
 import client.service.ClientService;
+import client.service.UserService;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
-@RequestMapping("/client")
+@RequestMapping("/profile")
 public class ClientMvcController {
-    private final ClientService userService;
-
-    public ClientMvcController(ClientService userService) {
+    private final ClientService clientService;
+    private final UserService userService;
+    public ClientMvcController(ClientService clientService, UserService userService) {
+        this.clientService = clientService;
         this.userService = userService;
     }
 
-    @GetMapping("/profile/{id}")
-    public String getProfile(@PathVariable Long id, Model model) {
-        model.addAttribute("client",
-                userService.findClient(id));
+    @GetMapping
+    public String getProfile(Model model, Principal principal) {
+        UserDetails user1 = (UserDetails) principal;
+        User user = (User) user1;
+        model.addAttribute("clientDto",
+                clientService.findClient(user.getUser_id()));
         return "profile";
     }
-    @GetMapping("/profile/edit/{id}")
-    public String editProfile(@PathVariable(required = false) Long id, Model model) {
-        model.addAttribute("clientId", id);
-        model.addAttribute("clientDto", userService.findClient(id));
+    @GetMapping("/edit")
+    public String editProfile(Model model, Principal principal) {
+        User user = (User) principal;
+        model.addAttribute("clientDto", clientService.findClient(user.getUser_id()));
         return "profile-edit";
     }
 
-    @PostMapping("/profile/save/{id}")
-    public String saveProfile(@PathVariable(required = false) Long id,
-                              @ModelAttribute @Valid ClientDto clientDto,
+    @PostMapping("/save")
+    public String saveProfile(@ModelAttribute @Valid ClientDto clientDto,
                               BindingResult bindingResult,
                               Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("errors", bindingResult.getAllErrors());
-            return "/profile/edit/{id}";
+            return "/edit";
         }
-        userService.updateData(id, clientDto);
-        return "redirect:/client/profile/{id}";
+        userService.updateUser(clientDto);
+        return "redirect:/profile";
     }
 }

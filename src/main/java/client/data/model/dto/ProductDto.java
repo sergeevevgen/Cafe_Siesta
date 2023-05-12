@@ -108,4 +108,8 @@ public class ProductDto {
     public void setCombo(String combo) {
         this.combo = combo;
     }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

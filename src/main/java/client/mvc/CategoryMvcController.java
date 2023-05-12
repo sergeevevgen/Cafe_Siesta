@@ -23,7 +23,7 @@ public class CategoryMvcController {
     }
 
     @GetMapping
-    public String GetAllCategories(Model model) {
+    public String getAllCategories(Model model) {
         model.addAttribute("categories",
                 categoryService.findAllCategories());
         return "categories-main";
