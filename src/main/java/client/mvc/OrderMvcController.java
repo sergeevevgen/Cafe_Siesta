@@ -24,12 +24,20 @@ public class OrderMvcController {
                 orderService.findClientCart(1L));
         return "cart";
     }
+
+    @PostMapping("/cart/{id}")
+    public String addProductToCart(Model model) {
+        var dto = orderService.findClientCart(new OrderDto());
+
+        return "redirect:/cart";
+    }
     @GetMapping
     public String getOrders(Model model) {
         model.addAttribute("orders",
                 orderService.findAllClientOrders(1L));
         return "orders";
     }
+
     @GetMapping("/order")
     public String getOrder(Model model) {
         model.addAttribute("order",

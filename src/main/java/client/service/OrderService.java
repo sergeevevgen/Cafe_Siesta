@@ -428,6 +428,10 @@ public class OrderService {
         if (client == null) {
             throw new ClientNotFoundException(client_id);
         }
+        Order order = repository.findCartByClient(client_id);
+        if (order == null) {
+            addOrder(0.0, client_id, null, null);
+        }
         return repository.findCartByClient(client_id);
     }
 

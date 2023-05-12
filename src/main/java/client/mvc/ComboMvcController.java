@@ -1,6 +1,8 @@
 package client.mvc;
 
+import client.data.model.dto.ComboDto;
 import client.service.ComboService;
+import client.service.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,9 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/combos")
 public class ComboMvcController {
     private final ComboService comboService;
-
-    public ComboMvcController(ComboService comboService) {
+    private final ProductService productService;
+    public ComboMvcController(ComboService comboService, ProductService productService) {
         this.comboService = comboService;
+        this.productService = productService;
     }
 
     @GetMapping
@@ -25,8 +28,10 @@ public class ComboMvcController {
 
     @GetMapping("/{id}")
     public String getCombo(@PathVariable Long id, Model model) {
+        ComboDto dto = comboService.findCombo(id);
         model.addAttribute("combo",
-                comboService.findCombo(id));
+                dto);
+        model.addAttribute("products", productService.findProducts(dto.getProducts()));
         return "combo";
     }
 }

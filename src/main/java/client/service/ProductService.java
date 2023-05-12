@@ -161,4 +161,12 @@ public class ProductService {
     public void deleteAllProducts() {
         productRepository.deleteAll();
     }
+
+    @Transactional(readOnly = true)
+    public List<ProductDto> findProducts(List<Long> ids) {
+        return productRepository.findAllById(ids)
+                .stream()
+                .map(ProductDto::new)
+                .toList();
+    }
 }
