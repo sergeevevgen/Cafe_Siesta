@@ -985,6 +985,38 @@ form {
     align-items: center;
 }
 
+.form-control-combos {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 10px;
+
+    width: 700px;
+    height: 170px;
+
+    /* серый */
+
+    border: 1px solid #C9C9C9;
+    border-radius: 15px;
+
+    font-weight: 500;
+    font-size: 25px;
+    line-height: 30px;
+    display: flex;
+    align-items: center;
+}
+
+.mb-3-combos {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 20px;
+
+    width: 700px;
+    height: 215px;
+}
+
 .btn-primary {
     display: flex;
     flex-direction: row;

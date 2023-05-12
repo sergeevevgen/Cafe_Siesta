@@ -2,6 +2,7 @@ package client.rest_mobile;
 
 import client.configuration.WebConfiguration;
 import client.data.model.dto.ComboDto;
+import client.data.model.dto.ProductDto;
 import client.data.model.entity.Combo;
 import client.service.ComboService;
 import org.springframework.web.bind.annotation.*;
@@ -32,8 +33,8 @@ public class ComboController {
         return comboService.addCombo(dto);
     }
 
-    @PostMapping("/updateOne")
-    public ComboDto updateOne(@RequestBody ComboDto dto) {
-        return comboService.updateCombo(dto);
+    @PostMapping("/updateOne/{id}")
+    public ComboDto updateOne(@PathVariable Long id, @RequestBody ComboDto dto) {
+        return comboService.updateCombo(id, dto);
     }
 }
