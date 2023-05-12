@@ -34,11 +34,11 @@
                 </div>
                 <div class="mb-3">
                     <label for="entrance" class="form-label">Подъезд</label>
-                    <input type="text" class="form-control" id="entrance" th:field="${clientDto.entrance}" required>
+                    <input type="text" class="form-control" id="entrance" th:field="${clientDto.entrance}">
                 </div>
                 <div class="mb-3">
                     <label for="flat" class="form-label">Квартира</label>
-                    <input type="text" class="form-control" id="flat" th:field="${clientDto.flat}" required>
+                    <input type="text" class="form-control" id="flat" th:field="${clientDto.flat}">
                 </div>
                 <button type="submit" class="btn btn-primary button-fixed">
                     <span th:if="${id == null}">Подтвердить</span>
