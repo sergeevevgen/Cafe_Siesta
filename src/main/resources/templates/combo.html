@@ -26,10 +26,9 @@
         <img class="combo-image-combo-pg" th:src="@{/images/{image}(image=${combo.image_url})}" alt="Описание изображения">
         <div class="combo-info-combo-pg" th:text="${combo.description}">Мы готовим его из мясного и рыбного паштета, очень вкусно получается я того все</div>
         <div class="products-list-combo-pg">
-            <div>Яблоко</div>
-            <div>Яблоко</div>
-            <div>Яблоко</div>
-            <div>Яблоко</div>
+            <ul>
+                <li th:each="product : ${products}" th:text="${product.name}"></li>
+            </ul>
         </div>
         <div class="price-and-btn-pr-pg">
             <a th:href="@{/orders/cart}">
