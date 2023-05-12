@@ -19,16 +19,6 @@ public class ClientMvcController {
         this.userService = userService;
     }
 
-    @GetMapping("/login")
-    public String login(Model model) {
-        return "login";
-    }
-
-    @GetMapping("/signup")
-    public String signup(Model model) {
-        return "signup";
-    }
-
     @GetMapping("/profile/{id}")
     public String getProfile(@PathVariable Long id, Model model) {
         model.addAttribute("client",

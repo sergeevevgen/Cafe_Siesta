@@ -31,7 +31,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         final String admin = "admin";
         if (userService.findByLogin(admin) == null) {
             log.info("Admin user successfully created");
-            userService.createUser(admin, admin, admin, admin, "+77777777777", UserRole.ADMIN);
+            userService.createUser(admin, "12345678", admin, admin, "+77777777777", UserRole.ADMIN);
         }
     }
 
@@ -43,6 +43,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(UserSignUpMvcController.SIGNUP_URL).permitAll()
                 .antMatchers(HttpMethod.GET, LOGIN_URL).permitAll()
+                .antMatchers("/swagger-ui/**").permitAll()
+                .antMatchers("/api/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

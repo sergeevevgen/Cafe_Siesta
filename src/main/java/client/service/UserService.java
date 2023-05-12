@@ -42,7 +42,7 @@ public class UserService implements UserDetailsService {
     }
 
     public User createUser(String login, String password, String name, String surname, String phone_number, UserRole role) {
-        if (!StringUtils.hasText(login) || !StringUtils.hasText(password) || password.length() > 7 || !StringUtils.hasText(name)
+        if (!StringUtils.hasText(login) || !StringUtils.hasText(password) || password.length() < 8 || !StringUtils.hasText(name)
                 || !StringUtils.hasText(surname) || !StringUtils.hasText(phone_number) || role == null) {
             throw new IllegalArgumentException("User fields are null or empty");
         }
