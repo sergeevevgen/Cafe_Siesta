@@ -149,8 +149,8 @@ public class ComboService {
 
     //Изменение категории по полям через Dto
     @Transactional
-    public ComboDto updateCombo(ComboDto comboDto) {
-        return new ComboDto(updateCombo(comboDto.getId(), comboDto.getName(), comboDto.getDescription(),
+    public ComboDto updateCombo(Long id, ComboDto comboDto) {
+        return new ComboDto(updateCombo(id, comboDto.getName(), comboDto.getDescription(),
                 comboDto.getImage_url(), comboDto.getSale(), comboDto.getPrice(), comboDto.getProducts()));
     }
 

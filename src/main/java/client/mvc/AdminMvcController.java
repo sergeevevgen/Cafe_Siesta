@@ -1,6 +1,7 @@
 package client.mvc;
 
 import client.data.model.dto.CategoryDto;
+import client.data.model.dto.ComboDto;
 import client.data.model.dto.ProductDto;
 import client.service.CategoryService;
 import client.service.ComboService;
@@ -114,5 +115,48 @@ public class AdminMvcController {
     public String deleteCategory(@PathVariable Long id) {
         categoryService.deleteCategory(id);
         return "redirect:/admin/categories";
+    }
+
+    @GetMapping("/combos")
+    public String getAllCombos(Model model) {
+        model.addAttribute("combos",
+                comboService.findAllCombos());
+        return "combos-admin";
+    }
+
+    @GetMapping(value = {"/combos/edit", "/combos/edit/{id}"})
+    public String editCombo(@PathVariable(required = false) Long id, Model model) {
+        if (id == null || id <= 0) {
+            model.addAttribute("comboDto", new ComboDto());
+        }
+        else {
+            model.addAttribute("comboId", id);
+            model.addAttribute("comboDto", new ComboDto(comboService.findComboEntity(id)));
+        }
+        model.addAttribute("products", productService.findAllProducts());
+        return "combo-edit";
+    }
+
+    @PostMapping(value = {"/combos/save", "/combos/save/{id}"})
+    public String saveCombo(@PathVariable(required = false) Long id,
+                              @ModelAttribute @Valid ComboDto comboDto,
+                              BindingResult bindingResult,
+                              Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("errors", bindingResult.getAllErrors());
+            return "combo-edit";
+        }
+        if (id == null || id <= 0) {
+            comboService.addCombo(comboDto);
+        } else {
+            comboService.updateCombo(id, comboDto);
+        }
+        return "redirect:/admin/combos-admin";
+    }
+
+    @PostMapping("/combos/delete/{id}")
+    public String deleteCombo(@PathVariable Long id) {
+        comboService.deleteCombo(id);
+        return "redirect:/admin/combos-admin";
     }
 }
