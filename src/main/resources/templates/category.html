@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+            integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/index.css"/>
+    <title>Категории</title>
+</head>
+<body>
+<div th:insert="navbar"></div>
+<main class="main">
+    <a class="btn btn-secondary button-fixed" th:href="@{/category}">
+        Назад
+    </a>
+    <div class="products-main-pg">
+        <div th:each="pr : ${products}">
+            <div class="product-main-pg">
+                <a th:href="@{/product/{id}(id=${pr.id})}">
+                    <img class="product-image-main-pg" th:src="@{/images/{image}(image=${pr.image_url})}" alt="*картинка продукта*">
+                </a>
+                <div class="product-info-main-pg">
+                    <div class="info-name-main-pg" th:text="${pr.name}"></div>
+                    <div class="info-dop-main-pg">
+                        <div class="dop-weight-frame-main-pg">
+                            <div class="dop-weight-main-pg" th:text="${pr.weight}"></div>
+                            <div>г</div>
+                        </div>
+                        <div class="dop-rating-main-pg"></div>
+                    </div>
+                    <form action="#" th:action="@{/orders/cart}">
+                        <div class="info-price-main-pg">
+                            <button type="submit" class="price-btn-frame-main-pg">
+                                <div class="price-btn-main-pg" th:text="${#numbers.formatDecimal(pr.price, 0, 'WHITESPACE', 2, 'COMMA')}"></div>
+                                <div>₽</div>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

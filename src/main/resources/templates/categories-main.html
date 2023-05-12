@@ -24,7 +24,7 @@
 <main class="main">
     <div class="products-main-pg">
         <div th:each="ct : ${categories}">
-            <a th:href="@{/category/{id}(id=${ct.id})}">
+            <a th:href="@{/category/products?category={name}(name=${ct.name})}">
                 <div class="category-back">
                     <img class="category-image" th:src="@{/images/{image}(image=${ct.image_url})}" alt="фото Категории">
                     <div class="category-name" th:text="${ct.name}">Рыба и мясо</div>
