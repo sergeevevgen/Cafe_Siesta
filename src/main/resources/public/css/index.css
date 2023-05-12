@@ -1100,3 +1100,151 @@ form {
 
     color: #FFFFFF;
 }
+
+/*  combos page  */
+
+.combo-back-combos-pg {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0px 20px;
+    gap: 20px;
+
+    width: 800px;
+
+    background: #FFFFFF;
+
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
+    border-radius: 15px;
+
+    font-family: 'Montserrat';
+    font-style: normal;
+}
+
+.combo-info-combos-pg {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 40px 20px;
+    gap: 20px;
+
+    width: 370px;
+}
+
+.combo-info-discount-frame-combos-pg {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    max-width: 330px;
+
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 29px;
+
+    color: #D5A600;
+}
+
+.combo-info-name-combos-pg {
+    max-width: 330px;
+    font-weight: 600;
+    font-size: 30px;
+    line-height: 44px;
+
+    color: #000000;
+}
+
+.combo-info-price-btn-combos-pg {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 30px;
+    gap: 10px;
+    border: none;
+
+    background: #FF0000;
+    border-radius: 15px;
+
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 30px;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.combo-image-combos-pg {
+    display: flex;
+    align-items: center;
+    object-fit: contain;
+
+    width: 370px;
+    height: 300px;
+}
+
+/*  combo page  */
+
+.combo-back-combo-pg {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding: 60px 80px;
+  gap: 45px;
+
+  width: 800px;
+
+  background: #FFFFFF;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
+  border-radius: 15px;
+}
+
+.combo-name-combo-pg {
+  padding: 0px 10px;
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 39px;
+  color: #000000;
+}
+
+.combo-image-combo-pg {
+  width: 600px;
+  height: 300px;
+  object-fit: contain;
+
+  border-radius: 15px;
+}
+
+.combo-info-combo-pg {
+  padding: 20px;
+
+  width: 100%;
+
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 29px;
+
+  background: #FFFFFF;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
+  border-radius: 15px;
+}
+
+.products-list-combo-pg {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px;
+  gap: 10px;
+
+  width: 100%;
+
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 29px;
+
+  background: #FFFFFF;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
+  border-radius: 15px;
+}

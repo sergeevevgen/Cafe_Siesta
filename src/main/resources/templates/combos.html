@@ -1,10 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+            integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/index.css"/>
+    <title>Комбо</title>
 </head>
 <body>
-
+<div th:insert="navbar"></div>
+<main class="main">
+    <div class="products-main-pg">
+        <div th:each="cmb : ${combos}">
+            <div class="combo-back-combos-pg">
+                <div class="combo-info-combos-pg">
+                    <div class="combo-info-discount-frame-combos-pg">
+                        <div class="combo-info-discount-text-combos-pg">Акция</div>
+                        <div class="combo-info-discount-sum-combos-pg" th:text="${cmb.sale} + '%'">10%</div>
+                    </div>
+                    <div class="combo-info-name-combos-pg" th:text="${cmb.name}">Вареники с перцем</div>
+                    <div class="combo-info-price-btn-combos-pg">
+                        <div class="combo-info-price-btn-text-combos-pg">Заказать</div>
+                        <div class="combo-info-price-btn-sum-combos-pg" th:text="${cmb.price} + '&nbsp;₽'">3200 ₽</div>
+                    </div>
+                </div>
+                <a th:href="@{/combos/{id}(id=${cmb.id})}">
+                    <img class="combo-image-combos-pg" th:src="@{/images/{image}(image=${cmb.image_url})}" alt="Описание изображения">
+                </a>
+            </div>
+        </div>
+    </div>
+</main>
 </body>
 </html>
