@@ -24,6 +24,16 @@
 <body>
 <div th:insert="navbar"></div>
 <main class="main">
+    <div class="combo-back-main-pg">
+        <div class="combo-info-main-pg">
+            <div class="combo-info-discount-frame-main-pg">Блюда со скидкой</div>
+            <div class="combo-info-name-main-pg">Наше комбо меню</div>
+            <a th:href="@{/combos}">
+                <div class="combo-info-price-btn-main-pg">Посмотреть</div>
+            </a>
+        </div>
+        <img class="combo-image-main-pg" src="../images/combo-img.jpg" alt="Описание изображения">
+    </div>
     <div class="products-main-pg">
         <div th:each="pr : ${products}">
              <div class="product-main-pg">

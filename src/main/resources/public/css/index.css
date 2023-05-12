@@ -64,14 +64,15 @@ h4 {
 
 /*   main page   */
 
+/*  combo  */
+
 .combo-back-main-pg {
     display: flex;
     flex-direction: row;
     align-items: center;
     padding: 0px 20px;
-    gap: 20px;
 
-    width: 800px;
+    width: 700px;
 
     background: #FFFFFF;
 
@@ -85,21 +86,16 @@ h4 {
 .combo-info-main-pg {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
     padding: 40px 20px;
     gap: 20px;
 
-    width: 370px;
+    width: 300px;
 }
 
 .combo-info-discount-frame-main-pg {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    max-width: 330px;
+    text-align: center;
 
     font-weight: 600;
     font-size: 24px;
@@ -109,7 +105,7 @@ h4 {
 }
 
 .combo-info-name-main-pg {
-    max-width: 330px;
+    text-align: center;
     font-weight: 600;
     font-size: 30px;
     line-height: 44px;
@@ -118,12 +114,7 @@ h4 {
 }
 
 .combo-info-price-btn-main-pg {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
     padding: 10px 30px;
-    gap: 10px;
     border: none;
 
     background: #FF0000;
@@ -141,9 +132,11 @@ h4 {
     align-items: center;
     object-fit: cover;
 
-    width: 370px;
+    width: 400px;
     height: 300px;
 }
+
+/*  product   */
 
 .products-main-pg {
     display: flex;
