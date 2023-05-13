@@ -44,6 +44,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(UserSignUpMvcController.SIGNUP_URL).permitAll()
                 .antMatchers(HttpMethod.GET, LOGIN_URL).permitAll()
                 .antMatchers("/api/**").permitAll()
+                .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/images/**").permitAll()
                 .antMatchers("/swagger-ui/**").permitAll()
                 .antMatchers("/v3/api-docs").permitAll()

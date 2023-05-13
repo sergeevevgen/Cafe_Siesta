@@ -4,6 +4,7 @@ import client.data.model.dto.ClientDto;
 import client.data.model.entity.User;
 import client.service.ClientService;
 import client.service.UserService;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,13 +25,13 @@ public class ClientMvcController {
     }
 
     @GetMapping
-    public String getProfile(Model model, Principal principal) {
-        UserDetails user1 = (UserDetails) principal;
-        User user = (User) user1;
-        model.addAttribute("clientDto",
-                clientService.findClient(user.getUser_id()));
+    public String getProfile(Model model) {
+
+//        model.addAttribute("clientDto",
+//                clientService.findClient(user.getUser_id()));
         return "profile";
     }
+
     @GetMapping("/edit")
     public String editProfile(Model model, Principal principal) {
         User user = (User) principal;
