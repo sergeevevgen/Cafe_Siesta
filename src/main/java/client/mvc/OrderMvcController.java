@@ -1,6 +1,8 @@
 package client.mvc;
 
 import client.data.model.dto.OrderDto;
+import client.data.model.dto.ProductCartDto;
+import client.data.model.dto.ProductDto;
 import client.data.model.entity.User;
 import client.service.ClientService;
 import client.service.OrderService;
@@ -49,10 +51,23 @@ public class OrderMvcController {
         User user = userService.findByLogin(getUserName());
         OrderDto cartDto = orderService.findClientCart(user.getUser_id());
         model.addAttribute("cartDto", cartDto);
-        model.addAttribute("products", productService.findProducts(cartDto.getProducts()
+        if (cartDto.getProducts().isEmpty()) {
+            model.addAttribute("products", null);
+            return "cart";
+        }
+        List<ProductDto> products = productService.findProducts(cartDto.getProducts()
                 .keySet()
                 .stream()
-                .toList()));
+                .toList());
+        List<ProductCartDto> productsCart =  new ArrayList<>();
+        for (int i = 0; i < cartDto.getProducts().size(); ++i) {
+            if (cartDto.getProducts().containsKey(products.get(i).getId())) {
+                ProductCartDto productCartDto = new ProductCartDto(products.get(i),
+                        cartDto.getProducts().get(products.get(i).getId()));
+                productsCart.add(productCartDto);
+            }
+        }
+        model.addAttribute("products", productsCart);
         return "cart";
     }
 
