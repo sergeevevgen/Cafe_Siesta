@@ -24,28 +24,28 @@
     <div class="back">
         <div class="name-email-prf-pg">
             <div class="name-and-surname-prf-pg">
-                <div class="name-prf-pg" th:text="${client.name}"></div>
-                <div class="surname-prf-pg" th:text="${client.surname}"></div>
+                <div class="name-prf-pg" th:text="${clientDto.name}"></div>
+                <div class="surname-prf-pg" th:text="${clientDto.surname}"></div>
             </div>
-            <div class="email-prf-pg" th:text="${client.login}"></div>
+            <div class="email-prf-pg" th:text="${clientDto.login}"></div>
         </div>
         <div class="info-prf-pg">
             <div class="address-frame-prf-pg">
                 <h4>Адрес</h4>
                 <div class="address-prf-pg">г. Ульяновск
-                    <div class="address-street-prf-pg" th:if="${client.street != null}" th:text="',&nbsp;ул.&nbsp;' + ${client.street}"></div>
-                    <div class="address-house-prf-pg" th:if="${client.house != null}" th:text="'&nbsp;' + ${client.house} + ','"></div>
-                    <div class="address-entrance-prf-pg" th:if="${client.entrance != null and client.entrance != ''}" th:text="'&nbsp;подъезд&nbsp;' + ${client.entrance} + ','"></div>
-                    <div class="address-flat-prf-pg" th:if="${client.flat != null and client.flat != ''}" th:text="'&nbsp;кв.&nbsp;' + ${client.flat}"></div>
+                    <div class="address-street-prf-pg" th:if="${clientDto.street != null}" th:text="',&nbsp;ул.&nbsp;' + ${clientDto.street}"></div>
+                    <div class="address-house-prf-pg" th:if="${clientDto.house != null}" th:text="'&nbsp;' + ${clientDto.house} + ','"></div>
+                    <div class="address-entrance-prf-pg" th:if="${clientDto.entrance != null and clientDto.entrance != ''}" th:text="'&nbsp;подъезд&nbsp;' + ${clientDto.entrance} + ','"></div>
+                    <div class="address-flat-prf-pg" th:if="${clientDto.flat != null and clientDto.flat != ''}" th:text="'&nbsp;кв.&nbsp;' + ${clientDto.flat}"></div>
                 </div>
             </div>
             <div class="phone-number-bl-prf-pg">
                 <h4>Телефон</h4>
-                <div class="phone-number-prf-pg" th:text="${client.phone_number}">
+                <div class="phone-number-prf-pg" th:text="${clientDto.phone_number}">
                 </div>
             </div>
         </div>
-        <a class="order-btn-cart-pg" th:href="@{/client/profile/edit/{id}(id=${client.id})}">
+        <a class="order-btn-cart-pg" th:href="@{/profile/edit}">
             Изменить
         </a>
     </div>

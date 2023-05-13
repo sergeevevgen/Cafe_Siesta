@@ -23,7 +23,7 @@
 </head>
 <body>
 <main class="main">
-    <form action="#" th:action="@{/client/profile/save/{id}(id=${id})}" th:object="${clientDto}" method="post">
+    <form action="#" th:action="@{/profile/save}" th:object="${clientDto}" method="post">
         <div class="back-edit-pg">
             <div class="name-category-edit-pg">Личные данные</div>
             <div class="mb-3">
@@ -57,7 +57,7 @@
             <button type="submit" class="btn btn-primary button-fixed">
                 Подтвердить
             </button>
-            <a class="btn btn-secondary button-fixed" th:href="@{/client/profile/{id}(id=${id})}">
+            <a class="btn btn-secondary button-fixed" th:href="@{/profile}">
                 Назад
             </a>
         </div>

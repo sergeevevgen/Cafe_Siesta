@@ -4,7 +4,10 @@ import client.data.model.dto.ClientDto;
 import client.data.model.entity.User;
 import client.service.ClientService;
 import client.service.UserService;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +22,12 @@ import java.security.Principal;
 public class ClientMvcController {
     private final ClientService clientService;
     private final UserService userService;
+
+    private static String getUserName() {
+        SecurityContext context = SecurityContextHolder.getContext();
+        Authentication authentication = context.getAuthentication();
+        return authentication.getName();
+    }
     public ClientMvcController(ClientService clientService, UserService userService) {
         this.clientService = clientService;
         this.userService = userService;
@@ -26,15 +35,15 @@ public class ClientMvcController {
 
     @GetMapping
     public String getProfile(Model model) {
-
-//        model.addAttribute("clientDto",
-//                clientService.findClient(user.getUser_id()));
+        User user = userService.findByLogin(getUserName());
+        model.addAttribute("clientDto",
+                clientService.findClient(user.getUser_id()));
         return "profile";
     }
 
     @GetMapping("/edit")
-    public String editProfile(Model model, Principal principal) {
-        User user = (User) principal;
+    public String editProfile(Model model) {
+        User user = userService.findByLogin(getUserName());
         model.addAttribute("clientDto", clientService.findClient(user.getUser_id()));
         return "profile-edit";
     }
@@ -47,6 +56,7 @@ public class ClientMvcController {
             model.addAttribute("errors", bindingResult.getAllErrors());
             return "/edit";
         }
+        clientDto.setLogin(getUserName());
         userService.updateUser(clientDto);
         return "redirect:/profile";
     }

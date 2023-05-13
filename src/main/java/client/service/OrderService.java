@@ -22,8 +22,6 @@ import java.util.*;
 
 @Service
 public class OrderService {
-    //не начат
-    private final Logger log = LoggerFactory.getLogger(OrderService.class);
 
     private final OrderRepository repository;
     private final Order_ItemRepository order_itemRepository;
@@ -63,6 +61,12 @@ public class OrderService {
         if (client == null) {
             throw new ClientNotFoundException(client_id);
         }
+
+//        Order cart = findClientCart(client.getId());
+//        if (findClientCart(client.getId()) != null) {
+//            return findClientCart(client.getId());
+//        }
+
         order.setClient(client);
         order.setStatus(Order_Status.Is_cart);
         if (client.getStreet() != null) {
@@ -200,7 +204,7 @@ public class OrderService {
             case Accepted: {
                 if (current.getStatus() == Order_Status.Is_cart) {
                     current.setStatus(status);
-                    addOrder(0.0, current.getClient().getId(), null, null);
+//                    addOrder(0.0, current.getClient().getId(), null, null);
                 }
                 else {
                     throw new WrongOrderStatusException(current.getId(), current.getStatus());
@@ -418,7 +422,7 @@ public class OrderService {
     }
 
     @Transactional
-    public Order findClientCart(
+    public OrderDto findClientCart(
             Long client_id
     ) {
         if (client_id == null || client_id <= 0) {
@@ -432,14 +436,7 @@ public class OrderService {
         if (order == null) {
             addOrder(0.0, client_id, null, null);
         }
-        return repository.findCartByClient(client_id);
-    }
-
-    @Transactional
-    public OrderDto findClientCart(
-            OrderDto orderDto
-    ) {
-        return new OrderDto(findClientCart(orderDto.getClient_id()));
+        return new OrderDto(repository.findCartByClient(client_id));
     }
 
     @Transactional
