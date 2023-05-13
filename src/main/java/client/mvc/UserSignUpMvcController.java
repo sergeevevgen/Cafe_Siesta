@@ -4,6 +4,7 @@ import client.data.model.dto.UserDto;
 import client.data.model.entity.User;
 import client.data.model.enums.UserRole;
 import client.service.UserService;
+import org.apache.juli.logging.Log;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -33,7 +34,7 @@ public class UserSignUpMvcController {
     }
 
     @PostMapping
-    public String signup(@ModelAttribute("userDto") @Valid UserDto userDto,
+    public String signup(@ModelAttribute @Valid UserDto userDto,
                          BindingResult bindingResult,
                          Model model) {
         if (bindingResult.hasErrors()) {
