@@ -16,6 +16,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/index.css"/>
+    <script type="text/javascript" th:src="@{/js/counter.js}"></script>
     <title>Продукт</title>
 </head>
 <body>
@@ -40,11 +41,11 @@
                 <div class="to-card-btn-pr-pg">В корзину</div>
             </a>
             <div class="product-count-frame">
-                <div class="product-count minus">
+                <div class="product-count minus" id="minus">
                     <img th:src="@{../images/icons/minus.svg}" style="width: 30px; height: 6px;">
                 </div>
-                <div class="product-count-text">11</div>
-                <div class="product-count plus">
+                <div class="product-count-text" id="count">0</div>
+                <div class="product-count plus" id="plus">
                     <img th:src="@{../images/icons/plus.svg}" style="width: 30px; height: 30px;">
                 </div>
             </div>
