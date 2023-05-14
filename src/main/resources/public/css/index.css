@@ -265,6 +265,40 @@ h4 {
     color: #121219;
 }
 
+.product-count-frame {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+}
+
+.product-count {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 44px;
+    height: 40px;
+
+    background: #EFEFEF;
+    border-radius: 15px;
+}
+
+.product-count:hover {
+    background: #D8D6D6;
+    cursor: pointer;
+}
+
+.product-count-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+
+    font-weight: 600;
+    font-size: 30px;
+    line-height: 36px;
+}
+
 /*   cart page   */
 
 .product-cart-pg {
@@ -535,6 +569,15 @@ h4 {
     line-height: 29px;
 
     color: #000000;
+}
+
+.reviews-header-frame-pr-pg {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 10px;
+    gap: 15px;
 }
 
 .review-pr-pg {

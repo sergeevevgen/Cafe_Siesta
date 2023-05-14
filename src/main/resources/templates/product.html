@@ -32,19 +32,30 @@
         </div>
         <div class="product-info-pr-pg" th:text="${product.description}"></div>
         <div class="price-and-btn-pr-pg">
-            <a th:href="@{/orders/cart}">
-                <div class="to-card-btn-pr-pg">В корзину</div>
-            </a>
             <div class="price-text-pr-pg">
                 <div class="price-pr-pg" th:text="${product.price}"></div>
                 <div>₽</div>
             </div>
             <a th:href="@{/orders/cart}">
-                <div class="to-card-btn-pr-pg">Оставить отзыв</div>
+                <div class="to-card-btn-pr-pg">В корзину</div>
             </a>
+            <div class="product-count-frame">
+                <div class="product-count minus">
+                    <img th:src="@{../images/icons/minus.svg}" style="width: 30px; height: 6px;">
+                </div>
+                <div class="product-count-text">11</div>
+                <div class="product-count plus">
+                    <img th:src="@{../images/icons/plus.svg}" style="width: 30px; height: 30px;">
+                </div>
+            </div>
         </div>
         <div class="reviews-back-pr-pg">
-            <div class="reviews-header-pr-pg">Отзывы</div>
+            <div class="reviews-header-frame-pr-pg">
+                <div class="reviews-header-pr-pg">Отзывы</div>
+                <a th:href="@{/orders/cart}">
+                    <div class="to-card-btn-pr-pg">Оставить отзыв</div>
+                </a>
+            </div>
             <div class="review-pr-pg">
                 <div class="name-and-rating-review-pr-pg">
                     <div class="name-review-pr-pg"><!-- th:text="${review.username}">-->Николай:</div>
