@@ -36,8 +36,20 @@ public class ReviewService {
     }
 
     @Transactional(readOnly = true)
-    public List<ReviewDto> findReviewsByProduct(String product) {
-        return reviewRepository.findReviewsByProduct(product)
+    public ReviewDto findReviewDto(Long id) {
+        return new ReviewDto(findReview(id));
+    }
+
+    @Transactional(readOnly = true)
+    public List<ReviewDto> findReviewsByProduct(Long id) {
+        return reviewRepository.findReviewsByProduct(id)
+                .stream()
+                .map(ReviewDto::new)
+                .toList();
+    }
+    @Transactional(readOnly = true)
+    public List<ReviewDto> findReviewsByClient(Long id) {
+        return reviewRepository.findReviewsByClient(id)
                 .stream()
                 .map(ReviewDto::new)
                 .toList();
@@ -88,6 +100,20 @@ public class ReviewService {
         review.setLike(liked ? 1 : 0);
         validatorUtil.validate(review);
         return reviewRepository.save(review);
+    }
+
+    @Transactional
+    public ReviewDto updateOnlyLikeReview(Long id, Boolean liked) {
+        if (id == null || id <= 0) {
+            throw new IllegalArgumentException("Review fields are null or empty");
+        }
+        final Review review = findReview(id);
+        if (review == null) {
+            throw new ReviewNotFoundException(id);
+        }
+        review.setLike(liked ? 1 : 0);
+        validatorUtil.validate(review);
+        return new ReviewDto(reviewRepository.save(review));
     }
 
     @Transactional

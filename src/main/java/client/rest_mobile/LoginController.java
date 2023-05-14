@@ -38,6 +38,11 @@ public class LoginController {
         return clientService.register(clientDto);
     }
 
+    @PostMapping("/updateClient/{id}")
+    public ClientDto updateClient(@PathVariable Long id, @RequestBody ClientDto clientDto) {
+        return clientService.updateData(id, clientDto);
+    }
+
     @PostMapping("/registerDeliveryMan")
     public DeliveryManDto registerDeliveryMan(@RequestBody DeliveryManDto deliveryManDto) {
         return deliveryManService.register(deliveryManDto);
