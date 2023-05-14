@@ -29,26 +29,34 @@ public class ChatsController {
         return new ChatDto(chatService.findChat(id));
     }
 
+    /**
+     * мне нужны работающие эти 2 снизу метода
+     * getAllMessages и postOneMessage
+     */
+//    @GetMapping("/getAll/{chat_id}")
+//    public List<MessageDto> getAllMessages(@PathVariable Long chat_id) {
+//        return chatService.findUserChats(user_id).stream().map(ChatDto::new).toList();
+//    }
+//
+//    @PostMapping("/postOneMessage/{chat_id}")
+//    public String postOneChat(MessageDto messageDto) {
+//        return chatService.(messageDto).toString();
+//    }
+
+    /**
+     * методы ниже мне не нужны
+     */
 //    @PostMapping("/postOne")
 //    public String postOneChat(Cha messageDto) {
 //        return chatService.createChat(messageDto).toString();
 //    }
     // логика сообщений
 
-//    @GetMapping("/getAll/{user_id}")
-//    public List<MessageDto> getAllMessages(@PathVariable Long user_id) {
-//        // возможность запросить чаты ВСЕ у пользователя
-//        // по всем абсолютно его заказам
-//        return chatService.findUserChats(user_id).stream().map(ChatDto::new).toList();
-//    }
+
 //
 //    @GetMapping("/getOneMessage/{message_id}")
 //    public MessageDto getMessage(@PathVariable Long message_id) {
 //        return chatService.findUserChats(message_id).stream().map(ChatDto::new).toList();
 //    }
 //
-//    @PostMapping("/postOneMessage/{user_id}")
-//    public String postOneChat(MessageDto messageDto) {
-//        return chatService.(messageDto).toString();
-//    }
 }

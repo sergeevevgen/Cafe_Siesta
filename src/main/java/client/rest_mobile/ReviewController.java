@@ -44,7 +44,7 @@ public class ReviewController {
         return reviewService.updateReview(id, reviewDto);
     }
 
-    @PostMapping("/updateOne")
+    @PostMapping("/updateOneOnlyLike")
     public ReviewDto updateOneOnlyLike(@PathVariable Long id, @RequestBody ReviewDto reviewDto) {
         return reviewService.updateOnlyLikeReview(id, reviewDto.getLiked());
     }
