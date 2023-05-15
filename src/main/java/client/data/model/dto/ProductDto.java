@@ -14,6 +14,7 @@ public class ProductDto {
     private String category;
     private Long combo_id;
     private String combo;
+    private Integer isInCart;
 
     public ProductDto() {
     }
