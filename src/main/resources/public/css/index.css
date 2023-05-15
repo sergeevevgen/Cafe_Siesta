@@ -1410,9 +1410,9 @@ form {
 .products-list-combo-pg {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: flex-start;
   padding: 20px 40px;
-  gap: 10px;
 
   width: 100%;
 
@@ -1424,3 +1424,22 @@ form {
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
   border-radius: 15px;
 }
+
+.count-price-combo-pg {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin-bottom: 25px;
+
+  width: 100%;
+}
+
+.product-name-combo-pg {
+  margin-bottom: 10px;
+}
+
+.product-price-combo-pg {
+  font-weight: 700;
+}
+
+
