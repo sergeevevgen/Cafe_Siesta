@@ -42,8 +42,16 @@
                                     <img th:src="@{../images/icons/plus.svg}" style="width: 25px; height: 25px;">
                                 </div>
                                 <div>
-                                    <button class="delete-button-cart-pg" type="submit">Удалить</button>
+                                    <button type="button" class="delete-button-cart-pg"
+                                            th:attr="onclick=|document.getElementById('remove-${product.id}').click()|">
+                                        <i class="fa fa-trash" aria-hidden="true"></i> Удалить
+                                    </button>
                                 </div>
+                                <form th:action="@{/orders/cart/remove/{id}(id=${product.id})}" method="post">
+                                    <button th:id="'remove-' + ${product.id}" type="submit" style="display: none">
+                                        Удалить
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -52,7 +60,7 @@
         </div>
         <div th:if="${products == null}">
             <img class="empty-cart-image" th:src="@{../images/cart/logo-cup.svg}" style="margin-bottom: 25px;">
-            <div style="font-weight: 600; font-size: 30px; line-height: 36px;">Ваша Карзина пуста</div>
+            <div style="font-weight: 600; font-size: 30px; line-height: 36px;">Ваша корзина пуста</div>
         </div>
 <!--        <a th:href="@{/}">
             <div class="order-btn-cart-pg" th:text="Заказать"

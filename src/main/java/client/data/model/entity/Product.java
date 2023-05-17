@@ -31,7 +31,7 @@ public class Product {
 
     private Double price;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "product_fk")
     private List<Order_Item> items = new ArrayList<>();
 
@@ -45,7 +45,7 @@ public class Product {
     @JoinColumn(name = "combo_fk")
     private Combo combo;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "product_fk")
     private List<Review> reviews = new ArrayList<>();
 

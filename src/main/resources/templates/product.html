@@ -36,10 +36,11 @@
                 <div class="price-pr-pg" th:text="${product.price}"></div>
                 <div>₽</div>
             </div>
-            <form action="#" th:action="@{/orders/cart/{id}(id=${product.id})}" method="post" th:if="${product.isInCart == 0}">
-                <div class="to-card-btn-pr-pg">
+            <form action="#" th:action="@{/orders/cart/add/{id}(id=${product.id})}" method="post" th:if="${product.isInCart == 0}">
+                <input type="hidden" value="1" name="count">
+                <button type="submit" class="to-card-btn-pr-pg">
                         Добавить
-                </div>
+                </button>
             </form>
             <a th:href="@{/orders/cart}"  th:if="${product.isInCart == 1}">
                 <div class="to-card-btn-pr-pg">

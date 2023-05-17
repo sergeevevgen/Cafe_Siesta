@@ -16,7 +16,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
         countText.innerText = count;
         priceText.innerText = count * initialPrice;
 
-        updateCartData(card.dataset.productId, count);
+        addProductToCart(card.dataset.productId, count);
       }
     });
 
@@ -26,12 +26,12 @@ window.addEventListener("DOMContentLoaded", (event) => {
         countText.innerText = count;
         priceText.innerText = count * initialPrice;
 
-        updateCartData(card.dataset.productId, count);
+        addProductToCart(card.dataset.productId, count);
       }
     });
     });
 
-    function addProductToCart(id) {
+    function addProductToCart(id, count) {
       const url = `/orders/cart/${id}`;
 
       fetch(url, {
