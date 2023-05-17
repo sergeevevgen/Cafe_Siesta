@@ -32,7 +32,7 @@ public class ChatsController {
         return new ChatDto(chatService.findChat(id));
     }
 
-    @GetMapping("/getAll/{chat_id}")
+    @GetMapping("/getAllMessagesByChat/{chat_id}")
     public List<MessageDto> getAllMessages(@PathVariable Long chat_id) {
         return messageService.findAllMessagesByChat(chat_id)
                 .stream()
@@ -41,7 +41,7 @@ public class ChatsController {
     }
 
     @PostMapping("/postOneMessage/{chat_id}")
-    public MessageDto postOneChat(MessageDto messageDto) {
+    public MessageDto postOneMessage(MessageDto messageDto) {
         return messageService.addMessage(messageDto);
     }
 }
