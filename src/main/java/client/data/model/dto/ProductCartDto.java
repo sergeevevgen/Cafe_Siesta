@@ -11,6 +11,8 @@ public class ProductCartDto {
     private Long category_id;
     private String category;
     private Long count;
+    private Integer isInCart;
+    private String description;
 
     public ProductCartDto() {
     }
@@ -24,6 +26,15 @@ public class ProductCartDto {
         this.category_id = product.getCategory_id();
         this.category = product.getCategory();
         this.count = count;
+    }
+
+    public ProductCartDto(Product product) {
+        this.id = product.getId();
+        this.name = product.getName();
+        this.image_url = product.getImage_url();
+        this.weight = product.getWeight();
+        this.price = product.getPrice();
+        this.description = product.getDescription();
     }
 
     public Long getId() {
@@ -88,5 +99,13 @@ public class ProductCartDto {
 
     public void setCount(Long count) {
         this.count = count;
+    }
+
+    public Integer getIsInCart() {
+        return isInCart;
+    }
+
+    public void setIsInCart(Integer isInCart) {
+        this.isInCart = isInCart;
     }
 }
