@@ -55,6 +55,14 @@ public class ReviewService {
                 .toList();
     }
 
+    @Transactional(readOnly = true)
+    public List<ReviewDto> findReviewByUserAndProduct(Long userId, Long productId) {
+        return reviewRepository.findReviewByUserAndProduct(userId, productId)
+                .stream()
+                .map(ReviewDto::new)
+                .toList();
+    }
+
     @Transactional
     public Review addReview(Integer score,
                             String text,
