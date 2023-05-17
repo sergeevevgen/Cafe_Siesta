@@ -18,17 +18,17 @@ public class ReviewController {
         this.reviewService = reviewService;
     }
 
-    @GetMapping("/getAllByProduct")
+    @GetMapping("/getAllByProduct/{id}")
     public List<ReviewDto> getAllReviewsByProduct(@PathVariable Long id) {
         return reviewService.findReviewsByProduct(id);
     }
 
-    @GetMapping("/getAllByClient")
+    @GetMapping("/getAllByClient/{id}")
     public List<ReviewDto> getAllReviewsByClient(@PathVariable Long id) {
         return reviewService.findReviewsByClient(id);
     }
 
-    @GetMapping("/getOne")
+    @GetMapping("/getOne/{id}")
     public ReviewDto getOneReview(@PathVariable Long id) {
         return reviewService.findReviewDto(id);
     }
@@ -39,12 +39,12 @@ public class ReviewController {
 
     }
 
-    @PostMapping("/updateOne")
+    @PostMapping("/updateOne/{id}")
     public ReviewDto updateOne(@PathVariable Long id, @RequestBody ReviewDto reviewDto) {
         return reviewService.updateReview(id, reviewDto);
     }
 
-    @PostMapping("/updateOneOnlyLike")
+    @PostMapping("/updateOneOnlyLike/{id}")
     public ReviewDto updateOneOnlyLike(@PathVariable Long id, @RequestBody ReviewDto reviewDto) {
         return reviewService.updateOnlyLikeReview(id, reviewDto.getLiked());
     }
