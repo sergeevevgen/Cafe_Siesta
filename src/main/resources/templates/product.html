@@ -44,7 +44,7 @@
                     </button>
                 </div>
             </form>
-            <a th:href="@{/orders/cart/{id}(id=${product.id})}"  th:if="${product.isInCart == 1}">
+            <a th:href="@{/orders/cart/}"  th:if="${product.isInCart == 1}">
                 <div class="info-price-main-pg">
                     <button type="submit" class="price-btn-frame-main-pg">
                         В корзину
