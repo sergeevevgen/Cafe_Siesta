@@ -76,7 +76,6 @@ public class OrderMvcController {
 
         User user = userService.findByLogin(getUserName());
 
-
         OrderDto orderDto = orderService.findClientCart(user.getUser_id());
         orderDto.getProducts().put(id, 1L);
         orderDto.setProducts(orderDto.getProducts());

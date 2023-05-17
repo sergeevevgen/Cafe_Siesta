@@ -98,7 +98,10 @@
                 </div>
             </div>
         </div>
-        <div th:if="${products == null}">Ваша корзина пуста</div>
+        <div th:if="${products == null}">
+            <img class="empty-cart-image" th:src="@{../images/cart/logo-cup.svg}" style="margin-bottom: 25px;">
+            <div style="font-weight: 600; font-size: 30px; line-height: 36px;">Ваша Карзина пуста</div>
+        </div>
 <!--        <a th:href="@{/}">
             <div class="order-btn-cart-pg" th:text="Заказать"
                  th:href="@{/cart/submit/{id}(id=${category.id})}"></div>

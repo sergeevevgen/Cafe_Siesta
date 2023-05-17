@@ -121,4 +121,9 @@ public class MessageService {
     public void deleteAllByChat(Long chat_id) {
         repository.deleteAllByChatId(chat_id);
     }
+
+    @Transactional(readOnly = true)
+    public List<Message> findAllMessagesByChat(Long chat_id) {
+        return repository.findAllByChat(chat_id);
+    }
 }

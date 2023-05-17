@@ -1,14 +1,9 @@
 package client.service;
 
-import client.data.model.dto.CategoryDto;
 import client.data.model.dto.ProductDto;
 import client.data.model.entity.Category;
-import client.data.model.entity.Combo;
 import client.data.model.entity.Product;
-import client.data.repository.CategoryRepository;
 import client.data.repository.ProductRepository;
-import client.service.exception.CategoryNotFoundException;
-import client.service.exception.InCategoryFoundProductsException;
 import client.service.exception.ProductNotFoundException;
 import client.util.validation.ValidationException;
 import client.util.validation.ValidatorUtil;
@@ -168,5 +163,19 @@ public class ProductService {
                 .stream()
                 .map(ProductDto::new)
                 .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<Long> findProductsByClientCart(Long clientId) {
+        return productRepository.findProductsByClient(clientId)
+                .stream()
+                .map(Product::getId)
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public Boolean isProductInCart(Long clientId, Long productId) {
+        return findProductsByClientCart(clientId)
+                .contains(productId);
     }
 }

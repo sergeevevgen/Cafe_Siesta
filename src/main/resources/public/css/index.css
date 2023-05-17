@@ -64,6 +64,39 @@ h4 {
 
 /*   main page   */
 
+.main.main-page {
+  padding-top: 0px
+}
+
+/*   swiper  */
+
+.swiper {
+    width: 820px;
+}
+
+.swiper-wrapper {
+    align-items: center;
+}
+
+.swiper-pagination-bullet {
+    --swiper-pagination-bullet-width: 26px;
+    --swiper-pagination-bullet-height: 7px;
+    --swiper-pagination-bullet-border-radius: 25px;
+    --swiper-theme-color: #FF0000;
+    z-index: 100;
+}
+
+.swiper-button-next, .swiper-button-prev {
+    opacity: 0.7;
+    --swiper-theme-color: #FF0000;
+    transition: all 0.3s ease;
+}
+
+.swiper-button-next:hover, .swiper-button-prev:hover {
+    opacity: 1;
+    --swiper-theme-color: #FF0000;
+}
+
 /*  combo  */
 
 .combo-back-main-pg {
@@ -71,8 +104,7 @@ h4 {
     flex-direction: row;
     align-items: center;
     padding: 0px 20px;
-
-    width: 700px;
+    margin: 60px;
 
     background: #FFFFFF;
 
@@ -83,7 +115,9 @@ h4 {
     font-style: normal;
 }
 
-.combo-info-main-pg {
+/*   static card  */
+
+.combo-info-ad-main-pg {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -94,7 +128,7 @@ h4 {
     width: 300px;
 }
 
-.combo-info-discount-frame-main-pg {
+.combo-info-discount-frame-ad-main-pg {
     text-align: center;
 
     font-weight: 600;
@@ -104,7 +138,7 @@ h4 {
     color: #D5A600;
 }
 
-.combo-info-name-main-pg {
+.combo-info-name-ad-main-pg {
     text-align: center;
     font-weight: 600;
     font-size: 30px;
@@ -113,8 +147,73 @@ h4 {
     color: #000000;
 }
 
-.combo-info-price-btn-main-pg {
+.combo-info-price-btn-ad-main-pg {
     padding: 10px 30px;
+    border: none;
+
+    background: #FF0000;
+    border-radius: 15px;
+
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 30px;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.combo-image-ad-main-pg {
+    display: flex;
+    align-items: center;
+    object-fit: cover;
+
+    width: 400px;
+    height: 300px;
+}
+
+/*  combos from database  */
+
+.combo-info-main-pg {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 40px 20px;
+    gap: 20px;
+
+    width: 330px;
+}
+
+.combo-info-discount-frame-main-pg {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    max-width: 330px;
+
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 29px;
+
+    color: #D5A600;
+}
+
+.combo-info-name-main-pg {
+    max-width: 330px;
+    font-weight: 600;
+    font-size: 30px;
+    line-height: 44px;
+
+    color: #000000;
+}
+
+.combo-info-price-btn-main-pg {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 30px;
+    gap: 10px;
     border: none;
 
     background: #FF0000;
@@ -132,7 +231,7 @@ h4 {
     align-items: center;
     object-fit: cover;
 
-    width: 400px;
+    width: 330px;
     height: 300px;
 }
 
@@ -263,6 +362,42 @@ h4 {
     line-height: 29px;
     text-align: center;
     color: #121219;
+}
+
+.product-count-frame {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+}
+
+.product-count {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 44px;
+    height: 40px;
+
+    background: #EFEFEF;
+    border-radius: 15px;
+    user-select: none;
+    transition: all 0.3s ease;
+}
+
+.product-count:hover {
+    background: #D8D6D6;
+    cursor: pointer;
+}
+
+.product-count-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+
+    font-weight: 600;
+    font-size: 30px;
+    line-height: 36px;
 }
 
 /*   cart page   */
@@ -535,6 +670,15 @@ h4 {
     line-height: 29px;
 
     color: #000000;
+}
+
+.reviews-header-frame-pr-pg {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 10px;
+    gap: 15px;
 }
 
 .review-pr-pg {
@@ -1266,9 +1410,9 @@ form {
 .products-list-combo-pg {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: flex-start;
   padding: 20px 40px;
-  gap: 10px;
 
   width: 100%;
 
@@ -1280,3 +1424,22 @@ form {
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
   border-radius: 15px;
 }
+
+.count-price-combo-pg {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin-bottom: 25px;
+
+  width: 100%;
+}
+
+.product-name-combo-pg {
+  margin-bottom: 10px;
+}
+
+.product-price-combo-pg {
+  font-weight: 700;
+}
+
+

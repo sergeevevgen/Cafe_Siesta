@@ -27,7 +27,13 @@
         <div class="combo-info-combo-pg" th:text="${combo.description}">Мы готовим его из мясного и рыбного паштета, очень вкусно получается я того все</div>
         <div class="products-list-combo-pg">
             <ul>
-                <li th:each="product : ${products}" th:text="${product.name}"></li>
+                <li th:each="product : ${products}">
+                    <div class="product-name-combo-pg" th:text="${product.name}">Яблоко</div>
+                    <div class="count-price-combo-pg">
+                        <div class="product-price-combo-pg">320 ₽</div>
+                        <div class="product-count-combo-pg">2 шт.</div>
+                    </div>
+                </li>
             </ul>
         </div>
         <div class="price-and-btn-pr-pg">
