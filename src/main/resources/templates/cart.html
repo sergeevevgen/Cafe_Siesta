@@ -44,7 +44,7 @@
                                 <div>
                                     <button type="button" class="delete-button-cart-pg"
                                             th:attr="onclick=|document.getElementById('remove-${product.id}').click()|">
-                                        <i class="fa fa-trash" aria-hidden="true"></i> Удалить
+                                        Удалить
                                     </button>
                                 </div>
                                 <form th:action="@{/orders/cart/remove/{id}(id=${product.id})}" method="post">

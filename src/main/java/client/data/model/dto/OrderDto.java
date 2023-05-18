@@ -198,6 +198,7 @@ public class OrderDto {
     public Date getTime() {
         return new Date(time * 1000);
     }
+    public Long getTime(Long i) { return time; }
 
     public void setTime(Long time) {
         this.time = time;

@@ -34,8 +34,9 @@ public class DeliveryManService {
 
     //Создание доставщика через поля
     @Transactional
-    public DeliveryMan register(String name, String surname, String login, String password) {
-        if (!StringUtils.hasText(name) || !StringUtils.hasText(surname) || !StringUtils.hasText(login) || !StringUtils.hasText(password)) {
+    public DeliveryMan register(String name, String surname, String login, String password, String phone_number) {
+        if (!StringUtils.hasText(name) || !StringUtils.hasText(surname) || !StringUtils.hasText(login) || !StringUtils.hasText(password)
+                || !StringUtils.hasText(phone_number)) {
             throw new IllegalArgumentException("DeliveryMan fields are null or empty");
         }
         if (findByLogin(login) != null) {
@@ -47,6 +48,7 @@ public class DeliveryManService {
         deliveryMan.setLogin(login);
         deliveryMan.setPassword(password);
         deliveryMan.setImage_url(null);
+        deliveryMan.setPhone_number(phone_number);
         deliveryMan.setStatus(DeliveryMan_Status.Offline);
         validatorUtil.validate(deliveryMan);
         return repository.save(deliveryMan);
@@ -56,7 +58,7 @@ public class DeliveryManService {
     @Transactional
     public DeliveryManDto register(DeliveryManDto deliveryManDto) {
         return new DeliveryManDto(register(deliveryManDto.getName(), deliveryManDto.getSurname(),
-                deliveryManDto.getLogin(), deliveryManDto.getPassword()));
+                deliveryManDto.getLogin(), deliveryManDto.getPassword(), deliveryManDto.getPhone_number()));
     }
 
     //Поиск доставщика по логину
@@ -80,8 +82,12 @@ public class DeliveryManService {
 
     //Изменение доставщика по полям
     @Transactional
-    public DeliveryMan updateDeliveryMan(Long id, String name, String surname, String password, String image_url) {
-        if (!StringUtils.hasText(name) || !StringUtils.hasText(surname) || !StringUtils.hasText(password)) {
+    public DeliveryMan updateDeliveryMan(Long id, String name,
+                                         String surname,
+                                         String password,
+                                         String image_url,
+                                         String phone_number) {
+        if (!StringUtils.hasText(name) || !StringUtils.hasText(surname) || !StringUtils.hasText(password) || !StringUtils.hasText(phone_number)) {
             throw new IllegalArgumentException("DeliveryMan fields are null or empty");
         }
         final DeliveryMan current = findById(id);
@@ -92,6 +98,7 @@ public class DeliveryManService {
         current.setSurname(surname);
         current.setPassword(password);
         current.setImage_url(image_url);
+        current.setPhone_number(phone_number);
         validatorUtil.validate(current);
         return repository.save(current);
     }
@@ -116,7 +123,7 @@ public class DeliveryManService {
     @Transactional
     public DeliveryManDto updateDeliveryMan(DeliveryManDto deliveryManDto) {
         return new DeliveryManDto(updateDeliveryMan(deliveryManDto.getId(), deliveryManDto.getName(),
-                deliveryManDto.getSurname(), deliveryManDto.getPassword(), deliveryManDto.getImage_url()));
+                deliveryManDto.getSurname(), deliveryManDto.getPassword(), deliveryManDto.getImage_url(), deliveryManDto.getPhone_number()));
     }
 
     //Удаление доставщика
@@ -135,20 +142,13 @@ public class DeliveryManService {
     }
 
     public DeliveryMan authorize(DeliveryManDto dto) {
-        // реализовать авторизацию по дто
-        // у DeliveryMan хотел бы видеть поле пароль
-//        final List<DeliveryMan> deliveryManList = findAllDeliveryMan();
-//        Optional<DeliveryMan> deliveryMan = Optional.empty();
-//        for (var delivery: deliveryManList) {
-//            if(delivery.getLogin().equals(dto.getLogin())){
-//                deliveryMan = Optional.of(delivery);
-//            }
-//        }
-//        return deliveryMan.orElseThrow(() -> new ClientNotFoundException(dto.getId()));
         return findByLogin(dto.getLogin());
     }
 
     public List<DeliveryManDto> getDeliveryMen() {
-        return repository.findAll().stream().map(DeliveryManDto::new).toList();
+        return repository.findAll()
+                .stream()
+                .map(DeliveryManDto::new)
+                .toList();
     }
 }

@@ -3,6 +3,7 @@ package client.service;
 import client.data.model.dto.OrderDto;
 import client.data.model.entity.*;
 import client.data.model.enums.Order_Status;
+import client.data.model.enums.PaymentEnum;
 import client.data.repository.Combo_OrderRepository;
 import client.data.repository.OrderRepository;
 import client.data.repository.Order_ItemRepository;
@@ -50,25 +51,26 @@ public class OrderService {
 
     //Создание заказа через поля
     @Transactional
-    public Order addOrder(Double price, Long client_id, Map<Long, Long> products, Map<Long, Long> combos) {
+    public Order addOrder(Double price, Long client_id, Map<Long, Long> products, Map<Long, Long> combos,
+                          PaymentEnum payment, Long time) {
         if (price == null || price < 0 ||  client_id == null || client_id < 0) {
             throw new IllegalArgumentException("Order fields are null or empty");
         }
         final Order order = new Order();
         order.setPrice(price);
         order.setTitle("Заказ #" + UUID.randomUUID().toString().substring(0, 8));
+        order.setStatus(Order_Status.Is_cart);
+        order.setPayment(Objects.requireNonNullElse(payment, PaymentEnum.CASH));
+
+        order.setTime(Objects.requireNonNullElseGet(time, System::currentTimeMillis));
+
         final Client client = clientService.findById(client_id);
         if (client == null) {
             throw new ClientNotFoundException(client_id);
         }
 
-//        Order cart = findClientCart(client.getId());
-//        if (findClientCart(client.getId()) != null) {
-//            return findClientCart(client.getId());
-//        }
-
         order.setClient(client);
-        order.setStatus(Order_Status.Is_cart);
+
         if (client.getStreet() != null) {
             order.setStreet(client.getStreet());
         }
@@ -152,7 +154,7 @@ public class OrderService {
     @Transactional
     public OrderDto addOrder(OrderDto orderDto) {
         return new OrderDto(addOrder(orderDto.getPrice(), orderDto.getClient_id(),
-                orderDto.getProducts(), orderDto.getCombos()));
+                orderDto.getProducts(), orderDto.getCombos(), orderDto.getPayment(), orderDto.getTime(0L)));
     }
 
     //Поиск заказа в репозитории
@@ -434,7 +436,7 @@ public class OrderService {
         }
         Order order = repository.findCartByClient(client_id);
         if (order == null) {
-            addOrder(0.0, client_id, null, null);
+            addOrder(0.0, client_id, null, null, null, null);
         }
         return new OrderDto(repository.findCartByClient(client_id));
     }
