@@ -70,12 +70,16 @@ public class OrderMvcController {
 
     @PostMapping("/cart/add/{id}")
     public String addProductToCart(@PathVariable Long id, @RequestParam Long count) {
-        User user = userService.findByLogin(getUserName());
-
-        OrderDto orderDto = orderService.findClientCart(user.getUser_id());
-        orderDto.getProducts().put(id, count);
-        orderService.updateOrderProducts(orderDto);
-        return "redirect:/orders/cart";
+        try {
+            User user = userService.findByLogin(getUserName());
+            OrderDto orderDto = orderService.findClientCart(user.getUser_id());
+            orderDto.getProducts().put(id, count);
+            orderService.updateOrderProducts(orderDto);
+            return "redirect:/orders/cart";
+        } catch (Exception e) {
+            e.printStackTrace(); // Вывод ошибки в консоль
+            return "error-page"; // Перенаправление на страницу с сообщением об ошибке
+        }
     }
 
     @PostMapping("/cart/remove/{id}")

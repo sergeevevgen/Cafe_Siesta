@@ -79,14 +79,12 @@
                         </div>
                         <div class="dop-rating-main-pg"></div>
                     </div>
-                    <a th:href="@{/orders/cart/{id}(id=${pr.id})}">
-                        <div class="info-price-main-pg">
-                            <button type="submit" class="price-btn-frame-main-pg">
-                                <div class="price-btn-main-pg" th:text="${#numbers.formatDecimal(pr.price, 0, 'WHITESPACE', 2, 'COMMA')}"></div>
-                                <div>₽</div>
-                            </button>
-                        </div>
-                    </a>
+                    <div class="info-price-main-pg">
+                        <button class="price-btn-frame-main-pg">
+                            <div class="price-btn-main-pg" th:text="${#numbers.formatDecimal(pr.price, 0, 'WHITESPACE', 2, 'COMMA')}"></div>
+                            <div>₽</div>
+                        </button>
+                    </div>
                 </div>
              </div>
         </div>
