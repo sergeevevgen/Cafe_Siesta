@@ -1,6 +1,7 @@
 package client.data.model.entity;
 
 import client.data.model.enums.Order_Status;
+import client.data.model.enums.PaymentEnum;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -32,17 +33,19 @@ public class Order {
     @Column(nullable = false)
     private String title;
 
-    @Column
     private String street;
 
-    @Column
     private String house;
 
-    @Column
     private String flat;
 
-    @Column
     private String entrance;
+
+    private Long time;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private PaymentEnum payment;
 
     //done
     @ManyToOne
@@ -71,7 +74,7 @@ public class Order {
     }
 
     public Order(Order_Status status, Double price, Integer count, String title, String street, String house,
-                 String flat, String entrance) {
+                 String flat, String entrance, Long time, PaymentEnum payment) {
         this.status = status;
         this.price = price;
         this.count = count;
@@ -80,6 +83,8 @@ public class Order {
         this.house = house;
         this.flat = flat;
         this.entrance = entrance;
+        this.payment = payment;
+        this.time = time;
     }
 
     public Chat getChat() {
@@ -264,5 +269,21 @@ public class Order {
 
     public void setEntrance(String entrance) {
         this.entrance = entrance;
+    }
+
+    public Long getTime() {
+        return time;
+    }
+
+    public void setTime(Long time) {
+        this.time = time;
+    }
+
+    public PaymentEnum getPayment() {
+        return payment;
+    }
+
+    public void setPayment(PaymentEnum payment) {
+        this.payment = payment;
     }
 }

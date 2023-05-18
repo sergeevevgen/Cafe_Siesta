@@ -4,14 +4,12 @@ import client.data.model.entity.Combo_Order;
 import client.data.model.entity.Order;
 import client.data.model.entity.Order_Item;
 import client.data.model.enums.Order_Status;
+import client.data.model.enums.PaymentEnum;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import groovy.lang.Tuple;
 import org.springframework.data.util.Pair;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class OrderDto {
 
@@ -26,10 +24,11 @@ public class OrderDto {
     private String house;
     private String flat;
     private String entrance;
-
     private Map<Long, Long> products = new HashMap<>();
     private Map<Long, Long> combos = new HashMap<>();
     private Long chat_id;
+    private Long time;
+    private PaymentEnum payment;
 
     public OrderDto() {
     }
@@ -41,15 +40,19 @@ public class OrderDto {
         this.title = order.getTitle();
         this.count = order.getCount();
         this.client_id = order.getClient().getId();
+
         if (order.getStreet() != null) {
             this.street = order.getStreet();
         }
+
         if (order.getHouse() != null) {
             this.house = order.getHouse();
         }
+
         if (order.getFlat() != null) {
             this.flat = order.getFlat();
         }
+
         if (order.getEntrance() != null) {
             this.entrance = order.getEntrance();
         }
@@ -57,6 +60,7 @@ public class OrderDto {
         if (order.getDeliveryMan() != null) {
             this.deliveryman_id = order.getDeliveryMan().getId();
         }
+
         if (order.getChat() != null) {
             this.chat_id = order.getChat().getId();
         }
@@ -72,6 +76,14 @@ public class OrderDto {
             for (var i : items) {
                 combos.put(i.getCombo().getId(), i.getCount());
             }
+        }
+
+        if (order.getTime() != null) {
+            this.time = order.getTime();
+        }
+
+        if (order.getPayment() != null) {
+            this.payment = order.getPayment();
         }
     }
 
@@ -181,5 +193,21 @@ public class OrderDto {
 
     public void setCombos(Map<Long, Long> combos) {
         this.combos = combos;
+    }
+
+    public Date getTime() {
+        return new Date(time * 1000);
+    }
+
+    public void setTime(Long time) {
+        this.time = time;
+    }
+
+    public PaymentEnum getPayment() {
+        return payment;
+    }
+
+    public void setPayment(PaymentEnum payment) {
+        this.payment = payment;
     }
 }

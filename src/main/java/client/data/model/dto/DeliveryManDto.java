@@ -17,6 +17,7 @@ public class DeliveryManDto {
     private String image_url;
     private DeliveryMan_Status status;
     private String password;
+    private String phone_number;
     private final Set<Long> orders = new HashSet<>();
 
     public DeliveryManDto() {
@@ -30,6 +31,7 @@ public class DeliveryManDto {
         this.image_url = deliveryMan.getImage_url();
         this.status = deliveryMan.getStatus();
         this.password = deliveryMan.getPassword();
+        this.phone_number = deliveryMan.getPhone_number();
         if (deliveryMan.getOrders() != null) {
             for (var o : deliveryMan.getOrders()) {
                 orders.add(o.getId());
@@ -67,5 +69,9 @@ public class DeliveryManDto {
 
     public String getPassword() {
         return password;
+    }
+
+    public String getPhone_number() {
+        return phone_number;
     }
 }

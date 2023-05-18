@@ -41,6 +41,10 @@ public class DeliveryMan {
 
     private String image_url;
 
+    @NotBlank
+    @Column(nullable = false)
+    private String phone_number;
+
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private DeliveryMan_Status status;
@@ -53,12 +57,13 @@ public class DeliveryMan {
     public DeliveryMan() {
     }
 
-    public DeliveryMan(String name, String surname, String login, String password, String image_url) {
+    public DeliveryMan(String name, String surname, String login, String password, String image_url, String phone_number) {
         this.name = name;
         this.surname = surname;
         this.login = login;
         this.password = password;
         this.image_url = image_url;
+        this.phone_number = phone_number;
     }
 
     public String getImage_url() {
@@ -153,5 +158,13 @@ public class DeliveryMan {
 
     public void setStatus(DeliveryMan_Status status) {
         this.status = status;
+    }
+
+    public String getPhone_number() {
+        return phone_number;
+    }
+
+    public void setPhone_number(String phone_number) {
+        this.phone_number = phone_number;
     }
 }
