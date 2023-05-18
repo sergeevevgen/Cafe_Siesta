@@ -22,48 +22,79 @@
 <div th:insert="navbar"></div>
 <main class="main">
     <div class="back">
-        <div class="order-ordr-pg">
-            <a class="number-order-and-price-ordr-pg" th:href="@{/orders/order}">
-                <div class="number-frame-ordr-pg">
-                    <div class="number-txt-ordr-pg">Заказ номер:</div>
-                    <div class="number-ordr-pg">000315</div>
-                </div>
-                <div class="price-frame-ordr-pg">
-                    <div class="price-txt-ordr-pg">Стоимость:</div>
-                    <div class="price-ordr-pg">1225 ₽</div>
-                </div>
-            </a>
-            <div class="info-ordr-pg">
-                <div class="address-frame-ordr-pg">
-                    <div class="address-txt-ordr-pg">Адрес доставки:</div>
-                    <div class="adress-ordr-pg">г. Ульяновск, ул. Ленина 32, кв. 10</div>
-                </div>
-                <div class="status-ordr-pg">
-                    В доставке
-                </div>
-            </div>
-        </div>
-        <div class="order-ordr-pg">
-            <a class="number-order-and-price-ordr-pg" th:href="@{/orders/order}">
-                <div class="number-frame-ordr-pg">
-                    <div class="number-txt-ordr-pg">Заказ номер:</div>
-                    <div class="number-ordr-pg">000316</div>
-                </div>
-                <div class="price-frame-ordr-pg">
-                    <div class="price-txt-ordr-pg">Стоимость:</div>
-                    <div class="price-ordr-pg">1020 ₽</div>
-                </div>
-            </a>
-            <div class="info-ordr-pg">
-                <div class="address-frame-ordr-pg">
-                    <div class="address-txt-ordr-pg">Адрес доставки:</div>
-                    <div class="adress-ordr-pg">г. Ульяновск, ул. Ленина 32, кв. 10</div>
-                </div>
-                <div class="status-ordr-pg">
-                    В доставке
+        <div th:each="order : ${orders}">
+            <div class="order-ordr-pg">
+                <a class="number-order-and-price-ordr-pg" th:href="@{/orders/order/{id}(id=${order.id})}">
+                    <div class="number-frame-ordr-pg">
+                        <div class="number-txt-ordr-pg">Заказ номер:</div>
+                        <div class="number-ordr-pg" th:text="${order.id}"></div>
+                    </div>
+                    <div class="price-frame-ordr-pg">
+                        <div class="price-txt-ordr-pg">Стоимость:</div>
+                        <div class="price-ordr-pg" th:text="${order.price}"></div>
+                    </div>
+                </a>
+                <div class="info-ordr-pg">
+                    <div class="address-frame-ordr-pg">
+                        <div class="address-txt-ordr-pg">Адрес доставки:</div>
+                        <div class="address-street-prf-pg" th:if="${order.street != null}" th:text="',&nbsp;ул.&nbsp;' + ${order.street}"></div>
+                        <div class="address-house-prf-pg" th:if="${order.house != null}" th:text="'&nbsp;' + ${order.house} + ','"></div>
+                        <div class="address-entrance-prf-pg" th:if="${order.entrance != null and order.entrance != ''}" th:text="'&nbsp;подъезд&nbsp;' + ${order.entrance} + ','"></div>
+                        <div class="address-flat-prf-pg" th:if="${order.flat != null and order.flat != ''}" th:text="'&nbsp;кв.&nbsp;' + ${order.flat}"></div>
+                    </div>
+                    <div class="status-ordr-pg" th:text="${order.status}">
+                    </div>
+                    <div th:text="${order.count}">
+                    </div>
+                    <div th:text="${order.payment}">
+                    </div>
+                    <div th:text="${order.time}">
+                    </div>
                 </div>
             </div>
         </div>
+<!--        <div class="order-ordr-pg">-->
+<!--            <a class="number-order-and-price-ordr-pg" th:href="@{/orders/order}">-->
+<!--                <div class="number-frame-ordr-pg">-->
+<!--                    <div class="number-txt-ordr-pg">Заказ номер:</div>-->
+<!--                    <div class="number-ordr-pg">000315</div>-->
+<!--                </div>-->
+<!--                <div class="price-frame-ordr-pg">-->
+<!--                    <div class="price-txt-ordr-pg">Стоимость:</div>-->
+<!--                    <div class="price-ordr-pg">1225 ₽</div>-->
+<!--                </div>-->
+<!--            </a>-->
+<!--            <div class="info-ordr-pg">-->
+<!--                <div class="address-frame-ordr-pg">-->
+<!--                    <div class="address-txt-ordr-pg">Адрес доставки:</div>-->
+<!--                    <div class="adress-ordr-pg">г. Ульяновск, ул. Ленина 32, кв. 10</div>-->
+<!--                </div>-->
+<!--                <div class="status-ordr-pg">-->
+<!--                    В доставке-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="order-ordr-pg">-->
+<!--            <a class="number-order-and-price-ordr-pg" th:href="@{/orders/order}">-->
+<!--                <div class="number-frame-ordr-pg">-->
+<!--                    <div class="number-txt-ordr-pg">Заказ номер:</div>-->
+<!--                    <div class="number-ordr-pg">000316</div>-->
+<!--                </div>-->
+<!--                <div class="price-frame-ordr-pg">-->
+<!--                    <div class="price-txt-ordr-pg">Стоимость:</div>-->
+<!--                    <div class="price-ordr-pg">1020 ₽</div>-->
+<!--                </div>-->
+<!--            </a>-->
+<!--            <div class="info-ordr-pg">-->
+<!--                <div class="address-frame-ordr-pg">-->
+<!--                    <div class="address-txt-ordr-pg">Адрес доставки:</div>-->
+<!--                    <div class="adress-ordr-pg">г. Ульяновск, ул. Ленина 32, кв. 10</div>-->
+<!--                </div>-->
+<!--                <div class="status-ordr-pg">-->
+<!--                    В доставке-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
         <a class="btn-back-ordr-pg" th:href="@{/}">На главную</a>
     </div>
 </main>

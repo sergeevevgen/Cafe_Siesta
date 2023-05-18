@@ -11,7 +11,7 @@ import java.util.List;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
-    @Query(value = "select * from orders o where o.client_fk = :clientId", nativeQuery = true)
+    @Query(value = "select * from orders o where o.client_fk = :clientId and o.status <> 'Is_cart'", nativeQuery = true)
     List<Order> findByClientId(Long clientId);
 
     @Query(value = "select * from orders o where o.deliveryman_fk = :deliveryId", nativeQuery = true)

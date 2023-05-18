@@ -151,12 +151,12 @@ public class AdminMvcController {
         } else {
             comboService.updateCombo(id, comboDto);
         }
-        return "redirect:/admin/combos-admin";
+        return "redirect:/admin/combos";
     }
 
     @PostMapping("/combos/delete/{id}")
     public String deleteCombo(@PathVariable Long id) {
         comboService.deleteCombo(id);
-        return "redirect:/admin/combos-admin";
+        return "redirect:/admin/combos";
     }
 }

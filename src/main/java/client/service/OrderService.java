@@ -173,14 +173,20 @@ public class OrderService {
     //Поиск всех записей в репозитории
     @Transactional(readOnly = true)
     public List<OrderDto> findAllOrders() {
-        return repository.findAll().stream().map(OrderDto::new).toList();
+        return repository.findAll()
+                .stream()
+                .map(OrderDto::new)
+                .toList();
     }
 
 
     // Поиск всех заказов у клиента
     @Transactional(readOnly = true)
     public List<OrderDto> findAllClientOrders(Long clientId) {
-        return findAllClientOrdersEntities(clientId).stream().map(OrderDto::new).toList();
+        return findAllClientOrdersEntities(clientId)
+                .stream()
+                .map(OrderDto::new)
+                .toList();
     }
 
     // Поиск всех заказов у клиента по Dto НЕ НУЖЕН
