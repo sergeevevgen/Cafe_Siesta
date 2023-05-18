@@ -71,3 +71,22 @@ body {
 .form a:hover {
 	color: #FF0000;
 }
+
+.btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 40px;
+    border: none;
+
+    height: 40px;
+
+    background: #FF0000;
+    border-radius: 15px;
+
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+    text-align: center;
+    color: #FFFFFF;
+}

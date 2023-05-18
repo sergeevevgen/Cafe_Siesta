@@ -13,10 +13,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.ArrayList;
@@ -71,16 +68,24 @@ public class OrderMvcController {
         return "cart";
     }
 
-    @PostMapping("/cart/{id}")
-    public String addProductToCart(@PathVariable Long id) {
-
+    @PostMapping("/cart/add/{id}")
+    public String addProductToCart(@PathVariable Long id, @RequestParam Long count) {
         User user = userService.findByLogin(getUserName());
 
         OrderDto orderDto = orderService.findClientCart(user.getUser_id());
-        orderDto.getProducts().put(id, 1L);
-        orderDto.setProducts(orderDto.getProducts());
+        orderDto.getProducts().put(id, count);
         orderService.updateOrderProducts(orderDto);
-        return "redirect:/cart";
+        return "redirect:/orders/cart";
+    }
+
+    @PostMapping("/cart/remove/{id}")
+    public String removeProductFromCart(@PathVariable Long id) {
+        User user = userService.findByLogin(getUserName());
+
+        OrderDto orderDto = orderService.findClientCart(user.getUser_id());
+        orderDto.getProducts().remove(id);
+        orderService.updateOrderProducts(orderDto);
+        return "redirect:/orders/cart";
     }
 
     @GetMapping

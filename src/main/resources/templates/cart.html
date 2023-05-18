@@ -15,84 +15,44 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700&display=swap" rel="stylesheet">
-    <script src="/js/navbar.js"></script>
     <link rel="stylesheet" href="/css/index.css"/>
+    <script type="text/javascript" th:src="@{/js/counter.js}"></script>
     <title>Корзина</title>
 </head>
 <body>
 <div th:insert="navbar"></div>
 <main class="main">
     <div class="back">
-<!--        <div class="product-cart-pg">-->
-<!--            <a th:href="@{/product/1}">-->
-<!--                <img class="product-image-cart-pg" src="../images/image8.jpg" alt="Описание изображения">-->
-<!--            </a>-->
-<!--            <div class="product-info-cart-pg">-->
-<!--                <div class="info-name-cart-pg">Картофельный суп</div>-->
-<!--                <div class="count-frame-cart-pg">-->
-<!--                    <div class="count-txt-cart-pg">Количество:</div>-->
-<!--                    <div class="count-cart-pg">1</div>-->
-<!--                </div>-->
-<!--                <div class="info-price-cart-pg">1200 ₽</div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="product-cart-pg">-->
-<!--            <a th:href="@{/product/2}">-->
-<!--                <img class="product-image-cart-pg" src="../images/image7.jpg" alt="Описание изображения">-->
-<!--            </a>-->
-<!--            <div class="product-info-cart-pg">-->
-<!--                <div class="info-name-cart-pg">Сэндвич с яйцом</div>-->
-<!--                <div class="count-frame-cart-pg">-->
-<!--                    <div class="count-txt-cart-pg">Количество:</div>-->
-<!--                    <div class="count-cart-pg">1</div>-->
-<!--                </div>-->
-<!--                <div class="info-price-cart-pg">500 ₽</div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="product-cart-pg">-->
-<!--            <a th:href="@{/product/3}">-->
-<!--                <img class="product-image-cart-pg" src="../images/image9.jpg" alt="Описание изображения">-->
-<!--            </a>-->
-<!--            <div class="product-info-cart-pg">-->
-<!--                <div class="info-name-cart-pg">Бургер</div>-->
-<!--                <div class="count-frame-cart-pg">-->
-<!--                    <div class="count-txt-cart-pg">Количество:</div>-->
-<!--                    <div class="count-cart-pg">1</div>-->
-<!--                </div>-->
-<!--                <div class="info-price-cart-pg">300 ₽</div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="product-cart-pg">-->
-<!--            <a th:href="@{/product/4}">-->
-<!--                <img class="product-image-cart-pg" src="../images/image6.jpg" alt="Описание изображения">-->
-<!--            </a>-->
-<!--            <div class="product-info-cart-pg">-->
-<!--                <div class="info-name-cart-pg">Торт с ягодами</div>-->
-<!--                <div class="count-frame-cart-pg">-->
-<!--                    <div class="count-txt-cart-pg">Количество:</div>-->
-<!--                    <div class="count-cart-pg">1</div>-->
-<!--                </div>-->
-<!--                <div class="info-price-cart-pg">450 ₽</div>-->
-<!--            </div>-->
-<!--        </div>-->
         <div th:if="${products != null}">
-            <div th:each="product : ${products}">
-                <div class="products-cart-pg">
-                    <a th:href="@{/product/{id}(id=${product.id})}">
-                        <img class="product-image-main-pg" th:src="@{/images/{image}(image=${product.image_url})}" alt="*картинка продукта*">
-                    </a>
-                    <div class="product-info-main-pg">
-                        <div class="info-name-main-pg" th:text="${product.name}"></div>
-                        <div class="info-dop-main-pg">
-                            <div class="dop-weight-frame-main-pg">
-                                <div class="dop-weight-main-pg" th:text="${product.weight}"></div>
-                                <div>г</div>
+            <div class="products-cart-pg">
+                <div th:each="product : ${products}">
+                    <div class="product-cart-pg">
+                        <a th:href="@{/product/{id}(id=${product.id})}">
+                            <img class="product-image-cart-pg" th:src="@{/images/{image}(image=${product.image_url})}" alt="Описание изображения">
+                        </a>
+                        <div class="product-info-cart-pg">
+                            <div class="info-name-cart-pg" th:text="${product.name}">Картофельный суп</div>
+                            <div class="info-price-cart-pg" th:text="${product.price}">1200 ₽</div>
+                            <div class="product-count-frame">
+                                <div class="product-count minus" id="minus" onclick="addProductToCart(this.dataset.id)">
+                                    <img th:src="@{../images/icons/minus.svg}" style="width: 25px; height: 5px;">
+                                </div>
+                                <div class="product-count-text" id="count">1</div>
+                                <div class="product-count plus" id="plus" onclick="addProductToCart(this.dataset.id)">
+                                    <img th:src="@{../images/icons/plus.svg}" style="width: 25px; height: 25px;">
+                                </div>
+                                <div>
+                                    <button type="button" class="delete-button-cart-pg"
+                                            th:attr="onclick=|document.getElementById('remove-${product.id}').click()|">
+                                        <i class="fa fa-trash" aria-hidden="true"></i> Удалить
+                                    </button>
+                                </div>
+                                <form th:action="@{/orders/cart/remove/{id}(id=${product.id})}" method="post">
+                                    <button th:id="'remove-' + ${product.id}" type="submit" style="display: none">
+                                        Удалить
+                                    </button>
+                                </form>
                             </div>
-                            <div class="dop-rating-main-pg"></div>
-                        </div>
-                        <div class="info-price-main-pg">
-                                <div class="price-btn-main-pg" th:text="${#numbers.formatDecimal(product.price, 0, 'WHITESPACE', 2, 'COMMA')}"></div>
-                                <div>₽</div>
                         </div>
                     </div>
                 </div>
@@ -100,7 +60,7 @@
         </div>
         <div th:if="${products == null}">
             <img class="empty-cart-image" th:src="@{../images/cart/logo-cup.svg}" style="margin-bottom: 25px;">
-            <div style="font-weight: 600; font-size: 30px; line-height: 36px;">Ваша Карзина пуста</div>
+            <div style="font-weight: 600; font-size: 30px; line-height: 36px;">Ваша корзина пуста</div>
         </div>
 <!--        <a th:href="@{/}">
             <div class="order-btn-cart-pg" th:text="Заказать"

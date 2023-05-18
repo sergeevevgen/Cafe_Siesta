@@ -23,7 +23,7 @@
 </head>
 <body>
 <main class="main">
-    <form action="#" method="post"><!--th:action="@{/client/profile/save/{id}(id=${id})}" th:object="${clientDto}" method="post">-->
+    <form action="#" th:action="@{/product/reviews/save/{id}(id=${id})}" th:object="${reviewDto}" method="post">
         <div class="back-edit-pg">
             <div class="name-category-edit-pg">Оставьте отзыв</div>
             <div class="mb-3">
@@ -39,14 +39,14 @@
             </div>
             <div class="mb-3">
                 <label for="text" class="form-label">Расскажите подробнее</label>
-                <input type="text" class="form-control" id="text" required>
+                <input type="text" class="form-control" id="text" th:field="${reviewDto.text}" required>
             </div>
             <button type="submit" class="btn btn-primary button-fixed">
                 Отправить
             </button>
-            <a class="btn btn-secondary button-fixed" th:href="@{/product/{id}(id=${id})}">
+<!--            <a class="btn btn-secondary button-fixed" th:href="/product/4">
                 Назад
-            </a>
+            </a>-->
         </div>
     </form>
 </main>

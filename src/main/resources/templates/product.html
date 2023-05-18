@@ -16,7 +16,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/index.css"/>
-    <script type="text/javascript" th:src="@{/js/counter.js}"></script>
     <title>Продукт</title>
 </head>
 <body>
@@ -37,34 +36,22 @@
                 <div class="price-pr-pg" th:text="${product.price}"></div>
                 <div>₽</div>
             </div>
-            <form action="#" th:action="@{/orders/cart/{id}(id=${product.id})}" method="post" th:if="${product.isInCart == 0}">
-                <div class="info-price-main-pg">
-                    <button type="submit" class="price-btn-frame-main-pg">
+            <form action="#" th:action="@{/orders/cart/add/{id}(id=${product.id})}" method="post" th:if="${product.isInCart == 0}">
+                <input type="hidden" value="1" name="count">
+                <button type="submit" class="to-card-btn-pr-pg">
                         Добавить
-                    </button>
-                </div>
+                </button>
             </form>
-            <a th:href="@{/orders/cart/}"  th:if="${product.isInCart == 1}">
-                <div class="info-price-main-pg">
-                    <button type="submit" class="price-btn-frame-main-pg">
+            <a th:href="@{/orders/cart}"  th:if="${product.isInCart == 1}">
+                <div class="to-card-btn-pr-pg">
                         В корзину
-                    </button>
                 </div>
             </a>
-            <div class="product-count-frame">
-                <div class="product-count minus" id="minus">
-                    <img th:src="@{../images/icons/minus.svg}" style="width: 30px; height: 6px;">
-                </div>
-                <div class="product-count-text" id="count">1</div>
-                <div class="product-count plus" id="plus">
-                    <img th:src="@{../images/icons/plus.svg}" style="width: 30px; height: 30px;">
-                </div>
-            </div>
         </div>
         <div class="reviews-back-pr-pg">
             <div class="reviews-header-frame-pr-pg">
                 <div class="reviews-header-pr-pg">Отзывы</div>
-                <a th:href="@{/orders/cart}">
+                <a th:href="@{/product/reviews/edit}">
                     <div class="to-card-btn-pr-pg">Оставить отзыв</div>
                 </a>
             </div>

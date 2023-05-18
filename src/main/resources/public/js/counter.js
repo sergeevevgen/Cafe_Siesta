@@ -1,32 +1,55 @@
 window.addEventListener("DOMContentLoaded", (event) => {
-    const countText = document.getElementById("count"); // выбираем элемент, в котором хранится количество товаров
-    const plusButton = document.getElementById("plus"); // выбираем кнопку увеличения количества товаров
-    const minusButton = document.getElementById("minus"); // выбираем кнопку уменьшения количества товаров
-    const priceText = document.querySelector(".price-pr-pg"); // выбираем элемент, в котором хранится цена товара
-    const initialPrice = parseFloat(priceText.innerText); // сохраняем начальную цену товара
+  const productCards = document.querySelectorAll(".product-cart-pg");
+
+    productCards.forEach((card) => {
+    const countText = card.querySelector(".product-count-text");
+    const plusButton = card.querySelector(".product-count.plus");
+    const minusButton = card.querySelector(".product-count.minus");
+    const priceText = card.querySelector(".info-price-cart-pg");
+    const initialPrice = parseFloat(priceText.innerText);
 
     let count = 1;
 
-    plusButton.addEventListener("click", function () { // добавляем обработчик события на клик по кнопке увеличения количества товаров
-        console.log("Клик на кнопке 'минус'");
-        if (count < 10) {
-            count++; // увеличиваем количество товаров на 1
-            countText.innerText = count; // обновляем количество товаров на странице
-            priceText.innerText = count * initialPrice; // обновляем цену товара на странице
-        }
+    plusButton.addEventListener("click", function () {
+      if (count < 10) {
+        count++;
+        countText.innerText = count;
+        priceText.innerText = count * initialPrice;
+
+        addProductToCart(card.dataset.productId, count);
+      }
     });
 
-    minusButton.addEventListener("click", function () { // добавляем обработчик события на клик по кнопке уменьшения количества товаров
-        console.log("Клик на кнопке 'плюс'");
-        if (count > 1) { // проверяем, что количество товаров больше 0, чтобы не получить отрицательное количество
-            count--; // уменьшаем количество товаров на 1
-            countText.innerText = count; // обновляем количество товаров на странице
+    minusButton.addEventListener("click", function () {
+      if (count > 1) {
+        count--;
+        countText.innerText = count;
+        priceText.innerText = count * initialPrice;
 
-            if (count === 0) {
-                priceText.innerText = initialPrice;
-            } else {
-                priceText.innerText = count * initialPrice;
-            }
-        }
+        addProductToCart(card.dataset.productId, count);
+      }
     });
+    });
+
+    function addProductToCart(id, count) {
+      const url = `/orders/cart/${id}`;
+
+      fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Failed to add product to cart');
+          }
+          // В этом месте вы можете обновить интерфейс, если необходимо
+          // например, обновить счетчик корзины или показать уведомление об успешном добавлении продукта
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+          // Обработка ошибки, если необходимо
+        });
+    }
 });

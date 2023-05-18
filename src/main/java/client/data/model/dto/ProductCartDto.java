@@ -14,6 +14,7 @@ public class ProductCartDto {
     private Integer isInCart;
     private String description;
 
+
     public ProductCartDto() {
     }
 
@@ -107,5 +108,13 @@ public class ProductCartDto {
 
     public void setIsInCart(Integer isInCart) {
         this.isInCart = isInCart;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
