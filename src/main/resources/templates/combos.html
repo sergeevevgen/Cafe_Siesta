@@ -27,9 +27,10 @@
                 <div class="combo-info-combos-pg">
                     <div class="combo-info-discount-frame-combos-pg">
                         <div class="combo-info-discount-text-combos-pg">Акция</div>
-                        <div class="combo-info-discount-sum-combos-pg" th:text="${cmb.sale} + '%'">10%</div>
+                        <div class="combo-info-discount-sum-combos-pg" th:text="${cmb.sale} + '%'"></div>
                     </div>
-                    <div class="combo-info-name-combos-pg" th:text="${cmb.name}">Вареники с перцем</div>
+                    <div class="combo-info-name-combos-pg" th:text="${cmb.name}"></div>
+<!--                    Тут должна быть form, чтобы отправлять на сервер запрос о добавлении-->
                     <div class="combo-info-price-btn-combos-pg">
                         <div class="combo-info-price-btn-text-combos-pg">Заказать</div>
                         <div class="combo-info-price-btn-sum-combos-pg" th:text="${cmb.price} + '&nbsp;₽'">3200 ₽</div>

@@ -68,6 +68,9 @@ public class ComboService {
                         comboDto.getSale(),
                         comboDto.getPrice(),
                         comboDto.getProducts()
+                                .keySet()
+                                .stream()
+                                .toList()
                 ));
     }
 
@@ -92,6 +95,14 @@ public class ComboService {
     @Transactional(readOnly = true)
     public List<Combo> findAllCombos() {
         return repository.findAll();
+    }
+
+    @Transactional(readOnly = true)
+    public List<ComboDto> findAllCombosDto() {
+        return findAllCombos()
+                .stream()
+                .map(ComboDto::new)
+                .toList();
     }
 
     //Изменение категории по полям
@@ -151,7 +162,7 @@ public class ComboService {
     @Transactional
     public ComboDto updateCombo(Long id, ComboDto comboDto) {
         return new ComboDto(updateCombo(id, comboDto.getName(), comboDto.getDescription(),
-                comboDto.getImage_url(), comboDto.getSale(), comboDto.getPrice(), comboDto.getProducts()));
+                comboDto.getImage_url(), comboDto.getSale(), comboDto.getPrice(), comboDto.getProducts().keySet().stream().toList()));
     }
 
     @Transactional

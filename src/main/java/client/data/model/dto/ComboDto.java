@@ -5,6 +5,8 @@ import client.data.model.entity.Product;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ComboDto {
 
@@ -14,7 +16,7 @@ public class ComboDto {
     private String image_url;
     private Double sale;
     private Double price;
-    private List<Long> products;
+    private Map<Long, String> products;
 
     public ComboDto() {
     }
@@ -27,7 +29,9 @@ public class ComboDto {
         this.sale = combo.getSale();
         this.price = combo.getPrice();
         if (combo.getProducts() != null) {
-            this.products = combo.getProducts().stream().map(Product::getId).toList();
+            this.products = combo.getProducts()
+                    .stream()
+                    .collect(Collectors.toMap(Product::getId, Product::getName));
         }
     }
 
@@ -55,7 +59,7 @@ public class ComboDto {
         return price;
     }
 
-    public List<Long> getProducts() {
+    public Map<Long, String> getProducts() {
         return products;
     }
 
@@ -79,7 +83,7 @@ public class ComboDto {
         this.price = price;
     }
 
-    public void setProducts(List<Long> products) {
+    public void setProducts(Map<Long, String> products) {
         this.products = products;
     }
 }

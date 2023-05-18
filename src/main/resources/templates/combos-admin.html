@@ -53,7 +53,7 @@
                         style="width: 100px; height: 50px;"></td>
                 <td th:text="${combo.sale} + '%'" style="width: 20%"></td>
                 <td th:text="${combo.price} + 'руб.'" style="width: 15%"></td>
-                <td th:text="${combo.products}" style="width: 10%"></td>
+                <td th:text="${combo.products}" style="width: 10%"></td> <!-- тут крч надо опять foreach запускать, потому что продуктс - теперь map-->
                 <td style="width: 20%">
                     <div class="btn-group" role="group" aria-label="Basic example">
                         <a class="btn btn-warning button-fixed button-sm"
