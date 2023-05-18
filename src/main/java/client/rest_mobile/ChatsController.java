@@ -40,8 +40,8 @@ public class ChatsController {
                 .toList();
     }
 
-    @PostMapping("/postOneMessage/{chat_id}")
-    public MessageDto postOneMessage(MessageDto messageDto) {
+    @PostMapping("/postOneMessage")
+    public MessageDto postOneMessage(@RequestBody MessageDto messageDto) {
         return messageService.addMessage(messageDto);
     }
 }

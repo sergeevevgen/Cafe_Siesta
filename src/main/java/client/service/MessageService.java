@@ -50,7 +50,6 @@ public class MessageService {
         message.setSender_id(sender_id);
         final Chat chat = chatService.findChat(chat_id);
         message.setChat(chat);
-        validatorUtil.validate(message);
         return repository.save(message);
     }
 

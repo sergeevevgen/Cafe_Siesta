@@ -21,11 +21,9 @@ public class Message {
     @Column(nullable = false)
     private String text;
 
-    @NotBlank
     @Column(nullable = false)
     private Long time;
 
-    @NotBlank
     @Column(nullable = false)
     private Long sender_id;
 
