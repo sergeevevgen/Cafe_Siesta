@@ -111,17 +111,28 @@ public class ReviewService {
     }
 
     @Transactional
-    public ReviewDto updateOnlyLikeReview(Long id, Boolean liked) {
-        if (id == null || id <= 0) {
+    public ReviewDto updateOnlyLikeReview(Long id, ReviewDto reviewDto) {
+        if (id == null || id < 0) {
             throw new IllegalArgumentException("Review fields are null or empty");
         }
-        final Review review = findReview(id);
-        if (review == null) {
-            throw new ReviewNotFoundException(id);
+        if(id==0){
+            return new ReviewDto(addReview(
+                    null,
+                    null,
+                    reviewDto.getProduct_id(),
+                    reviewDto.getClient_id(),
+                    reviewDto.getLiked()
+            ));
         }
-        review.setLike(liked ? 1 : 0);
-        validatorUtil.validate(review);
-        return new ReviewDto(reviewRepository.save(review));
+        else {
+            final Review review = findReview(id);
+            if (review == null) {
+                throw new ReviewNotFoundException(id);
+            }
+            review.setLike(reviewDto.getLiked() ? 1 : 0);
+            validatorUtil.validate(review);
+            return new ReviewDto(reviewRepository.save(review));
+        }
     }
 
     @Transactional
