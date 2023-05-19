@@ -23,7 +23,7 @@
 <body>
 <div th:insert="navbar"></div>
 <main class="main">
-    <div class="back">
+    <div class="back" style="gap: 40px">
         <div th:if="${!products.isEmpty()}">
             <div class="products-cart-pg">
                 <div th:each="product : ${products}">
@@ -59,24 +59,26 @@
             </div>
         </div>
         <div th:if="${!combos.isEmpty()}">
-            <div class="combos-cart-pg">
+            <div class="products-cart-pg">
                 <div th:each="combo : ${combos}">
-                    <div class="combo-cart-pg">
+                    <div class="product-cart-pg">
                         <a th:href="@{/combo/{id}(id=${combo.id})}">
-                            <img class="combo-image-cart-pg" th:src="@{/images/{image}(image=${combo.image_url})}" alt="Описание изображения">
+                            <img class="product-image-cart-pg" th:src="@{/images/{image}(image=${combo.image_url})}" alt="Описание изображения">
                         </a>
-                        <div class="combo-info-cart-pg">
+                        <div class="product-info-cart-pg">
                             <div class="info-name-cart-pg" th:text="${combo.name}"></div>
-                            <div class="info-price-cart-pg" th:text="${combo.price}"></div>
-                            <div class="info-price-cart-pg" th:text="${combo.sale}"></div>
-                            <div class="combo-count-frame">
-                                <div class="combo-count minus" id="'minus' + ${combo.id}">
+                            <div class="combo-price-sale-frame-cart-pg">
+                                <div class="combo info-price-cart-pg" th:text="${combo.price}"></div>
+                                <div class="info-price-cart-pg" th:text="${combo.sale} + '%'"></div>
+                            </div>
+                            <div class="product-count-frame">
+                                <div class="product-count minus" id="'minus' + ${combo.id}">
                                     <img th:src="@{../images/icons/minus.svg}" style="width: 25px; height: 5px;">
                                 </div>
                                 <form>
-                                    <div class="combo-count-text" id="'count' + ${combo.id}" th:text="${combo.count}"></div>
+                                    <div class="product-count-text" id="'count' + ${combo.id}" th:text="${combo.count}"></div>
                                 </form>
-                                <div class="combo-count plus" id="'plus' + ${combo.id}">
+                                <div class="product-count plus" id="'plus' + ${combo.id}">
                                     <img th:src="@{../images/icons/plus.svg}" style="width: 25px; height: 25px;">
                                 </div>
                                 <button type="button" class="delete-button-cart-pg"
@@ -93,19 +95,21 @@
                 </div>
             </div>
         </div>
-        <div th:if="${!products.isEmpty() || !combos.isEmpty()}">
-            <form action="#" th:action="@{/orders/buy}" method="post">
-                <button type="submit">
-                    Заказать
-                </button>
-            </form>
-        </div>
-        <div th:if="${!products.isEmpty() || !combos.isEmpty()}">
-            <form action="#" th:action="@{/orders/cart/removeAll}" method="post">
-                <button type="submit">
-                    Очистить корзину
-                </button>
-            </form>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+            <div th:if="${!products.isEmpty() || !combos.isEmpty()}">
+                <form action="#" th:action="@{/orders/buy}" method="post">
+                    <button type="submit" class="to-card-btn-pr-pg">
+                        Заказать
+                    </button>
+                </form>
+            </div>
+            <div th:if="${!products.isEmpty() || !combos.isEmpty()}">
+                <form action="#" th:action="@{/orders/cart/removeAll}" method="post">
+                    <button type="submit" class="to-card-btn-pr-pg">
+                        Очистить корзину
+                    </button>
+                </form>
+            </div>
         </div>
         <div th:if="${products.isEmpty() && combos.isEmpty()}">
             <img class="empty-cart-image" th:src="@{../images/cart/logo-cup.svg}" style="margin-bottom: 25px;">

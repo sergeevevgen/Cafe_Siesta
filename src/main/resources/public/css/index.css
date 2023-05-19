@@ -412,7 +412,7 @@ h4 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 35px;
+    gap: 40px;
 }
 
 .product-cart-pg {
@@ -536,6 +536,26 @@ h4 {
     font-size: 20px;
     line-height: 24px;
     text-align: center;
+    color: #FFFFFF;
+}
+
+.combo-price-sale-frame-cart-pg {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.combo.info-price-cart-pg {
+    align-items: center;
+    padding: 8px 8px;
+    border: none;
+
+    height: 40px;
+
+    background: #D4A600;
+    border-radius: 15px;
+
     color: #FFFFFF;
 }
 
