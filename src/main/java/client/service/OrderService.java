@@ -209,6 +209,14 @@ public class OrderService {
                 .toList();
     }
 
+    @Transactional(readOnly = true)
+    public List<OrderDto> findOrders() {
+        return repository.findOrdersNotCarts()
+                .stream()
+                .map(OrderDto::new)
+                .toList();
+    }
+
     // Изменение статуса заказа у клиента
     @Transactional
     public Order changeOrderStatus(Long orderId, Order_Status status) {
@@ -496,5 +504,14 @@ public class OrderService {
     @Transactional
     public void deleteAllOrders() {
         repository.deleteAll();
+    }
+
+    @Transactional
+    public OrderDto isOrderForClient(Long clientId, Long orderId) {
+        Order current = findOrder(orderId);
+        if (current.getClient().getId().equals(clientId)) {
+            return new OrderDto(current);
+        }
+        return null;
     }
 }

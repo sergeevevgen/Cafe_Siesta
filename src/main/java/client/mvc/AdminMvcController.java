@@ -3,9 +3,7 @@ package client.mvc;
 import client.data.model.dto.CategoryDto;
 import client.data.model.dto.ComboDto;
 import client.data.model.dto.ProductDto;
-import client.service.CategoryService;
-import client.service.ComboService;
-import client.service.ProductService;
+import client.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,13 +18,24 @@ public class AdminMvcController {
     private final ProductService productService;
     private final CategoryService categoryService;
     private final ComboService comboService;
+    private final OrderService orderService;
+    private final DeliveryManService deliveryManService;
 
     public AdminMvcController(ProductService productService,
                               CategoryService categoryService,
-                              ComboService comboService) {
+                              ComboService comboService, OrderService orderService, DeliveryManService deliveryManService) {
         this.productService = productService;
         this.categoryService = categoryService;
         this.comboService = comboService;
+        this.orderService = orderService;
+        this.deliveryManService = deliveryManService;
+    }
+
+    @GetMapping
+    public String getMainPage(Model model) {
+        model.addAttribute("orders", orderService.findOrders());
+
+        return "orders-admin";
     }
 
     //Products

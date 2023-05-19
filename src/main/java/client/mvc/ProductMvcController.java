@@ -1,19 +1,14 @@
 package client.mvc;
 
-import client.data.model.dto.CategoryDto;
+import client.data.model.dto.OrderDto;
 import client.data.model.dto.ProductCartDto;
 import client.data.model.dto.ReviewDto;
 import client.data.model.entity.Review;
 import client.data.model.entity.User;
-import client.service.CategoryService;
-import client.service.ProductService;
-import client.service.ReviewService;
-import client.service.UserService;
-import org.springframework.boot.Banner;
+import client.service.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,6 +23,7 @@ public class ProductMvcController {
     private final CategoryService categoryService;
     private final UserService userService;
     private final ReviewService reviewService;
+    private final OrderService orderService;
 
     private static String getUserName() {
         SecurityContext context = SecurityContextHolder.getContext();
@@ -35,18 +31,20 @@ public class ProductMvcController {
         return authentication.getName();
     }
 
-    public ProductMvcController(ProductService productService, CategoryService categoryService, UserService userService, ReviewService reviewService) {
+    public ProductMvcController(ProductService productService, CategoryService categoryService, UserService userService, ReviewService reviewService, OrderService orderService) {
         this.productService = productService;
         this.categoryService = categoryService;
         this.userService = userService;
         this.reviewService = reviewService;
+        this.orderService = orderService;
     }
 
     @GetMapping("/{id}")
     public String getProduct(@PathVariable Long id, Model model) {
         User user = userService.findByLogin(getUserName());
+        OrderDto cart = orderService.findClientCart(user.getUser_id());
         ProductCartDto productDto = new ProductCartDto(productService.findProduct(id));
-        if (productService.isProductInCart(user.getUser_id(), id)) {
+        if (productService.isProductInCart(user.getUser_id(), id, cart.getId())) {
             productDto.setIsInCart(1);
         }
         else {

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -21,7 +22,8 @@
 <header class="header">
     <div th:fragment="navbar" class="navbar">
         <div class="logo-lvl">
-            <div class="logo"><a class="logo-s" th:href="@{/}">Siesta</a></div>
+            <div class="logo"><a sec:authorize="hasRole('ROLE_CLIENT')" class="logo-s" th:href="@{/}">Siesta</a>
+                <a sec:authorize="hasRole('ROLE_ADMIN')" class="logo-s" th:href="@{/admin}">Siesta</a></div>
             <div class="search-box">
                 <input type="text" class="search-text" placeholder="Поиск">
                 <input type="submit" class="search-btn" value="Найти">
@@ -29,14 +31,14 @@
             <a class="action-btn" th:href="@{/logout}">Выйти</a>
         </div>
         <div class="links-lvl">
-            <a class="link" th:href="@{/}">Продукты</a>
-            <a class="link" th:href="@{/category}">Категории</a>
-            <a class="link" th:href="@{/orders/cart}">Корзина</a>
-            <a class="link" th:href="@{/profile}">Профиль</a>
-            <a class="link" th:href="@{/orders}">Заказы</a>
-            <a class="link" th:href="@{/admin/products}" th:if="${#httpServletRequest.getRequestURI().startsWith('/admin')}">Для админа (продукты)</a>
-            <a class="link" th:href="@{/admin/categories}" th:if="${#httpServletRequest.getRequestURI().startsWith('/admin')}">Для админа (категории)</a>
-            <a class="link" th:href="@{/admin/combos}" th:if="${#httpServletRequest.getRequestURI().startsWith('/admin')}">Для админа (комбо)</a>
+            <a sec:authorize="hasRole('ROLE_CLIENT')" class="link" th:href="@{/}">Продукты</a>
+            <a sec:authorize="hasRole('ROLE_CLIENT')" class="link" th:href="@{/category}">Категории</a>
+            <a sec:authorize="hasRole('ROLE_CLIENT')" class="link" th:href="@{/orders/cart}">Корзина</a>
+            <a sec:authorize="hasRole('ROLE_CLIENT')" class="link" th:href="@{/profile}">Профиль</a>
+            <a sec:authorize="hasRole('ROLE_CLIENT')" class="link" th:href="@{/orders}">Заказы</a>
+            <a sec:authorize="hasRole('ROLE_ADMIN')" class="link" th:href="@{/admin/products}">Для админа (продукты)</a>
+            <a sec:authorize="hasRole('ROLE_ADMIN')" class="link" th:href="@{/admin/categories}">Для админа (категории)</a>
+            <a sec:authorize="hasRole('ROLE_ADMIN')" class="link" th:href="@{/admin/combos}">Для админа (комбо)</a>
         </div>
     </div>
 </header>

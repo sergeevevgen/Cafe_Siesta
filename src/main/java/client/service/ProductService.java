@@ -166,16 +166,16 @@ public class ProductService {
     }
 
     @Transactional(readOnly = true)
-    public List<Long> findProductsByClientCart(Long clientId) {
-        return productRepository.findProductsByClient(clientId)
+    public List<Long> findProductsByClientCart(Long clientId, Long cartId) {
+        return productRepository.findProductsByClient(clientId, cartId)
                 .stream()
                 .map(Product::getId)
                 .toList();
     }
 
     @Transactional(readOnly = true)
-    public Boolean isProductInCart(Long clientId, Long productId) {
-        return findProductsByClientCart(clientId)
+    public Boolean isProductInCart(Long clientId, Long productId, Long cartId) {
+        return findProductsByClientCart(clientId, cartId)
                 .contains(productId);
     }
 }

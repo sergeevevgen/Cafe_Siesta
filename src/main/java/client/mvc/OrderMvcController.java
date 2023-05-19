@@ -2,6 +2,7 @@ package client.mvc;
 
 import client.data.model.dto.*;
 import client.data.model.entity.User;
+import client.data.model.enums.Order_Status;
 import client.service.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -23,6 +24,7 @@ public class OrderMvcController {
     private final ClientService clientService;
     private final ComboService comboService;
     private final ProductService productService;
+    private final DeliveryManService deliveryManService;
 
     private static String getUserName() {
         SecurityContext context = SecurityContextHolder.getContext();
@@ -30,12 +32,13 @@ public class OrderMvcController {
         return authentication.getName();
     }
 
-    public OrderMvcController(OrderService orderService, UserService userService, ClientService clientService, ComboService comboService, ProductService productService) {
+    public OrderMvcController(OrderService orderService, UserService userService, ClientService clientService, ComboService comboService, ProductService productService, DeliveryManService deliveryManService) {
         this.orderService = orderService;
         this.userService = userService;
         this.clientService = clientService;
         this.comboService = comboService;
         this.productService = productService;
+        this.deliveryManService = deliveryManService;
     }
 
     @GetMapping("/cart")
@@ -122,11 +125,44 @@ public class OrderMvcController {
         return "orders";
     }
 
-    @GetMapping("/order")
-    public String getOrder(Model model) {
+    @GetMapping("/order/{id}")
+    public String getOrder(@PathVariable Long id,  Model model) {
         User user = userService.findByLogin(getUserName());
-        model.addAttribute("order",
-                orderService.findAllClientOrders(user.getUser_id()));
+        OrderDto order = orderService.isOrderForClient(user.getUser_id(), id);
+        if (order == null) {
+            return "redirect:/orders";
+        }
+        model.addAttribute("order", order);
+        //Собираем продукты в корзине
+        List<ProductDto> products = productService.findProducts(order.getProducts()
+                .keySet()
+                .stream()
+                .toList());
+        List<ProductCartDto> productsCart =  new ArrayList<>();
+        for (int i = 0; i < order.getProducts().size(); ++i) {
+            if (order.getProducts().containsKey(products.get(i).getId())) {
+                ProductCartDto productCartDto = new ProductCartDto(products.get(i),
+                        order.getProducts().get(products.get(i).getId()));
+                productsCart.add(productCartDto);
+            }
+        }
+        model.addAttribute("products", productsCart);
+
+        //собираем комбо в корзине
+        List<ComboDto> combos = comboService.findCombos(order.getCombos()
+                .keySet()
+                .stream()
+                .toList());
+        List<ComboCartDto> comboCartDtos =  new ArrayList<>();
+        for (int i = 0; i < order.getCombos().size(); ++i) {
+            if (order.getCombos().containsKey(combos.get(i).getId())) {
+                ComboCartDto comboCartDto = new ComboCartDto(combos.get(i),
+                        order.getCombos().get(combos.get(i).getId()));
+                comboCartDtos.add(comboCartDto);
+            }
+        }
+        model.addAttribute("combos", comboCartDtos);
+        model.addAttribute("deliveryman", new DeliveryManDto(deliveryManService.findById(order.getDeliveryman_id())));
         return "order";
     }
 
@@ -152,6 +188,16 @@ public class OrderMvcController {
         orderDto.getCombos().remove(id);
         orderService.updateOrderCombos(orderDto);
         return "redirect:/orders/cart";
+    }
+
+    @PostMapping("/cart/buy")
+    public String buyOrder() {
+        User user = userService.findByLogin(getUserName());
+
+        OrderDto orderDto = orderService.findClientCart(user.getUser_id());
+        orderDto.setStatus(Order_Status.Accepted);
+        orderService.changeOrderStatus(orderDto);
+        return "redirect:/orders";
     }
 
     @PostMapping("/cart/setPrice")

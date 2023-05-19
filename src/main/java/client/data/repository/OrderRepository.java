@@ -22,4 +22,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     @Query(value = "select * from orders where status = 'Accepted'", nativeQuery = true)
     List<Order> findOrdersAccepted();
+
+    @Query(value = "select * from orders where status <> 'Is_cart'", nativeQuery = true)
+    List<Order> findOrdersNotCarts();
 }
