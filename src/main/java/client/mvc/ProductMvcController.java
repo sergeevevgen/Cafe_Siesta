@@ -1,16 +1,25 @@
 package client.mvc;
 
+import client.data.model.dto.CategoryDto;
 import client.data.model.dto.ProductCartDto;
+import client.data.model.dto.ReviewDto;
+import client.data.model.entity.Review;
 import client.data.model.entity.User;
 import client.service.CategoryService;
 import client.service.ProductService;
+import client.service.ReviewService;
 import client.service.UserService;
+import org.springframework.boot.Banner;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/product")
@@ -18,6 +27,7 @@ public class ProductMvcController {
     private final ProductService productService;
     private final CategoryService categoryService;
     private final UserService userService;
+    private final ReviewService reviewService;
 
     private static String getUserName() {
         SecurityContext context = SecurityContextHolder.getContext();
@@ -25,10 +35,11 @@ public class ProductMvcController {
         return authentication.getName();
     }
 
-    public ProductMvcController(ProductService productService, CategoryService categoryService, UserService userService) {
+    public ProductMvcController(ProductService productService, CategoryService categoryService, UserService userService, ReviewService reviewService) {
         this.productService = productService;
         this.categoryService = categoryService;
         this.userService = userService;
+        this.reviewService = reviewService;
     }
 
     @GetMapping("/{id}")
@@ -43,6 +54,56 @@ public class ProductMvcController {
         }
 
         model.addAttribute("product", productDto);
+        model.addAttribute("reviews", reviewService.findReviewsByProductNotFacked(id));
+
+        Review review = reviewService.findReviewByClientAndProduct(user.getUser_id(), id);
+        if (review != null) {
+            model.addAttribute("reviewClient", new ReviewDto(review));
+        }
+
         return "product";
+    }
+
+    @GetMapping(value = {"/{product_id}/review/edit", "/{product_id}/review/edit/{id}"})
+    public String makeReview(@PathVariable Long product_id,
+                             @PathVariable(required = false) Long id,
+                             Model model) {
+        if (id == null || id <= 0) {
+            model.addAttribute("reviewDto", new ReviewDto());
+        }
+        else {
+            model.addAttribute("reviewId", id);
+            model.addAttribute("reviewDto", reviewService.findReviewDto(id));
+        }
+        model.addAttribute("product_id", product_id);
+        return "review-edit";
+    }
+
+    @PostMapping(value = {"/{product_id}/review/save", "/{product_id}/review/save/{id}"})
+    public String saveReview(@PathVariable Long product_id,
+                             @PathVariable(required = false) Long id,
+                             @ModelAttribute @Valid ReviewDto reviewDto,
+                             BindingResult bindingResult,
+                             Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("errors", bindingResult.getAllErrors());
+            return "review-edit";
+        }
+        User user = userService.findByLogin(getUserName());
+        reviewDto.setClient_id(user.getUser_id());
+        if (id == null || id <= 0) {
+            reviewService.addReview(reviewDto);
+        } else {
+            reviewService.updateReview(id, reviewDto);
+        }
+        return "redirect:/product/" + product_id;
+    }
+
+    @PostMapping("/{product_id}/review/delete")
+    public String deleteReview(@PathVariable Long product_id,
+                             Model model) {
+        User user = userService.findByLogin(getUserName());
+        reviewService.deleteReview(reviewService.findReviewByClientAndProduct(user.getUser_id(), product_id).getId());
+        return "redirect:/product/" + product_id;
     }
 }

@@ -47,30 +47,52 @@
                         В корзину
                 </div>
             </a>
+            <button type="button" class="delete-button-cart-pg"
+                    th:attr="onclick=|document.getElementById('favourite-${product.id}').click()|">
+                <i class="fa fa-star" aria-hidden="true"></i>
+            </button>
+            <form action="#" th:action="@{/product/favourite/{id}(id=${product.id})}" method="post">
+                <button type="submit" class="to-card-btn-pr-pg" th:id="'favourite-' + ${product.id}" style="display: none">
+                </button>
+            </form>
         </div>
         <div class="reviews-back-pr-pg">
             <div class="reviews-header-frame-pr-pg">
                 <div class="reviews-header-pr-pg">Отзывы</div>
-                <a th:href="@{/product/reviews/edit}">
-                    <div class="to-card-btn-pr-pg">Оставить отзыв</div>
-                </a>
-            </div>
-            <div class="review-pr-pg">
-                <div class="name-and-rating-review-pr-pg">
-                    <div class="name-review-pr-pg"><!-- th:text="${review.username}">-->Николай:</div>
-                    <div class="rating-frame-review-pr-pg">
-                        <div class="rating-ic-review-pr-pg">
-                            <i class="fa fa-star" aria-hidden="true"></i>
-                        </div>
-                        <div class="rating-review-pr-pg"><!--th:text="${review.rating}">-->4</div>
-                    </div>
+                <div th:if="${reviewClient == null || (reviewClient.score == null && reviewClient.text == null)}">
+                    <a th:href="@{/product/{product_id}/review/edit(product_id=${product.id})}">
+                        <div class="to-card-btn-pr-pg">Оставить отзыв</div>
+                    </a>
                 </div>
-                <div class="comment-review-pr-pg">
-                    <div class="comment-header-review-pr-pg">Комментарий</div>
-                    <div class="comment-text-review-pr-pg"><!--th:text="${review.text}">-->
-                        Блюдо было оформлено очень красиво, что сразу же привлекло мое внимание. Но когда я пробовал
-                        его, я был удивлен насколько оно было вкусным и гармоничным. Каждый ингредиент был подобран
-                        идеально, и вкусовые нотки слились в одно целое, создавая прекрасное сочетание вкусов.
+                <div th:if="${reviewClient != null && (reviewClient.score != null || reviewClient.text != null)}">
+                    <a th:href="@{/product/{product_id}/review/edit/{id}(product_id=${product.id}, id=${reviewClient.id})}">
+                        <div class="to-card-btn-pr-pg">Изменить отзыв</div>
+                    </a>
+                    <button type="button" class="delete-button-cart-pg"
+                            th:attr="onclick=|document.getElementById('remove-${product.id}').click()|">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </button>
+                    <form th:action="@{/product/{product_id}/review/delete(product_id=${product.id})}" method="post">
+                        <button th:id="'remove-' + ${product.id}" type="submit" style="display: none">
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div th:each="review : ${reviews}">
+                <div class="review-pr-pg">
+                    <div class="name-and-rating-review-pr-pg">
+                        <div class="name-review-pr-pg" th:text="${review.client}"></div>
+                        <div class="rating-frame-review-pr-pg">
+                            <div class="rating-ic-review-pr-pg">
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                            </div>
+                            <div class="rating-review-pr-pg" th:if="${review.score != null}" th:text="${review.score}"></div>
+                        </div>
+                    </div>
+                    <div class="comment-review-pr-pg">
+                        <div class="comment-header-review-pr-pg">Комментарий</div>
+                        <div class="comment-text-review-pr-pg" th:if="${review.text != null}" th:text="${review.text}">
+                        </div>
                     </div>
                 </div>
             </div>

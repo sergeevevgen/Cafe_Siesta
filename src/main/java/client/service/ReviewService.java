@@ -47,6 +47,15 @@ public class ReviewService {
                 .map(ReviewDto::new)
                 .toList();
     }
+
+    @Transactional(readOnly = true)
+    public List<ReviewDto> findReviewsByProductNotFacked(Long id) {
+        return reviewRepository.findReviewsByProductNotFake(id)
+                .stream()
+                .map(ReviewDto::new)
+                .toList();
+    }
+
     @Transactional(readOnly = true)
     public List<ReviewDto> findReviewsByClient(Long id) {
         return reviewRepository.findReviewsByClient(id)
@@ -56,11 +65,8 @@ public class ReviewService {
     }
 
     @Transactional(readOnly = true)
-    public List<ReviewDto> findReviewByClientAndProduct(Long userId, Long productId) {
-        return reviewRepository.findReviewByClientAndProduct(userId, productId)
-                .stream()
-                .map(ReviewDto::new)
-                .toList();
+    public Review findReviewByClientAndProduct(Long userId, Long productId) {
+        return reviewRepository.findReviewByClientAndProduct(userId, productId);
     }
 
     @Transactional
@@ -73,7 +79,11 @@ public class ReviewService {
                 client_id == null || client_id <= 0) {
             throw new IllegalArgumentException("Review fields are null or empty");
         }
-        final Review review = new Review();
+//        Review review = findReviewByClientAndProduct(client_id, product_id);
+//        if (review != null) {
+//            return review;
+//        }
+        Review review = new Review();
         if (score != null) {
             review.setScore(score);
         }
@@ -145,6 +155,10 @@ public class ReviewService {
     public Review deleteReview(Long id) {
         Review review = findReview(id);
         reviewRepository.delete(review);
+//        final Client client = clientService.findById(review.getClient().getId());
+//        client.removeReview(review.getId());
+//        final Product product = productService.findProduct(review.getProduct().getId());
+//        product.removeReview(review.getId());
         return review;
     }
 

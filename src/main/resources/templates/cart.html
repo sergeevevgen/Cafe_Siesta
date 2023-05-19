@@ -38,16 +38,16 @@
                                 <div class="product-count minus" id="minus">
                                     <img th:src="@{../images/icons/minus.svg}" style="width: 25px; height: 5px;">
                                 </div>
-                                <div class="product-count-text" id="count" th:data-id="${product.id}" th:text="${product.count}">1</div>
+                                <form>
+                                    <div class="product-count-text" id="count" th:text="${product.count}"></div>
+                                </form>
                                 <div class="product-count plus" id="plus">
                                     <img th:src="@{../images/icons/plus.svg}" style="width: 25px; height: 25px;">
                                 </div>
-                                <div>
-                                    <button type="button" class="delete-button-cart-pg"
-                                            onclick="removeProductFromCart(this, ${product.id})">
-                                        Удалить
-                                    </button>
-                                </div>
+                                <button type="button" class="delete-button-cart-pg"
+                                        th:attr="onclick=|document.getElementById('remove-${product.id}').click()|">
+                                    Удалить
+                                </button>
                                 <form th:action="@{/orders/cart/remove/{id}(id=${product.id})}" method="post">
                                     <button th:id="'remove-' + ${product.id}" type="submit" style="display: none">
                                         Удалить
@@ -58,10 +58,13 @@
                     </div>
                 </div>
             </div>
-            <a th:href="@{/}">
-                <div class="order-btn-cart-pg" th:text="Заказать"
-                     th:href="@{/orders}"></div>
-            </a>
+            <div th:if="${products != null}">
+                <form action="#" th:action="@{/orders/buy}" method="post">
+                    <button type="submit">
+                        Заказать
+                    </button>
+                </form>
+            </div>
         </div>
         <div th:if="${products != null}">
             <form action="#" th:action="@{/orders/cart/removeAll}" method="post">
@@ -74,10 +77,6 @@
             <img class="empty-cart-image" th:src="@{../images/cart/logo-cup.svg}" style="margin-bottom: 25px;">
             <div style="font-weight: 600; font-size: 30px; line-height: 36px;">Ваша корзина пуста</div>
         </div>
-<!--        <a th:href="@{/}">
-            <div class="order-btn-cart-pg" th:text="Заказать"
-                 th:href="@{/cart/submit/{id}(id=${category.id})}"></div>
-        </a>-->
     </div>
 </main>
 </body>

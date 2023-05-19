@@ -23,9 +23,11 @@
 </head>
 <body>
 <main class="main">
-    <form action="#" th:action="@{/product/reviews/save/{id}(id=${id})}" th:object="${reviewDto}" method="post">
+    <div th:text="${errors}" class="margin-bottom alert-danger"></div>
+    <form action="#" th:action="@{/product/{product_id}/review/save/{id}(product_id=${product_id}, id=${id})}" th:object="${reviewDto}" method="post">
         <div class="back-edit-pg">
-            <div class="name-category-edit-pg">Оставьте отзыв</div>
+            <div class="name-category-edit-pg" th:if="${reviewDto == null}">Оставьте отзыв</div>
+            <div class="name-category-edit-pg" th:if="${reviewDto != null}">Измените отзыв</div>
             <div class="mb-3">
                 <label for="rating" class="form-label">Оценка</label>
                 <div class="rating" id="rating">
@@ -34,7 +36,7 @@
                     <span class="star" data-value="3"><i class="fa fa-star" aria-hidden="true"></i></span>
                     <span class="star" data-value="4"><i class="fa fa-star" aria-hidden="true"></i></span>
                     <span class="star" data-value="5"><i class="fa fa-star" aria-hidden="true"></i></span>
-                    <input type="hidden" name="rating" value="0">
+                    <input type="hidden" name="rating" value="0" th:field="${reviewDto.score}">
                 </div>
             </div>
             <div class="mb-3">
@@ -42,11 +44,12 @@
                 <input type="text" class="form-control" id="text" th:field="${reviewDto.text}" required>
             </div>
             <button type="submit" class="btn btn-primary button-fixed">
-                Отправить
+                <span th:if="${id == null}">Добавить</span>
+                <span th:if="${id != null}">Обновить</span>
             </button>
-<!--            <a class="btn btn-secondary button-fixed" th:href="/product/4">
+            <a class="btn btn-secondary button-fixed" th:href="@{/product/{id}(id=${product_id})}">
                 Назад
-            </a>-->
+            </a>
         </div>
     </form>
 </main>
