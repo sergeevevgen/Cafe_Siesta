@@ -177,7 +177,7 @@ public class Order {
         this.items = items;
     }
 
-    public void updateItems(Order_Item item) {
+    public void updateItem(Order_Item item) {
         for (var i : items) {
             if (Objects.equals(i.getId(), item.getId())) {
                 i = item;
@@ -185,14 +185,20 @@ public class Order {
             }
         }
     }
-    public Order_Item removeItems(Long id) {
+    public Order_Item removeItem(Long id) {
         for (var i : items) {
-            if (Objects.equals(i.getId(), id)) {
+            if (Objects.equals(i.getProduct().getId(), id)) {
                 items.remove(i);
                 return i;
             }
         }
         return null;
+    }
+
+    public List<Order_Item> removeItems() {
+        var list = new ArrayList<>(items);
+        items.clear();
+        return list;
     }
 
     public void setItem(Order_Item item) {
@@ -212,7 +218,7 @@ public class Order {
         this.combo_items = combo_items;
     }
 
-    public void updateComboItems(Combo_Order item) {
+    public void updateComboItem(Combo_Order item) {
         for (var i : combo_items) {
             if (Objects.equals(i.getId(), item.getId())) {
                 i = item;
@@ -220,14 +226,20 @@ public class Order {
             }
         }
     }
-    public Combo_Order removeComboItems(Long id) {
+    public Combo_Order removeComboItem(Long id) {
         for (var i : combo_items) {
-            if (Objects.equals(i.getId(), id)) {
+            if (Objects.equals(i.getCombo().getId(), id)) {
                 combo_items.remove(i);
                 return i;
             }
         }
         return null;
+    }
+
+    public List<Combo_Order> removeComboItems() {
+        var list = new ArrayList<>(combo_items);
+        combo_items.clear();
+        return list;
     }
 
     public void setComboItem(Combo_Order item) {

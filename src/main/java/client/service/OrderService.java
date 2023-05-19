@@ -315,12 +315,18 @@ public class OrderService {
             //Удаляем старые
             for(var i : items.entrySet()) {
                 if (!products.containsKey(i.getKey())) {
-                    order_itemRepository.delete(order_itemRepository.getById(i.getKey()));
+                    //Удалять надо не по айди order_item, а по айди продукта
+                    var order_item = current.removeItem(i.getKey());
+                    order_itemRepository.delete(order_item);
                 }
             }
         }
         else {
-            order_itemRepository.deleteAllById(current.getItems().stream().map(Order_Item::getId).toList());
+            //Удалять надо не по айди order_item, а по айди продукта
+            order_itemRepository.deleteAllById(current.removeItems()
+                    .stream()
+                    .map(Order_Item::getId)
+                    .toList());
         }
 
         validatorUtil.validate(current);
@@ -371,12 +377,18 @@ public class OrderService {
             //Удаляем старые
             for(var i : items.entrySet()) {
                 if (!combos.containsKey(i.getKey())) {
-                    combo_orderRepository.delete(combo_orderRepository.getById(i.getKey()));
+                    //Удалять надо не по айди combo_item, а по айди combo
+                    var order_combo_item = current.removeComboItem(i.getKey());
+                    combo_orderRepository.delete(order_combo_item);
                 }
             }
         }
         else {
-            combo_orderRepository.deleteAllById(current.getCombo_items().stream().map(Combo_Order::getId).toList());
+            //Тут тупо удаляем всё
+            combo_orderRepository.deleteAllById(current.removeComboItems()
+                    .stream()
+                    .map(Combo_Order::getId)
+                    .toList());
         }
 
         validatorUtil.validate(current);

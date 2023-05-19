@@ -58,6 +58,13 @@
                 </div>
             </div>
         </div>
+        <div th:if="${products != null}">
+            <form action="#" th:action="@{/orders/cart/removeAll}" method="post">
+                <button type="submit">
+                    Очистить корзину
+                </button>
+            </form>
+        </div>
         <div th:if="${products == null}">
             <img class="empty-cart-image" th:src="@{../images/cart/logo-cup.svg}" style="margin-bottom: 25px;">
             <div style="font-weight: 600; font-size: 30px; line-height: 36px;">Ваша корзина пуста</div>

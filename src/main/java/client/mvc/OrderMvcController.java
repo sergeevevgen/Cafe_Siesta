@@ -88,6 +88,16 @@ public class OrderMvcController {
         return "redirect:/orders/cart";
     }
 
+    @PostMapping("/cart/removeAll")
+    public String removeProductsFromCart() {
+        User user = userService.findByLogin(getUserName());
+
+        OrderDto orderDto = orderService.findClientCart(user.getUser_id());
+        orderDto.getProducts().clear();
+        orderService.updateOrderProducts(orderDto);
+        return "redirect:/orders/cart";
+    }
+
     @GetMapping
     public String getOrders(Model model) {
 
