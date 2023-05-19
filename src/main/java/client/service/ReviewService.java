@@ -87,7 +87,6 @@ public class ReviewService {
         review.setClient(client);
         final Product product = productService.findProduct(product_id);
         review.setProduct(product);
-        validatorUtil.validate(product);
         return reviewRepository.save(review);
     }
 

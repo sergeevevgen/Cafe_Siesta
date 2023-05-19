@@ -18,6 +18,7 @@ public class ReviewDto {
     private Long client_id;
 
     private String client;
+
     private Boolean liked;
 
     public ReviewDto() {
@@ -101,7 +102,11 @@ public class ReviewDto {
         return liked;
     }
 
-    public void setLiked(Integer liked) {
+    public void setLiked(Boolean liked) {
+        this.liked = liked;
+    }
+
+    public void setIntegerLiked(Integer liked) {
         this.liked = liked == 1;
     }
 }
