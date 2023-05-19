@@ -10,6 +10,7 @@ public class ComboCartDto {
     private Double price;
     private Long count;
     private Integer isInCart;
+    private String description;
 
     public ComboCartDto() {
     }
@@ -29,6 +30,7 @@ public class ComboCartDto {
         this.image_url = combo.getImage_url();
         this.sale = combo.getSale();
         this.price = combo.getPrice();
+        this.description = combo.getDescription();
     }
 
     public Long getId() {
@@ -85,5 +87,13 @@ public class ComboCartDto {
 
     public void setSale(Double sale) {
         this.sale = sale;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

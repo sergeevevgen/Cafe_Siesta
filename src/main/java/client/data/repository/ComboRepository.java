@@ -14,6 +14,6 @@ public interface ComboRepository extends JpaRepository<Combo, Long> {
     @Query(value = "select * from combo c where c.name ilike :name", nativeQuery = true)
     Combo findOneByNameIgnoreCase(String name);
 
-    @Query(value = "select * from combo c inner join combo_item ci on c.id = ci.combo_fk inner join orders o on ci.order_fk = o.id inner join client c on o.client_fk = c.id where c.id = :id",  nativeQuery = true)
+    @Query(value = "select * from combo c inner join combo_order co on c.id = co.combo_fk inner join orders o on co.order_fk = o.id inner join client cl on o.client_fk = cl.id where cl.id = :id",  nativeQuery = true)
     List<Combo> findCombosByClient(Long id);
 }
