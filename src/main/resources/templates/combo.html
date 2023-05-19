@@ -37,7 +37,7 @@
             </ul>
         </div>
         <div class="price-and-btn-pr-pg">
-            <form action="#" th:action="@{/orders/cart/add/{id}(id=${combo.id})}" method="post" th:if="${combo.isInCart == 0}">
+            <form action="#" th:action="@{/orders/cart/addCombo/{id}(id=${combo.id})}" method="post" th:if="${combo.isInCart == 0}">
                 <input type="hidden" value="1" name="count">
                 <button type="submit" class="to-card-btn-pr-pg">
                     Добавить

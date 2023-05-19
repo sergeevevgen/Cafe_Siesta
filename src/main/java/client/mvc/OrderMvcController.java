@@ -1,13 +1,8 @@
 package client.mvc;
 
-import client.data.model.dto.OrderDto;
-import client.data.model.dto.ProductCartDto;
-import client.data.model.dto.ProductDto;
+import client.data.model.dto.*;
 import client.data.model.entity.User;
-import client.service.ClientService;
-import client.service.OrderService;
-import client.service.ProductService;
-import client.service.UserService;
+import client.service.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,10 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import static org.apache.commons.lang3.SystemUtils.getUserName;
 
@@ -28,6 +21,7 @@ public class OrderMvcController {
     private final OrderService orderService;
     private final UserService userService;
     private final ClientService clientService;
+    private final ComboService comboService;
     private final ProductService productService;
 
     private static String getUserName() {
@@ -36,10 +30,11 @@ public class OrderMvcController {
         return authentication.getName();
     }
 
-    public OrderMvcController(OrderService orderService, UserService userService, ClientService clientService, ProductService productService) {
+    public OrderMvcController(OrderService orderService, UserService userService, ClientService clientService, ComboService comboService, ProductService productService) {
         this.orderService = orderService;
         this.userService = userService;
         this.clientService = clientService;
+        this.comboService = comboService;
         this.productService = productService;
     }
 
@@ -48,10 +43,8 @@ public class OrderMvcController {
         User user = userService.findByLogin(getUserName());
         OrderDto cartDto = orderService.findClientCart(user.getUser_id());
         model.addAttribute("cartDto", cartDto);
-        if (cartDto.getProducts().isEmpty()) {
-            model.addAttribute("products", null);
-            return "cart";
-        }
+
+        //Собираем продукты в корзине
         List<ProductDto> products = productService.findProducts(cartDto.getProducts()
                 .keySet()
                 .stream()
@@ -65,10 +58,26 @@ public class OrderMvcController {
             }
         }
         model.addAttribute("products", productsCart);
+
+        //собираем комбо в корзине
+        List<ComboDto> combos = comboService.findCombos(cartDto.getCombos()
+                .keySet()
+                .stream()
+                .toList());
+        List<ComboCartDto> comboCartDtos =  new ArrayList<>();
+        for (int i = 0; i < cartDto.getCombos().size(); ++i) {
+            if (cartDto.getCombos().containsKey(combos.get(i).getId())) {
+                ComboCartDto comboCartDto = new ComboCartDto(combos.get(i),
+                        cartDto.getCombos().get(combos.get(i).getId()));
+                comboCartDtos.add(comboCartDto);
+            }
+        }
+        model.addAttribute("combos", comboCartDtos);
+
         return "cart";
     }
 
-    @PostMapping("/cart/add/{id}")
+    @PostMapping("/cart/addProduct/{id}")
     public String addProductToCart(@PathVariable Long id, @RequestParam Long count) {
         try {
             User user = userService.findByLogin(getUserName());
@@ -82,7 +91,7 @@ public class OrderMvcController {
         }
     }
 
-    @PostMapping("/cart/remove/{id}")
+    @PostMapping("/cart/removeProduct/{id}")
     public String removeProductFromCart(@PathVariable Long id) {
         User user = userService.findByLogin(getUserName());
 
@@ -93,12 +102,14 @@ public class OrderMvcController {
     }
 
     @PostMapping("/cart/removeAll")
-    public String removeProductsFromCart() {
+    public String removeAllFromCart() {
         User user = userService.findByLogin(getUserName());
 
         OrderDto orderDto = orderService.findClientCart(user.getUser_id());
         orderDto.getProducts().clear();
+        orderDto.getCombos().clear();
         orderService.updateOrderProducts(orderDto);
+        orderService.updateOrderCombos(orderDto);
         return "redirect:/orders/cart";
     }
 
@@ -117,5 +128,29 @@ public class OrderMvcController {
         model.addAttribute("order",
                 orderService.findAllClientOrders(user.getUser_id()));
         return "order";
+    }
+
+    @PostMapping("/cart/addCombo/{id}")
+    public String addComboToCart(@PathVariable Long id, @RequestParam Long count) {
+        try {
+            User user = userService.findByLogin(getUserName());
+            OrderDto orderDto = orderService.findClientCart(user.getUser_id());
+            orderDto.getCombos().put(id, count);
+            orderService.updateOrderCombos(orderDto);
+            return "redirect:/orders/cart";
+        } catch (Exception e) {
+            e.printStackTrace(); // Вывод ошибки в консоль
+            return "redirect:/orders/cart";
+        }
+    }
+
+    @PostMapping("/cart/removeCombo/{id}")
+    public String removeComboFromCart(@PathVariable Long id) {
+        User user = userService.findByLogin(getUserName());
+
+        OrderDto orderDto = orderService.findClientCart(user.getUser_id());
+        orderDto.getCombos().remove(id);
+        orderService.updateOrderCombos(orderDto);
+        return "redirect:/orders/cart";
     }
 }

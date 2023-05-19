@@ -1,6 +1,7 @@
 package client.service;
 
 import client.data.model.dto.ComboDto;
+import client.data.model.dto.ProductDto;
 import client.data.model.entity.Combo;
 import client.data.model.entity.Order_Item;
 import client.data.model.entity.Product;
@@ -177,5 +178,27 @@ public class ComboService {
             }
         }
         repository.deleteAll();
+    }
+
+    @Transactional(readOnly = true)
+    public List<ComboDto> findCombos(List<Long> ids) {
+        return repository.findAllById(ids)
+                .stream()
+                .map(ComboDto::new)
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<Long> findCombosByClientCart(Long clientId) {
+        return repository.findCombosByClient(clientId)
+                .stream()
+                .map(Combo::getId)
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public Boolean isComboInCart(Long clientId, Long comboId) {
+        return findCombosByClientCart(clientId)
+                .contains(comboId);
     }
 }

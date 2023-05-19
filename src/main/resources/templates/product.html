@@ -36,7 +36,7 @@
                 <div class="price-pr-pg" th:text="${product.price}"></div>
                 <div>₽</div>
             </div>
-            <form action="#" th:action="@{/orders/cart/add/{id}(id=${product.id})}" method="post" th:if="${product.isInCart == 0}">
+            <form action="#" th:action="@{/orders/cart/addProduct/{id}(id=${product.id})}" method="post" th:if="${product.isInCart == 0}">
                 <input type="hidden" value="1" name="count">
                 <button type="submit" class="to-card-btn-pr-pg">
                         Добавить
