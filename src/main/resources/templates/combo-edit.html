@@ -16,6 +16,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/index.css"/>
     <script src="/js/select-items.js"></script>
+    <script type="text/javascript" th:src="@{/js/add_images.js}"></script>
     <title>Продукт</title>
 </head>
 <body>
@@ -34,7 +35,8 @@
             </div>
             <div class="mb-3">
                 <label for="image" class="form-label">Изображение</label>
-                <input type="text" class="form-control" id="image" th:field="${comboDto.image_url}" required>
+                <input type="file" class="form-control" id="image-input" onchange="updateImageName()" required>
+                <input type="text" class="form-control" id="image" th:field="${comboDto.image_url}" required style="display: none;">
             </div>
             <div class="mb-3">
                 <label for="sale" class="form-label">Скидка</label>
