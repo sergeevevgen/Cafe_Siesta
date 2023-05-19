@@ -153,4 +153,14 @@ public class OrderMvcController {
         orderService.updateOrderCombos(orderDto);
         return "redirect:/orders/cart";
     }
+
+    @PostMapping("/cart/setPrice")
+    public String setNewPrice(@RequestParam Double price) {
+        User user = userService.findByLogin(getUserName());
+
+        OrderDto orderDto = orderService.findClientCart(user.getUser_id());
+        orderDto.setPrice(price);
+        orderService.updateOrderFields(orderDto);
+        return "redirect:/orders/cart";
+    }
 }

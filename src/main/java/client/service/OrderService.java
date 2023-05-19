@@ -15,6 +15,7 @@ import client.util.validation.ValidatorUtil;
 import org.aspectj.weaver.ast.Or;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -297,15 +298,11 @@ public class OrderService {
 
         if (products != null && !products.isEmpty()) {
             //Номера продуктов, которые сейчас используются
-            Map<Long, Long> items = new HashMap<>();
+            Map<Long, Pair<Order_Item, Long>> items = new HashMap<>();
 
             //Тут существующие продукты из заказа с количеством
             for(var i : current.getItems()) {
-                if (items.containsKey(i.getProduct().getId())) {
-                    items.put(i.getProduct().getId(), items.get(i.getProduct().getId()) + i.getCount());
-                }
-                else
-                    items.put(i.getProduct().getId(), i.getCount());
+                items.put(i.getProduct().getId(), Pair.of(i, i.getCount()));
             }
 
             //Добавляем новые
@@ -320,8 +317,8 @@ public class OrderService {
 
                     order_itemRepository.save(order_item);
                 }
-                else if (items.containsKey(i.getKey()) && !Objects.equals(items.get(i.getKey()), i.getValue())) {
-                    Order_Item order_item = order_itemRepository.getById(i.getKey());
+                else if (items.containsKey(i.getKey()) && !Objects.equals(items.get(i.getKey()).getSecond(), i.getValue())) {
+                    Order_Item order_item = order_itemRepository.getById(items.get(i.getKey()).getFirst().getId());
                     order_item.setCount(i.getValue());
                     order_itemRepository.save(order_item);
                 }
@@ -359,15 +356,11 @@ public class OrderService {
 
         if (combos != null && !combos.isEmpty()) {
             //Номера комбо, которые сейчас используются
-            Map<Long, Long> items = new HashMap<>();
+            Map<Long, Pair<Combo_Order, Long>> items = new HashMap<>();
 
             //Тут существующие комбо из заказа с количеством
             for(var i : current.getCombo_items()) {
-                if (items.containsKey(i.getCombo().getId())) {
-                    items.put(i.getCombo().getId(), items.get(i.getCombo().getId()) + i.getCount());
-                }
-                else
-                    items.put(i.getCombo().getId(), i.getCount());
+                items.put(i.getCombo().getId(), Pair.of(i, i.getCount()));
             }
 
             //Добавляем новые
@@ -382,8 +375,8 @@ public class OrderService {
 
                     combo_orderRepository.save(item);
                 }
-                else if (items.containsKey(i.getKey()) && !Objects.equals(items.get(i.getKey()), i.getValue())) {
-                    Combo_Order item = combo_orderRepository.getById(i.getKey());
+                else if (items.containsKey(i.getKey()) && !Objects.equals(items.get(i.getKey()).getSecond(), i.getValue())) {
+                    Combo_Order item = combo_orderRepository.getById(items.get(i.getKey()).getFirst().getId());
                     item.setCount(i.getValue());
                     combo_orderRepository.save(item);
                 }

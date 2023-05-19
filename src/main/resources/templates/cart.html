@@ -17,7 +17,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/index.css"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script type="text/javascript" th:src="@{/js/counter.js}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <title>Корзина</title>
 </head>
 <body>
@@ -35,15 +35,13 @@
                             <div class="info-name-cart-pg" th:text="${product.name}"></div>
                             <div class="info-price-cart-pg" th:text="${product.price}"></div>
                             <div class="product-count-frame">
-                                <div class="product-count minus" id="'minus' + ${product.id}">
+                                <button class="product-count-minus" th:id="'minus' + ${product.id}" th:attr="data-product-id=${product.id}">
                                     <img th:src="@{../images/icons/minus.svg}" style="width: 25px; height: 5px;">
-                                </div>
-                                <form>
-                                    <div class="product-count-text" id="'count' + ${product.id}" th:text="${product.count}"></div>
-                                </form>
-                                <div class="product-count plus" id="'plus' + ${product.id}">
+                                </button>
+                                <div class="product-count-text" th:id="'count-product' + ${product.id}" th:text="${product.count}"></div>
+                                <button class="product-count-plus" th:id="'plus' + ${product.id}" th:attr="data-product-id=${product.id}">
                                     <img th:src="@{../images/icons/plus.svg}" style="width: 25px; height: 25px;">
-                                </div>
+                                </button>
                                 <button type="button" class="delete-button-cart-pg"
                                         th:attr="onclick=|document.getElementById('remove_product-${product.id}').click()|">
                                     Удалить
@@ -72,15 +70,13 @@
                                 <div class="info-price-cart-pg" th:text="${combo.sale} + '%'"></div>
                             </div>
                             <div class="product-count-frame">
-                                <div class="product-count minus" id="'minus' + ${combo.id}">
+                                <button class="combo-count-minus" th:id="'minus' + ${combo.id}" th:attr="data-combo-id=${combo.id}">
                                     <img th:src="@{../images/icons/minus.svg}" style="width: 25px; height: 5px;">
-                                </div>
-                                <form>
-                                    <div class="product-count-text" id="'count' + ${combo.id}" th:text="${combo.count}"></div>
-                                </form>
-                                <div class="product-count plus" id="'plus' + ${combo.id}">
+                                </button>
+                                <div class="combo-count-text" th:id="'count-combo' + ${combo.id}" th:text="${combo.count}"></div>
+                                <button class="combo-count-plus" th:id="'plus' + ${combo.id}" th:attr="data-combo-id=${combo.id}">
                                     <img th:src="@{../images/icons/plus.svg}" style="width: 25px; height: 25px;">
-                                </div>
+                                </button>
                                 <button type="button" class="delete-button-cart-pg"
                                         th:attr="onclick=|document.getElementById('remove_combo-${combo.id}').click()|">
                                     Удалить
@@ -93,6 +89,16 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div th:if="${!products.isEmpty() || !combos.isEmpty()}">
+            Общее количество
+            <div th:text="${cartDto.count}" id="count">
+
+            </div>
+            Общая стоимость
+            <div th:text="${cartDto.price}" id="price">
+
             </div>
         </div>
         <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
@@ -117,5 +123,146 @@
         </div>
     </div>
 </main>
+<script>
+
+$(document).ready(function() {
+
+  $('.product-count-plus').click(function() {
+    var productId = $(this).data('product-id');
+    changeProductQuantity(productId, 1);
+  });
+
+  $('.product-count-minus').click(function() {
+    var productId = $(this).data('product-id');
+    changeProductQuantity(productId, -1);
+  });
+
+
+  function changeProductQuantity(productId, count) {
+    var countElementId = '#count-product' + productId;
+    var currentCount = parseInt($(countElementId).text());
+
+    var newCount = currentCount + count;
+
+    // Ограничение нижнего порога
+    if (newCount < 1) {
+      newCount = 1;
+    }
+
+    // Ограничение верхнего порога
+    if (newCount > 10) {
+      newCount = 10;
+    }
+
+    $(countElementId).text(newCount);
+    updatePriceAndCount();
+
+    $.ajax({
+      type: 'POST',
+      url: '/orders/cart/addProduct/' + productId,
+      data: {
+        count: newCount
+      },
+      success: function(response) {
+        // Обновить отображение количества продукта после успешного изменения на сервере
+        // Например, обновить значение на странице или перезагрузить корзину
+      },
+      error: function(xhr) {
+        // Обработать ошибку при изменении количества продукта
+      }
+    });
+  }
+
+  $('.combo-count-plus').click(function() {
+        var comboId = $(this).data('combo-id');
+        changeComboQuantity(comboId, 1);
+      });
+
+      $('.combo-count-minus').click(function() {
+        var comboId = $(this).data('combo-id');
+        changeComboQuantity(comboId, -1);
+      });
+
+  function changeComboQuantity(comboId, count) {
+    var countElementId = '#count-combo' + comboId;
+    var currentCount = parseInt($(countElementId).text());
+
+    var newCount = currentCount + count;
+
+    // Ограничение нижнего порога
+    if (newCount < 1) {
+      newCount = 1;
+    }
+
+    // Ограничение верхнего порога
+    if (newCount > 10) {
+      newCount = 10;
+    }
+
+    $(countElementId).text(newCount);
+    updatePriceAndCount();
+
+    $.ajax({
+      type: 'POST',
+      url: '/orders/cart/addCombo/' + comboId,
+      data: {
+        count: newCount
+      },
+      success: function(response) {
+        // Обновить отображение количества продукта после успешного изменения на сервере
+        // Например, обновить значение на странице или перезагрузить корзину
+      },
+      error: function(xhr) {
+        // Обработать ошибку при изменении количества продукта
+      }
+    });
+  }
+
+
+  function updatePriceAndCount() {
+    var totalPrice = 0.0;
+    var totalCount = 0;
+
+     $('.product-count-text').each(function() {
+        var count = parseInt($(this).text());
+        var price = parseFloat($(this).closest('.product-info-cart-pg').find('.info-price-cart-pg').text());
+
+        totalCount += count;
+        totalPrice += count * price;
+     });
+
+      $('.combo-count-text').each(function() {
+        var count = parseInt($(this).text());
+        var price = parseFloat($(this).closest('.product-info-cart-pg').find('.combo.info-price-cart-pg').text());
+
+        totalCount += count;
+        totalPrice += count * price;
+      });
+      $('#count').text(totalCount);
+      $('#price').text(totalPrice);
+
+       $.ajax({
+      type: 'POST',
+      url: "/orders/cart/setPrice",
+      data: {
+        price: totalPrice
+      },
+      success: function(response) {
+        // Обновить отображение количества продукта после успешного изменения на сервере
+        // Например, обновить значение на странице или перезагрузить корзину
+      },
+      error: function(xhr) {
+        // Обработать ошибку при изменении количества продукта
+      }
+    });
+  }
+
+    $('.delete-button-cart-pg').on('click', function() {
+      updatePriceAndCount();
+    });
+
+  updatePriceAndCount();
+});
+</script>
 </body>
 </html>
