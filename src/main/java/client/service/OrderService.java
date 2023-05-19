@@ -154,7 +154,7 @@ public class OrderService {
     @Transactional
     public OrderDto addOrder(OrderDto orderDto) {
         return new OrderDto(addOrder(orderDto.getPrice(), orderDto.getClient_id(),
-                orderDto.getProducts(), orderDto.getCombos(), orderDto.getPayment(), orderDto.getTime(0L)));
+                orderDto.getProducts(), orderDto.getCombos(), orderDto.getPayment(), orderDto.getTime()));
     }
 
     //Поиск заказа в репозитории

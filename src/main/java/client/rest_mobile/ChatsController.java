@@ -20,11 +20,24 @@ public class ChatsController {
         this.messageService = messageService;
     }
 
-    @GetMapping("/getAll/{user_id}")
-    public List<ChatDto> getAllChats(@PathVariable Long user_id) {
+    @GetMapping("/getForClient/{user_id}")
+    public List<ChatDto> getForClient(@PathVariable Long user_id) {
         // возможность запросить чаты ВСЕ у пользователя
         // по всем абсолютно его заказам
-        return chatService.findUserChats(user_id).stream().map(ChatDto::new).toList();
+        return chatService.findClientChats(user_id)
+                .stream()
+                .map(ChatDto::new)
+                .toList();
+    }
+
+    @GetMapping("/getForDeliveryMan/{user_id}")
+    public List<ChatDto> getForDeliveryMan(@PathVariable Long user_id) {
+        // возможность запросить чаты ВСЕ у пользователя
+        // по всем абсолютно его заказам
+        return chatService.findDeliverymanChats(user_id)
+                .stream()
+                .map(ChatDto::new)
+                .toList();
     }
 
     @GetMapping("/getOne/{id}")

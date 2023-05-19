@@ -51,7 +51,6 @@ public class ChatService {
         return repository.save(chat);
     }
 
-    //Поиск категории в репозитории
     @Transactional(readOnly = true)
     public Chat findChat(Long id) {
         final Optional<Chat> chat = repository.findById(id);
@@ -61,8 +60,13 @@ public class ChatService {
     // Наподобие такого, ищем все чаты у клиента
     // Все очень просто
     @Transactional(readOnly = true)
-    public List<Chat> findUserChats(Long clientId) {
+    public List<Chat> findClientChats(Long clientId) {
         return repository.findByClientId(clientId);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Chat> findDeliverymanChats(Long deliveryManId) {
+        return repository.findByDeliveryManId(deliveryManId);
     }
 
     @Transactional
