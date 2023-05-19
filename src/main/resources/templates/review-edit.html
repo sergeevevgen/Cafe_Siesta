@@ -31,12 +31,12 @@
             <div class="mb-3">
                 <label for="rating" class="form-label">Оценка</label>
                 <div class="rating" id="rating">
-                    <span class="star" data-value="1"><i class="fa fa-star" aria-hidden="true"></i></span>
-                    <span class="star" data-value="2"><i class="fa fa-star" aria-hidden="true"></i></span>
-                    <span class="star" data-value="3"><i class="fa fa-star" aria-hidden="true"></i></span>
-                    <span class="star" data-value="4"><i class="fa fa-star" aria-hidden="true"></i></span>
                     <span class="star" data-value="5"><i class="fa fa-star" aria-hidden="true"></i></span>
-                    <input type="hidden" name="rating" value="0" th:field="${reviewDto.score}">
+                    <span class="star" data-value="4"><i class="fa fa-star" aria-hidden="true"></i></span>
+                    <span class="star" data-value="3"><i class="fa fa-star" aria-hidden="true"></i></span>
+                    <span class="star" data-value="2"><i class="fa fa-star" aria-hidden="true"></i></span>
+                    <span class="star" data-value="1"><i class="fa fa-star" aria-hidden="true"></i></span>
+                    <input type="text" name="rating-value" value="0" th:field="${reviewDto.score}">
                 </div>
             </div>
             <div class="mb-3">
