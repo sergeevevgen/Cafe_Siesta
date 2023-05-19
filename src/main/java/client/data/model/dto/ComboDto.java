@@ -16,7 +16,7 @@ public class ComboDto {
     private String image_url;
     private Double sale;
     private Double price;
-    private Map<Long, String> products;
+    private List<Long> products;
 
     public ComboDto() {
     }
@@ -31,7 +31,8 @@ public class ComboDto {
         if (combo.getProducts() != null) {
             this.products = combo.getProducts()
                     .stream()
-                    .collect(Collectors.toMap(Product::getId, Product::getName));
+                    .map(Product::getId)
+                    .toList();
         }
     }
 
@@ -59,7 +60,7 @@ public class ComboDto {
         return price;
     }
 
-    public Map<Long, String> getProducts() {
+    public List<Long> getProducts() {
         return products;
     }
 
@@ -83,7 +84,7 @@ public class ComboDto {
         this.price = price;
     }
 
-    public void setProducts(Map<Long, String> products) {
+    public void setProducts(List<Long> products) {
         this.products = products;
     }
 }

@@ -29,6 +29,21 @@ public class OrderController {
         return orderService.findAllDeliveryOrdersEntities(deliveryId);
     }
 
+    @GetMapping("/getAccepted")
+    public List<OrderDto> getAcceptedOrders() {
+        return orderService.findAcceptedOrders();
+    }
+
+    @GetMapping("/getAllOrders")
+    public List<OrderDto> getAllOrders() {
+        return orderService.findAllOrders();
+    }
+
+    @PostMapping("/takeOne")
+    public OrderDto takeOrder(@RequestBody OrderDto orderDto) {
+        return orderService.updateOrderDeliveryMan(orderDto);
+    }
+
     @GetMapping("/getOne/{id}")
     public OrderDto getOneOrder(@PathVariable Long id) {
         return new OrderDto(orderService.findOrder(id));

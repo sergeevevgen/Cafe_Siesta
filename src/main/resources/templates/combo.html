@@ -24,22 +24,22 @@
     <div class="combo-back-combo-pg">
         <div class="combo-name-combo-pg" th:text="${combo.name}">Комбо</div>
         <img class="combo-image-combo-pg" th:src="@{/images/{image}(image=${combo.image_url})}" alt="Описание изображения">
-        <div class="combo-info-combo-pg" th:text="${combo.description}">Мы готовим его из мясного и рыбного паштета, очень вкусно получается я того все</div>
+        <div class="combo-info-combo-pg" th:text="${combo.description}"></div>
         <div class="products-list-combo-pg">
             <ul>
                 <li th:each="product : ${products}">
-                    <div class="product-name-combo-pg" th:text="${product.name}">Яблоко</div>
+                    <div class="product-name-combo-pg" th:text="${product.name}"></div>
                     <div class="count-price-combo-pg">
-                        <div class="product-price-combo-pg">320 ₽</div>
-                        <div class="product-count-combo-pg">2 шт.</div>
+                        <div class="product-price-combo-pg" th:text="${product.price}"></div>
+                        <div class="product-count-combo-pg">1 шт</div>
                     </div>
                 </li>
             </ul>
         </div>
         <div class="price-and-btn-pr-pg">
-            <a th:href="@{/orders/cart}">
+            <form th:href="@{/orders/cart}">
                 <div class="to-card-btn-pr-pg">В корзину</div>
-            </a>
+            </form>
             <div class="price-text-pr-pg">
                 <div class="price-pr-pg" th:text="${combo.price}"></div>
                 <div>₽</div>

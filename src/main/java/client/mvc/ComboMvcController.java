@@ -30,10 +30,7 @@ public class ComboMvcController {
     public String getCombo(@PathVariable Long id, Model model) {
         ComboDto dto = comboService.findCombo(id);
         model.addAttribute("combo", dto);
-        model.addAttribute("products", productService.findProducts(dto.getProducts()
-                .keySet()
-                .stream()
-                .toList()));
+        model.addAttribute("products", productService.findProducts(dto.getProducts()));
         return "combo";
     }
 }

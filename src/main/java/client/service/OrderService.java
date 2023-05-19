@@ -200,6 +200,14 @@ public class OrderService {
         return repository.findByDeliveryId(deliveryId).stream().map(OrderDto::new).toList();
     }
 
+    @Transactional(readOnly = true)
+    public List<OrderDto> findAcceptedOrders() {
+        return repository.findOrdersAccepted()
+                .stream()
+                .map(OrderDto::new)
+                .toList();
+    }
+
     // Изменение статуса заказа у клиента
     @Transactional
     public Order changeOrderStatus(Long orderId, Order_Status status) {
@@ -212,7 +220,6 @@ public class OrderService {
             case Accepted: {
                 if (current.getStatus() == Order_Status.Is_cart) {
                     current.setStatus(status);
-//                    addOrder(0.0, current.getClient().getId(), null, null);
                 }
                 else {
                     throw new WrongOrderStatusException(current.getId(), current.getStatus());
@@ -220,10 +227,17 @@ public class OrderService {
                 break;
             }
             case In_process:
+                if (current.getStatus() == Order_Status.Accepted) {
+                    current.setStatus(status);
+                }
+                else {
+                    throw new WrongOrderStatusException(current.getId(), current.getStatus());
+                }
                 break;
             case Rejected: {
                 if (current.getStatus() == Order_Status.Accepted) {
                     current.setStatus(status);
+                    current.removeDeliveryMan();
                 }
                 else {
                     throw new WrongOrderStatusException(current.getId(), current.getStatus());
