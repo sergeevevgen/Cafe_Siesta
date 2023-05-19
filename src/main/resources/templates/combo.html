@@ -37,9 +37,17 @@
             </ul>
         </div>
         <div class="price-and-btn-pr-pg">
-            <form th:href="@{/orders/cart}">
-                <div class="to-card-btn-pr-pg">В корзину</div>
+            <form action="#" th:action="@{/orders/cart/add/{id}(id=${combo.id})}" method="post" th:if="${combo.isInCart == 0}">
+                <input type="hidden" value="1" name="count">
+                <button type="submit" class="to-card-btn-pr-pg">
+                    Добавить
+                </button>
             </form>
+            <a th:href="@{/orders/cart}"  th:if="${combo.isInCart == 1}">
+                <div class="to-card-btn-pr-pg">
+                    В корзину
+                </div>
+            </a>
             <div class="price-text-pr-pg">
                 <div class="price-pr-pg" th:text="${combo.price}"></div>
                 <div>₽</div>

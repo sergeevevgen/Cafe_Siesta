@@ -399,6 +399,13 @@ h4 {
     line-height: 36px;
 }
 
+.reviews-buttons-frame-pr-pg {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
 /*   cart page   */
 
 .products-cart-pg {

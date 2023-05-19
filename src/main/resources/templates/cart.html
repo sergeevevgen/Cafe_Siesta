@@ -23,7 +23,7 @@
 <body>
 <div th:insert="navbar"></div>
 <main class="main">
-    <div class="back">
+    <div class="back" style="gap: 35px;">
         <div th:if="${products != null}">
             <div class="products-cart-pg">
                 <div th:each="product : ${products}">
@@ -58,9 +58,9 @@
                     </div>
                 </div>
             </div>
-            <div th:if="${products != null}">
+            <div th:if="${products != null}" style="display: flex; align-items: center; justify-content: center; margin-top: 35px;">
                 <form action="#" th:action="@{/orders/buy}" method="post">
-                    <button type="submit">
+                    <button type="submit" class="to-card-btn-pr-pg">
                         Заказать
                     </button>
                 </form>
@@ -68,7 +68,7 @@
         </div>
         <div th:if="${products != null}">
             <form action="#" th:action="@{/orders/cart/removeAll}" method="post">
-                <button type="submit">
+                <button type="submit" class="to-card-btn-pr-pg">
                     Очистить корзину
                 </button>
             </form>

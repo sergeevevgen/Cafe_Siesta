@@ -65,17 +65,19 @@
                     </a>
                 </div>
                 <div th:if="${reviewClient != null && (reviewClient.score != null || reviewClient.text != null)}">
-                    <a th:href="@{/product/{product_id}/review/edit/{id}(product_id=${product.id}, id=${reviewClient.id})}">
-                        <div class="to-card-btn-pr-pg">Изменить отзыв</div>
-                    </a>
-                    <button type="button" class="delete-button-cart-pg"
-                            th:attr="onclick=|document.getElementById('remove-${product.id}').click()|">
-                        <i class="fa fa-trash" aria-hidden="true"></i>
-                    </button>
-                    <form th:action="@{/product/{product_id}/review/delete(product_id=${product.id})}" method="post">
-                        <button th:id="'remove-' + ${product.id}" type="submit" style="display: none">
+                    <div class="reviews-buttons-frame-pr-pg">
+                        <a th:href="@{/product/{product_id}/review/edit/{id}(product_id=${product.id}, id=${reviewClient.id})}">
+                            <div class="to-card-btn-pr-pg">Изменить отзыв</div>
+                        </a>
+                        <button type="button" class="to-card-btn-pr-pg"
+                                th:attr="onclick=|document.getElementById('remove-${product.id}').click()|">
+                            Удалить отзыв
                         </button>
-                    </form>
+                        <form th:action="@{/product/{product_id}/review/delete(product_id=${product.id})}" method="post">
+                            <button th:id="'remove-' + ${product.id}" type="submit" style="display: none">
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
             <div th:each="review : ${reviews}">
