@@ -16,6 +16,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/index.css"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" th:src="@{/js/counter.js}"></script>
     <title>Корзина</title>
 </head>
@@ -34,16 +35,16 @@
                             <div class="info-name-cart-pg" th:text="${product.name}">Картофельный суп</div>
                             <div class="info-price-cart-pg" th:text="${product.price}">1200 ₽</div>
                             <div class="product-count-frame">
-                                <div class="product-count minus" id="minus" onclick="addProductToCart(this.dataset.id)">
+                                <div class="product-count minus" id="minus">
                                     <img th:src="@{../images/icons/minus.svg}" style="width: 25px; height: 5px;">
                                 </div>
-                                <div class="product-count-text" id="count">1</div>
-                                <div class="product-count plus" id="plus" onclick="addProductToCart(this.dataset.id)">
+                                <div class="product-count-text" id="count" th:data-id="${product.id}" th:text="${product.count}">1</div>
+                                <div class="product-count plus" id="plus">
                                     <img th:src="@{../images/icons/plus.svg}" style="width: 25px; height: 25px;">
                                 </div>
                                 <div>
                                     <button type="button" class="delete-button-cart-pg"
-                                            th:attr="onclick=|document.getElementById('remove-${product.id}').click()|">
+                                            onclick="removeProductFromCart(this, ${product.id})">
                                         Удалить
                                     </button>
                                 </div>
@@ -57,6 +58,10 @@
                     </div>
                 </div>
             </div>
+            <a th:href="@{/}">
+                <div class="order-btn-cart-pg" th:text="Заказать"
+                     th:href="@{/orders}"></div>
+            </a>
         </div>
         <div th:if="${products != null}">
             <form action="#" th:action="@{/orders/cart/removeAll}" method="post">
