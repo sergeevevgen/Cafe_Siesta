@@ -1,17 +1,29 @@
 window.addEventListener("DOMContentLoaded", (event) => {
-    // Get all the stars
-    const stars = document.querySelectorAll(".star");
+  // Get all the stars
+  const stars = document.querySelectorAll(".star");
+  const ratingInput = document.querySelector('#rating-value');
 
-    // Add click event listener to each star
-    stars.forEach((star) => {
-        star.addEventListener("click", () => {
-            stars.forEach((s) => s.classList.remove("active"));
-            star.classList.add("active");
+  // Set initial selected stars based on the rating input value
+  stars.forEach((star) => {
+    if (star.dataset.value <= ratingInput.value) {
+      star.classList.add("active");
+    }
+  });
 
-            const ratingInput = document.querySelector('input[name="rating-value"]');
-            ratingInput.value = star.dataset.value;
-            console.log("звезды", star.dataset.value);
-            console.log(ratingInput.value);
-        });
+  // Add click event listener to each star
+  stars.forEach((star) => {
+    star.addEventListener("click", () => {
+      const selectedValue = star.dataset.value;
+
+      stars.forEach((s) => {
+        if (s.dataset.value <= selectedValue) {
+          s.classList.add("active");
+        } else {
+          s.classList.remove("active");
+        }
+      });
+
+      ratingInput.value = selectedValue;
     });
+  });
 });
