@@ -78,7 +78,7 @@ public class OrderMvcController {
             return "redirect:/orders/cart";
         } catch (Exception e) {
             e.printStackTrace(); // Вывод ошибки в консоль
-            return "error-page"; // Перенаправление на страницу с сообщением об ошибке
+            return "redirect:/orders/cart";
         }
     }
 

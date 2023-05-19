@@ -38,7 +38,7 @@
                                 <div class="product-count minus" id="minus">
                                     <img th:src="@{../images/icons/minus.svg}" style="width: 25px; height: 5px;">
                                 </div>
-                                <div class="product-count-text" id="count" data-id="${product.id}" th:text="${product.count}">1</div>
+                                <div class="product-count-text" id="count" th:data-id="${product.id}" th:text="${product.count}">1</div>
                                 <div class="product-count plus" id="plus">
                                     <img th:src="@{../images/icons/plus.svg}" style="width: 25px; height: 25px;">
                                 </div>
@@ -58,6 +58,10 @@
                     </div>
                 </div>
             </div>
+            <a th:href="@{/}">
+                <div class="order-btn-cart-pg" th:text="Заказать"
+                     th:href="@{/orders}"></div>
+            </a>
         </div>
         <div th:if="${products == null}">
             <img class="empty-cart-image" th:src="@{../images/cart/logo-cup.svg}" style="margin-bottom: 25px;">
