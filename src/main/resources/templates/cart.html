@@ -91,25 +91,31 @@
                 </div>
             </div>
         </div>
-        <div th:if="${!products.isEmpty() || !combos.isEmpty()}">
-            Общее количество
-            <div th:text="${cartDto.count}" id="count">
-
+        <div th:if="${!products.isEmpty() || !combos.isEmpty()}" class="cart-buttons-info">
+            <div class="cart-info-frame">
+                <div>Общее количество:</div>
+                <div th:text="${cartDto.count}" id="count" class="cart-result-text"></div>
             </div>
-            Общая стоимость
-            <div th:text="${cartDto.price}" id="price">
-
+            <div class="cart-info-frame">
+                <div>Общая стоимость:</div>
+                <div th:text="${cartDto.price}" id="price" class="cart-result-text"></div>
             </div>
-        </div>
-        <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
-            <div th:if="${!products.isEmpty() || !combos.isEmpty()}">
+            <div class="cart-info-frame">
+                <div>Способ оплаты:</div>
+                <!--<div th:text="${cartDto.payment}" id="payment" class="cart-result-text"></div>-->
+                <div class="payment-select">
+                    <label for="cash">Наличные</label>
+                    <input type="radio" checked="checked" id="cash" name="paymentMethod">
+                    <label for="non-cash">Безналичный</label>
+                    <input type="radio" id="non-cash" name="paymentMethod">
+                </div>
+            </div>
+            <div class="cart-buttons">
                 <form action="#" th:action="@{/orders/buy}" method="post">
                     <button type="submit" class="to-card-btn-pr-pg">
                         Заказать
                     </button>
                 </form>
-            </div>
-            <div th:if="${!products.isEmpty() || !combos.isEmpty()}">
                 <form action="#" th:action="@{/orders/cart/removeAll}" method="post">
                     <button type="submit" class="to-card-btn-pr-pg">
                         Очистить корзину

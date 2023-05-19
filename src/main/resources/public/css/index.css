@@ -371,7 +371,7 @@ h4 {
     gap: 10px;
 }
 
-.product-count {
+.product-count-minus {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -380,16 +380,86 @@ h4 {
 
     background: #EFEFEF;
     border-radius: 15px;
+    border: none;
     user-select: none;
     transition: all 0.3s ease;
 }
 
-.product-count:hover {
+.product-count-minus:hover {
+    background: #D8D6D6;
+    cursor: pointer;
+}
+
+.product-count-plus {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 35px;
+    height: 35px;
+
+    background: #EFEFEF;
+    border-radius: 15px;
+    border: none;
+    user-select: none;
+    transition: all 0.3s ease;
+}
+
+.product-count-plus:hover {
     background: #D8D6D6;
     cursor: pointer;
 }
 
 .product-count-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 36px;
+}
+
+/*   ____   */
+
+.combo-count-minus {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 35px;
+    height: 35px;
+
+    background: #EFEFEF;
+    border-radius: 15px;
+    border: none;
+    user-select: none;
+    transition: all 0.3s ease;
+}
+
+.combo-count-minus:hover {
+    background: #D8D6D6;
+    cursor: pointer;
+}
+
+.combo-count-plus {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 35px;
+    height: 35px;
+
+    background: #EFEFEF;
+    border-radius: 15px;
+    border: none;
+    user-select: none;
+    transition: all 0.3s ease;
+}
+
+.combo-count-plus:hover {
+    background: #D8D6D6;
+    cursor: pointer;
+}
+
+.combo-count-text {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -557,6 +627,32 @@ h4 {
     border-radius: 15px;
 
     color: #FFFFFF;
+}
+
+.cart-result-text {
+    font-weight: 600;
+}
+
+.cart-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+}
+
+.cart-buttons-info {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    font-size: 24px;
+    gap: 20px;
+}
+
+.cart-info-frame {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
 }
 
 /*   product page   */
