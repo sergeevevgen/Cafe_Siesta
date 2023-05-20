@@ -38,8 +38,9 @@
                 <th scope="col">Логин</th>
                 <th scope="col">Пароль</th>
                 <th scope="col">Телефон</th>
-                <th scope="col">Заказы</th>
                 <th scope="col">Занятость</th>
+                <th scope="col"></th>
+
             </tr>
             </thead>
             <tbody>
@@ -54,6 +55,7 @@
                 <td th:text="${deliveryman.login}" style="width: 20%"></td>
                 <td th:text="${deliveryman.password}" style="width: 15%"></td>
                 <td th:text="${deliveryman.phone_number}" style="width: 10%"></td>
+                <td th:text="${deliveryman.status}" style="width: 10%"></td>
 
                 <td style="width: 20%">
                     <div class="btn-group" role="group" aria-label="Basic example">

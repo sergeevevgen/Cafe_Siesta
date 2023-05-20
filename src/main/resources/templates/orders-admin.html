@@ -45,11 +45,11 @@
           </div>
           <div class="status-ordr-pg" th:text="${order.status}">
           </div>
-          <div th:text="${order.count}">
+          <div th:text="'Количество:&nbsp;' + ${order.count}">
           </div>
-          <div th:text="${order.payment}">
+          <div th:text="'Способ оплаты:&nbsp;' + ${order.payment}">
           </div>
-          <div th:text="${order.time}">
+          <div th:text="'Время:&nbsp;' + ${order.time}">
           </div>
         </div>
       </div>

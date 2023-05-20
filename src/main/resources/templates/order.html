@@ -63,7 +63,7 @@
                             <div class="info-name-cart-pg" th:text="${product.name}"></div>
                             <div class="info-price-cart-pg" th:text="${product.price}"></div>
                             <div class="product-count-frame">
-                                <div class="product-count-text" th:id="'count-product' + ${product.id}" th:text="${product.count}"></div>
+                                <div class="product-count-text" th:id="'count-product' + ${product.id}" th:text="'Количество:&nbsp;'${product.count}"></div>
                                 </form>
                             </div>
                         </div>

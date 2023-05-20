@@ -36,6 +36,7 @@
             <a sec:authorize="hasRole('ROLE_CLIENT')" class="link" th:href="@{/orders/cart}">Корзина</a>
             <a sec:authorize="hasRole('ROLE_CLIENT')" class="link" th:href="@{/profile}">Профиль</a>
             <a sec:authorize="hasRole('ROLE_CLIENT')" class="link" th:href="@{/orders}">Заказы</a>
+            <a sec:authorize="hasRole('ROLE_ADMIN')" class="link" th:href="@{/admin}">Заказы</a>
             <a sec:authorize="hasRole('ROLE_ADMIN')" class="link" th:href="@{/admin/products}">Продукты</a>
             <a sec:authorize="hasRole('ROLE_ADMIN')" class="link" th:href="@{/admin/categories}">Категории</a>
             <a sec:authorize="hasRole('ROLE_ADMIN')" class="link" th:href="@{/admin/combos}">Комбо</a>
