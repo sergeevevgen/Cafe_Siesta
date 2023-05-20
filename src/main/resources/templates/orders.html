@@ -38,6 +38,7 @@
                 <div class="info-ordr-pg">
                     <div class="address-frame-ordr-pg">
                         <div class="address-txt-ordr-pg">Адрес доставки:</div>
+                        <div>г. Ульяновск</div>
                         <div class="address-street-prf-pg" th:if="${order.street != null}" th:text="',&nbsp;ул.&nbsp;' + ${order.street}"></div>
                         <div class="address-house-prf-pg" th:if="${order.house != null}" th:text="'&nbsp;' + ${order.house} + ','"></div>
                         <div class="address-entrance-prf-pg" th:if="${order.entrance != null and order.entrance != ''}" th:text="'&nbsp;подъезд&nbsp;' + ${order.entrance} + ','"></div>
@@ -49,10 +50,10 @@
                     </div>
                     <div th:text="'Способ оплаты:&nbsp;' + ${order.payment}">
                     </div>
-                    <div th:text="'Время:&nbsp;' + ${order.time}">
+                    <div th:text="'Время:&nbsp;' + ${order.time_represent}">
                     </div>
-                    <div class="cart-buttons">
-                        <form action="#" th:action="@{/}" method="post">
+                    <div class="cart-buttons" th:if="${order.status.name().equals('Accepted')}">
+                        <form action="#"  th:action="@{/orders/cancelOrder/{id}(id=${order.id})}" method="post">
                             <button type="submit" class="to-card-btn-pr-pg" style="margin-top: 30px;">
                                 Отменить
                             </button>

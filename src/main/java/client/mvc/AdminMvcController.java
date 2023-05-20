@@ -1,9 +1,8 @@
 package client.mvc;
 
-import client.data.model.dto.CategoryDto;
-import client.data.model.dto.ComboDto;
-import client.data.model.dto.DeliveryManDto;
-import client.data.model.dto.ProductDto;
+import client.data.model.dto.*;
+import client.data.model.entity.User;
+import client.data.model.enums.Order_Status;
 import client.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +10,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
@@ -32,6 +33,42 @@ public class AdminMvcController {
         this.deliveryManService = deliveryManService;
     }
 
+    @GetMapping("/order/{id}")
+    public String getOrder(@PathVariable Long id, Model model) {
+        OrderDto order = new OrderDto(orderService.findOrder(id));
+        model.addAttribute("order", order);
+        //Собираем продукты в корзине
+        List<ProductDto> products = productService.findProducts(order.getProducts()
+                .keySet()
+                .stream()
+                .toList());
+        List<ProductCartDto> productsCart =  new ArrayList<>();
+        for (int i = 0; i < order.getProducts().size(); ++i) {
+            if (order.getProducts().containsKey(products.get(i).getId())) {
+                ProductCartDto productCartDto = new ProductCartDto(products.get(i),
+                        order.getProducts().get(products.get(i).getId()));
+                productsCart.add(productCartDto);
+            }
+        }
+        model.addAttribute("products", productsCart);
+
+        //собираем комбо в корзине
+        List<ComboDto> combos = comboService.findCombos(order.getCombos()
+                .keySet()
+                .stream()
+                .toList());
+        List<ComboCartDto> comboCartDtos =  new ArrayList<>();
+        for (int i = 0; i < order.getCombos().size(); ++i) {
+            if (order.getCombos().containsKey(combos.get(i).getId())) {
+                ComboCartDto comboCartDto = new ComboCartDto(combos.get(i),
+                        order.getCombos().get(combos.get(i).getId()));
+                comboCartDtos.add(comboCartDto);
+            }
+        }
+        model.addAttribute("combos", comboCartDtos);
+        model.addAttribute("deliveryman", new DeliveryManDto(deliveryManService.findById(order.getDeliveryman_id())));
+        return "order";
+    }
     @GetMapping
     public String getMainPage(Model model) {
         model.addAttribute("orders", orderService.findOrders());
@@ -211,5 +248,19 @@ public class AdminMvcController {
     public String deleteDeliveryMan(@PathVariable Long id) {
         deliveryManService.deleteDeliveryMan(id);
         return "redirect:/admin/deliveryman";
+    }
+
+    @PostMapping("/cancelOrder/{id}")
+    public String cancelOrder(@PathVariable Long id) {
+        OrderDto order = new OrderDto(orderService.findOrder(id));
+        orderService.changeOrderStatus(order.getId(), Order_Status.Rejected);
+        return "redirect:/admin";
+    }
+
+    @PostMapping("/changeOrderStatus/{id}")
+    public String changeOrderStatus(@PathVariable Long id) {
+        OrderDto order = new OrderDto(orderService.findOrder(id));
+        orderService.changeOrderStatus(order.getId());
+        return "redirect:/admin";
     }
 }

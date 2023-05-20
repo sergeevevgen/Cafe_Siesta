@@ -3,6 +3,7 @@ package client.mvc;
 import client.data.model.dto.*;
 import client.data.model.entity.User;
 import client.data.model.enums.Order_Status;
+import client.data.model.enums.PaymentEnum;
 import client.service.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -77,6 +78,7 @@ public class OrderMvcController {
         }
         model.addAttribute("combos", comboCartDtos);
 
+        model.addAttribute("client", clientService.findClient(user.getUser_id()));
         return "cart";
     }
 
@@ -162,7 +164,9 @@ public class OrderMvcController {
             }
         }
         model.addAttribute("combos", comboCartDtos);
-        model.addAttribute("deliveryman", new DeliveryManDto(deliveryManService.findById(order.getDeliveryman_id())));
+        if (order.getDeliveryman_id() != null) {
+            model.addAttribute("deliveryman", new DeliveryManDto(deliveryManService.findById(order.getDeliveryman_id())));
+        }
         return "order";
     }
 
@@ -191,11 +195,13 @@ public class OrderMvcController {
     }
 
     @PostMapping("/cart/buy")
-    public String buyOrder() {
+    public String buyOrder(@RequestParam Integer radio) {
         User user = userService.findByLogin(getUserName());
 
         OrderDto orderDto = orderService.findClientCart(user.getUser_id());
         orderDto.setStatus(Order_Status.Accepted);
+        orderDto.setPayment(radio == 1 ? PaymentEnum.CASH : PaymentEnum.NON_CASH);
+        orderService.updatePayment(orderDto);
         orderService.changeOrderStatus(orderDto);
         return "redirect:/orders";
     }
@@ -208,5 +214,16 @@ public class OrderMvcController {
         orderDto.setPrice(price);
         orderService.updateOrderFields(orderDto);
         return "redirect:/orders/cart";
+    }
+
+    @PostMapping("/cancelOrder/{id}")
+    public String cancelOrder(@PathVariable Long id) {
+        User user = userService.findByLogin(getUserName());
+        OrderDto order = orderService.isOrderForClient(user.getUser_id(), id);
+        if (order == null) {
+            return "redirect:/orders";
+        }
+        orderService.changeOrderStatus(order.getId(), Order_Status.Rejected);
+        return "redirect:/orders";
     }
 }

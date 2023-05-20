@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.w3.org/1999/xhtml"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+      >
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -25,7 +25,7 @@
   <div class="back">
     <div th:each="order : ${orders}">
       <div class="order-ordr-pg">
-        <a class="number-order-and-price-ordr-pg" th:href="@{/orders/order/{id}(id=${order.id})}">
+        <a class="number-order-and-price-ordr-pg" th:href="@{/admin/order/{id}(id=${order.id})}">
           <div class="number-frame-ordr-pg">
             <div class="number-txt-ordr-pg">Заказ номер:</div>
             <div class="number-ordr-pg" th:text="${order.id}"></div>
@@ -49,15 +49,15 @@
           </div>
           <div th:text="'Способ оплаты:&nbsp;' + ${order.payment}">
           </div>
-          <div th:text="'Время:&nbsp;' + ${order.time}">
+          <div th:text="'Время:&nbsp;' + ${order.time_represent}">
           </div>
           <div class="cart-buttons">
-            <form action="#" th:action="@{/}" method="post">
+            <form action="#" th:if="${!order.status.name().equals('Finish') && !order.status.name().equals('Rejected')}" th:action="@{/admin/cancelOrder/{id}(id=${order.id})}" method="post">
               <button type="submit" class="to-card-btn-pr-pg" style="margin-top: 30px;">
                 Отменить
               </button>
             </form>
-            <form action="#" th:action="@{/}" method="post">
+            <form action="#" th:if="${order.status.name().equals('Accepted') || order.status.name().equals('In_process')}" th:action="@{/admin/changeOrderStatus/{id}(id=${order.id})}" method="post">
               <button type="submit" class="to-card-btn-pr-pg">
                 Изменить статус
               </button>
@@ -66,7 +66,6 @@
         </div>
       </div>
     </div>
-    <a sec:authorize="hasRole('ROLE_CLIENT')" class="btn-back-ordr-pg" th:href="@{/}">На главную</a>
   </div>
 </main>
 </body>

@@ -103,23 +103,28 @@
             <div class="cart-info-frame">
                 <div>Способ оплаты:</div>
                 <!--<div th:text="${cartDto.payment}" id="payment" class="cart-result-text"></div>-->
-                <div class="payment-select">
-                    <div class="form_radio_btn">
-                        <input id="radio-1" type="radio" name="radio" value="1" checked>
-                        <label for="radio-1">Наличные</label>
-                    </div>
-                    <div class="form_radio_btn">
-                        <input id="radio-2" type="radio" name="radio" value="2">
-                        <label for="radio-2">Безналичный</label>
-                    </div>
-                </div>
             </div>
             <div class="cart-buttons">
-                <form action="#" th:action="@{/orders/cart/buy}" method="post">
+                <form action="#" th:if="${client.street != null && client.house != null}" th:action="@{/orders/cart/buy}" method="post">
+                    <div class="payment-select">
+                        <div class="form_radio_btn">
+                            <input id="radio-1" type="radio" name="radio" value="1" checked>
+                            <label for="radio-1">Наличные</label>
+                        </div>
+                        <div class="form_radio_btn">
+                            <input id="radio-2" type="radio" name="radio" value="2">
+                            <label for="radio-2">Безналичный</label>
+                        </div>
+                    </div>
                     <button type="submit" class="to-card-btn-pr-pg" style="margin-top: 30px;">
                         Заказать
                     </button>
                 </form>
+                <a th:if="${client.street == null || client.house == null}" th:href="@{/profile/edit}">
+                    <button type="submit" class="to-card-btn-pr-pg" style="margin-top: 30px;">
+                        Добавить адрес
+                    </button>
+                </a>
                 <form action="#" th:action="@{/orders/cart/removeAll}" method="post">
                     <button type="submit" class="to-card-btn-pr-pg">
                         Очистить корзину

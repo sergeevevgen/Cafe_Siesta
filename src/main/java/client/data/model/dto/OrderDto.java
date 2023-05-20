@@ -28,6 +28,7 @@ public class OrderDto {
     private Map<Long, Long> combos = new HashMap<>();
     private Long chat_id;
     private Long time;
+    private String time_represent;
     private PaymentEnum payment;
 
     public OrderDto() {
@@ -80,6 +81,7 @@ public class OrderDto {
 
         if (order.getTime() != null) {
             this.time = order.getTime();
+            this.time_represent = new Date(time).toString().split("GMT")[0];
         }
 
         if (order.getPayment() != null) {
@@ -207,5 +209,9 @@ public class OrderDto {
 
     public void setPayment(PaymentEnum payment) {
         this.payment = payment;
+    }
+
+    public String getTime_represent() {
+        return time_represent;
     }
 }

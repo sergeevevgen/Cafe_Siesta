@@ -217,6 +217,20 @@ public class OrderService {
                 .toList();
     }
 
+    @Transactional
+    public Order changeOrderStatus(Long orderId) {
+        Order order = findOrder(orderId);
+        Order_Status status = order.getStatus();
+        switch (status) {
+            case Accepted -> {
+                status = Order_Status.In_process;
+            }
+            case In_process -> {
+                status = Order_Status.Done;
+            }
+        }
+        return changeOrderStatus(orderId, status);
+    }
     // Изменение статуса заказа у клиента
     @Transactional
     public Order changeOrderStatus(Long orderId, Order_Status status) {
@@ -250,7 +264,9 @@ public class OrderService {
             case Rejected: {
                 if (current.getStatus() == Order_Status.Accepted) {
                     current.setStatus(status);
-                    current.removeDeliveryMan();
+                    if (current.getDeliveryMan() != null) {
+                        current.removeDeliveryMan();
+                    }
                 }
                 else {
                     throw new WrongOrderStatusException(current.getId(), current.getStatus());
@@ -288,6 +304,13 @@ public class OrderService {
         }
 
         return repository.save(current);
+    }
+
+    @Transactional
+    public void updatePayment(OrderDto orderDto) {
+        Order order = findOrder(orderDto.getId());
+        order.setPayment(orderDto.getPayment());
+        repository.save(order);
     }
 
     // Изменение статуса заказа у клиента через Dto
