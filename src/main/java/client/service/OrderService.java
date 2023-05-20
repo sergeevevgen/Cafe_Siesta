@@ -229,6 +229,10 @@ public class OrderService {
             case Accepted: {
                 if (current.getStatus() == Order_Status.Is_cart) {
                     current.setStatus(status);
+                    if (current.getStreet() == null || current.getHouse() == null) {
+                        setAddress(current.getId(), current.getClient().getStreet(), current.getClient().getHouse(),
+                                current.getClient().getFlat(), current.getClient().getEntrance());
+                    }
                 }
                 else {
                     throw new WrongOrderStatusException(current.getId(), current.getStatus());
