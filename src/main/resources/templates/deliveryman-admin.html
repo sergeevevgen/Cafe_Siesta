@@ -15,15 +15,15 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/index.css"/>
-    <title>Категории</title>
+    <title>Продукты</title>
 </head>
 <body>
 <div th:insert="navbar"></div>
 <main class="main">
     <div>
         <a class="order-btn-cart-pg"
-           th:href="@{/admin/categories/edit/}">
-            <i class="fa-solid fa-plus"></i> Создать категорию
+           th:href="@{/admin/deliveryman/edit/}">
+            <i class="fa-solid fa-plus"></i> Добавить курьера
         </a>
     </div>
     <div class="table-responsive">
@@ -32,32 +32,42 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">ID</th>
-                <th scope="col">Название</th>
-                <th scope="col">Описание</th>
-                <th scope="col">Изображение</th>
-                <th scope="col"></th>
+                <th scope="col">Имя</th>
+                <th scope="col">Фамилия</th>
+                <th scope="col">Фото</th>
+                <th scope="col">Логин</th>
+                <th scope="col">Пароль</th>
+                <th scope="col">Телефон</th>
+                <th scope="col">Заказы</th>
+                <th scope="col">Занятость</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="category, iterator: ${categories}">
+            <tr th:each="deliveryman, iterator: ${deliveryman}">
                 <th scope="row" th:text="${iterator.index} + 1"></th>
-                <td th:text="${category.id}"></td>
-                <td th:text="${category.name}"></td>
-                <td th:text="${category.description}"></td>
-                <td th:text="${category.image_url}"><img th:src="@{/images/{image}(image=${category.image_url})}"></td>
-                <td>
+                <td th:text="${deliveryman.id}"></td>
+                <td th:text="${deliveryman.name}" style="width: 20%"></td>
+                <td th:text="${deliveryman.surname}" style="width: 20%"></td>
+                <td th:text="${deliveryman.image_url}" style="width: 20%"><img
+                        th:src="@{/images/{image}(image=${product.image_url})}"
+                        style="width: 100px; height: 50px;"></td>
+                <td th:text="${deliveryman.login}" style="width: 20%"></td>
+                <td th:text="${deliveryman.password}" style="width: 15%"></td>
+                <td th:text="${deliveryman.phone_number}" style="width: 10%"></td>
+
+                <td style="width: 20%">
                     <div class="btn-group" role="group" aria-label="Basic example">
                         <a class="btn btn-warning button-fixed button-sm"
-                           th:href="@{/admin/categories/edit/{id}(id=${category.id})}">
+                           th:href="@{/admin/deliveryman/edit/{id}(id=${deliveryman.id})}">
                             <i class="fa fa-pencil" aria-hidden="true"></i> Изменить
                         </a>
                         <button type="button" class="btn btn-danger button-fixed button-sm"
-                                th:attr="onclick=|confirm('Удалить категорию?') && document.getElementById('remove-${category.id}').click()|">
+                                th:attr="onclick=|confirm('Удалить курьера?') && document.getElementById('remove-${deliveryman.id}').click()|">
                             <i class="fa fa-trash" aria-hidden="true"></i> Удалить
                         </button>
                     </div>
-                    <form th:action="@{/admin/categories/delete/{id}(id=${category.id})}" method="post">
-                        <button th:id="'remove-' + ${category.id}" type="submit" style="display: none">
+                    <form th:action="@{/admin/deliveryman/delete/{id}(id=${deliveryman.id})}" method="post">
+                        <button th:id="'remove-' + ${deliveryman.id}" type="submit" style="display: none">
                             Удалить
                         </button>
                     </form>

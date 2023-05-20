@@ -121,8 +121,8 @@ public class DeliveryManService {
 
     //Изменение доставщика по полям через Dto
     @Transactional
-    public DeliveryManDto updateDeliveryMan(DeliveryManDto deliveryManDto) {
-        return new DeliveryManDto(updateDeliveryMan(deliveryManDto.getId(), deliveryManDto.getName(),
+    public DeliveryManDto updateDeliveryMan(Long id, DeliveryManDto deliveryManDto) {
+        return new DeliveryManDto(updateDeliveryMan(id, deliveryManDto.getName(),
                 deliveryManDto.getSurname(), deliveryManDto.getPassword(), deliveryManDto.getImage_url(), deliveryManDto.getPhone_number()));
     }
 

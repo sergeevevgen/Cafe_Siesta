@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+            integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/index.css"/>
+    <script src="/js/select-items.js"></script>
+    <script type="text/javascript" th:src="@{/js/add_images.js}"></script>
+    <title>Продукт</title>
+</head>
+<body>
+<main class="main">
+    <div th:text="${errors}" class="margin-bottom alert-danger"></div>
+    <form action="#" th:action="@{/admin/deliveryman/save/{id}(id=${id})}" th:object="${deliverymanDto}" method="post">
+        <div class="back-edit-pg">
+            <div class="name-category-edit-pg">Комбо</div>
+            <div class="mb-3">
+                <label for="name" class="form-label">Имя</label>
+                <input type="text" class="form-control" id="name" th:field="${deliverymanDto.name}" required>
+            </div>
+            <div class="mb-3">
+                <label for="surname" class="form-label">Фамилия</label>
+                <input type="text" class="form-control" id="surname" th:field="${deliverymanDto.surname}" required>
+            </div>
+            <div class="mb-3">
+                <label for="image" class="form-label">Фото</label>
+                <input type="file" class="form-control" id="image-input" onchange="updateImageName()" required>
+                <input type="text" class="form-control" id="image" th:field="${deliverymanDto.image_url}" required style="display: none;">
+            </div>
+            <div class="mb-3">
+                <label for="login" class="form-label">Логин</label>
+                <input type="text" class="form-control" id="login" th:field="${deliverymanDto.login}">
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Пароль</label>
+                <input type="text" class="form-control" id="password" th:field="${deliverymanDto.password}">
+            </div>
+            <div class="mb-3">
+                <label for="phone_number" class="form-label">Телефон</label>
+                <input type="text" class="form-control" id="phone_number" th:field="${deliverymanDto.phone_number}">
+            </div>
+            <button type="submit" class="btn btn-primary button-fixed">
+                <span th:if="${id == null}">Добавить</span>
+                <span th:if="${id != null}">Обновить</span>
+            </button>
+            <a class="btn btn-secondary button-fixed" th:href="@{/admin/deliveryman}">
+                Назад
+            </a>
+        </div>
+    </form>
+</main>
+</body>
+</html>

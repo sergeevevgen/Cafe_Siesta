@@ -2,6 +2,7 @@ package client.mvc;
 
 import client.data.model.dto.CategoryDto;
 import client.data.model.dto.ComboDto;
+import client.data.model.dto.DeliveryManDto;
 import client.data.model.dto.ProductDto;
 import client.service.*;
 import org.springframework.stereotype.Controller;
@@ -167,5 +168,48 @@ public class AdminMvcController {
     public String deleteCombo(@PathVariable Long id) {
         comboService.deleteCombo(id);
         return "redirect:/admin/combos";
+    }
+
+    @GetMapping("/deliveryman")
+    public String getAllDeliveryMen(Model model) {
+        model.addAttribute("deliveryman",
+                deliveryManService.findAllDeliveryMan());
+        return "deliveryman-admin";
+    }
+
+    @GetMapping(value = {"/deliveryman/edit", "/deliveryman/edit/{id}"})
+    public String editDeliveryMan(@PathVariable(required = false) Long id, Model model) {
+        if (id == null || id <= 0) {
+            model.addAttribute("deliverymanDto", new DeliveryManDto());
+        }
+        else {
+            model.addAttribute("deliverymanId", id);
+            model.addAttribute("deliverymanDto", new DeliveryManDto(deliveryManService.findById(id)));
+        }
+        model.addAttribute("orders", orderService.findOrders());
+        return "deliveryman-edit";
+    }
+
+    @PostMapping(value = {"/deliveryman/save", "/deliveryman/save/{id}"})
+    public String saveDeliveryMan(@PathVariable(required = false) Long id,
+                            @ModelAttribute @Valid DeliveryManDto deliveryManDto,
+                            BindingResult bindingResult,
+                            Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("errors", bindingResult.getAllErrors());
+            return "deliveryman-edit";
+        }
+        if (id == null || id <= 0) {
+            deliveryManService.register(deliveryManDto);
+        } else {
+            deliveryManService.updateDeliveryMan(id, deliveryManDto);
+        }
+        return "redirect:/admin/deliveryman";
+    }
+
+    @PostMapping("/deliverymen/delete/{id}")
+    public String deleteDeliveryMan(@PathVariable Long id) {
+        deliveryManService.deleteDeliveryMan(id);
+        return "redirect:/admin/deliveryman";
     }
 }
