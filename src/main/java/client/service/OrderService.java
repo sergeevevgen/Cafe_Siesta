@@ -501,6 +501,9 @@ public class OrderService {
     @Transactional
     public Order deleteOrder(Long id) {
         Order current = findOrder(id);
+        order_itemRepository.deleteAll(current.removeItems());
+        combo_orderRepository.deleteAll(current.removeComboItems());
+
         repository.delete(current);
         return current;
     }

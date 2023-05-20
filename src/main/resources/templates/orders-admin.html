@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.w3.org/1999/xhtml">
+      xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -53,7 +54,7 @@
         </div>
       </div>
     </div>
-    <a class="btn-back-ordr-pg" th:href="@{/}">На главную</a>
+    <a sec:authorize="hasRole('ROLE_CLIENT')" class="btn-back-ordr-pg" th:href="@{/}">На главную</a>
   </div>
 </main>
 </body>
