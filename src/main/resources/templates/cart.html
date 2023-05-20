@@ -104,15 +104,19 @@
                 <div>Способ оплаты:</div>
                 <!--<div th:text="${cartDto.payment}" id="payment" class="cart-result-text"></div>-->
                 <div class="payment-select">
-                    <label for="cash">Наличные</label>
-                    <input type="radio" checked="checked" id="cash" name="paymentMethod">
-                    <label for="non-cash">Безналичный</label>
-                    <input type="radio" id="non-cash" name="paymentMethod">
+                    <div class="form_radio_btn">
+                        <input id="radio-1" type="radio" name="radio" value="1" checked>
+                        <label for="radio-1">Наличные</label>
+                    </div>
+                    <div class="form_radio_btn">
+                        <input id="radio-2" type="radio" name="radio" value="2">
+                        <label for="radio-2">Безналичный</label>
+                    </div>
                 </div>
             </div>
             <div class="cart-buttons">
                 <form action="#" th:action="@{/orders/cart/buy}" method="post">
-                    <button type="submit" class="to-card-btn-pr-pg">
+                    <button type="submit" class="to-card-btn-pr-pg" style="margin-top: 30px;">
                         Заказать
                     </button>
                 </form>

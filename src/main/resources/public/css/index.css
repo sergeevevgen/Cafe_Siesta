@@ -1581,4 +1581,33 @@ form {
   font-weight: 700;
 }
 
+/*  radio buttons  */
+
+.form_radio_btn {
+	display: inline-block;
+	margin-right: 10px;
+}
+
+.form_radio_btn input[type=radio] {
+	display: none;
+}
+
+.form_radio_btn label {
+	cursor: pointer;
+	padding: 8px 20px;
+	line-height: 24px;
+	border: none;
+	border-radius: 15px;
+	user-select: none;
+    background: #EFEFEF;
+    color: #000000;
+    transition: 0.4s ease;
+    font-weight: 600;
+}
+
+.form_radio_btn input[type=radio]:checked + label {
+	background: #FF0000;
+	color: #FFFFFF;
+}
+
 
