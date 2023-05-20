@@ -51,6 +51,18 @@
           </div>
           <div th:text="'Время:&nbsp;' + ${order.time}">
           </div>
+          <div class="cart-buttons">
+            <form action="#" th:action="@{/}" method="post">
+              <button type="submit" class="to-card-btn-pr-pg" style="margin-top: 30px;">
+                Отменить
+              </button>
+            </form>
+            <form action="#" th:action="@{/}" method="post">
+              <button type="submit" class="to-card-btn-pr-pg">
+                Изменить статус
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
