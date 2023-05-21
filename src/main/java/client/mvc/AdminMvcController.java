@@ -66,7 +66,9 @@ public class AdminMvcController {
             }
         }
         model.addAttribute("combos", comboCartDtos);
-        model.addAttribute("deliveryman", new DeliveryManDto(deliveryManService.findById(order.getDeliveryman_id())));
+        if (order.getDeliveryman_id() != null) {
+            model.addAttribute("deliveryman", new DeliveryManDto(deliveryManService.findById(order.getDeliveryman_id())));
+        }
         return "order";
     }
     @GetMapping
